@@ -1,5 +1,9 @@
 using backend.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using NuGet.DependencyResolver;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +18,11 @@ builder.Services.AddDbContext<SocialWorkDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SocialWorkDB"));
 });
+
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+);
 
 var app = builder.Build();
 
