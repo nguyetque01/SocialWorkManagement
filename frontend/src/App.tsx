@@ -6,7 +6,12 @@ const App = () => {
 
   const appStyles = darkMode ? "app dark" : "app";
 
-  return <div className={appStyles}>App</div>;
+  return (
+    <div className={appStyles}>
+      <h1>Navbar</h1>
+      <div className="wrapper">Routes</div>
+    </div>
+  );
 };
 
 export default App;

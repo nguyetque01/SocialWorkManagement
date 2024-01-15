@@ -15,7 +15,7 @@ interface IThemeContextProviderProps {
 }
 
 const ThemeContextProvider = ({ children }: IThemeContextProviderProps) => {
-  const [darkMode, setDarkMode] = useState<boolean>(true);
+  const [darkMode, setDarkMode] = useState<boolean>(false);
 
   const toggleDarkMode: () => void = () => {
     setDarkMode((prevState) => !prevState);
