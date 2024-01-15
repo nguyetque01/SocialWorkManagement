@@ -1,7 +1,12 @@
-import React from "react";
+import { useContext } from "react";
+import { ThemeContext } from "./context/theme.context";
 
 const App = () => {
-  return <div className="app">App</div>;
+  const { darkMode } = useContext(ThemeContext);
+
+  const appStyles = darkMode ? "app dark" : "app";
+
+  return <div className={appStyles}>App</div>;
 };
 
 export default App;
