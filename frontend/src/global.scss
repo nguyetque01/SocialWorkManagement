@@ -32,6 +32,7 @@ ul {
 .app {
   color: var(--text-color1);
   background-color: var(--bg-color);
+  transition: all 0.3s ease-in-out;
 
   &.dark {
     --bg-color: #000;
