@@ -1,0 +1,7 @@
+@import "../../mixins";
+.activities {
+  .heading {
+    @include d-flex(row, space-between, center);
+    width: 100%;
+  }
+}
