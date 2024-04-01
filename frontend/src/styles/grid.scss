@@ -1,0 +1,19 @@
+.grid {
+  width: 100%;
+  * {
+    color: var(--text-color1);
+  }
+}
+
+.MuiDataGrid-root {
+  .MuiDataGrid-columnHeader {
+    &:focus-within {
+      outline: none;
+    }
+  }
+  .MuiDataGrid-cell {
+    &:focus-within {
+      outline: none;
+    }
+  }
+}

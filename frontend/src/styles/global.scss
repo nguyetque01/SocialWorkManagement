@@ -9,9 +9,18 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 :root {
-  --blue: #4864ff;
+  --primary: #2772db;
+  --primary-light: #b8dff0;
+  --secondary: #ebc6ff;
+  --secondary-light: #fbeeff;
+  --dark: #353941;
+  --dark-deep: #26282b;
+  --grey: #eeeeee;
+  --red-light: #ff504d;
+  --white: #fff;
+
   --bg-color: #fff;
-  --text-color1: #000;
+  --text-color1: #5c4e4e;
   --text--color2: #555;
 }
 a {

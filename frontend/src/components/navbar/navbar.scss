@@ -1,8 +1,8 @@
-@import "../../mixins";
+@import "../../styles/mixins";
 .navbar {
   @include d-flex(row, space-between, center);
   color: #fff;
-  background-color: rgb(52, 51, 51);
+  background-color: var(--dark);
   width: 100%;
   height: 60px;
   padding: 0 2rem;
@@ -34,7 +34,7 @@
     margin-left: 1rem;
     cursor: pointer;
     svg {
-      color: var(--blue);
+      color: var(--primary-light);
     }
   }
 }
@@ -47,7 +47,7 @@
       @include d-flex(column, flex-start, center);
       gap: 1rem;
       color: #fff;
-      background-color: rgb(52, 51, 51);
+      background-color: var(--dark);
       width: 240px;
       height: 100vh;
       position: fixed;

@@ -1,34 +1,80 @@
-import { Box } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import "./activities-grid.scss";
-import { IActivity } from "../../types/global.typing";
+import { Edit, Delete } from "@mui/icons-material";
 import moment from "moment";
-
-const column: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 100 },
-  { field: "name", headerName: "Tên hoạt động", width: 300 },
-  { field: "location", headerName: "Địa điểm", width: 300 },
-  {
-    field: "releaseTime",
-    headerName: "Ngày công bố",
-    width: 200,
-    renderCell: (params) => moment(params.row.releaseTime).format("DD/MM/YYYY"),
-  },
-  { field: "description", headerName: "Mô tả", width: 300 },
-];
+import { IActivity } from "../../types/global.typing";
+import "../../styles/grid.scss";
 
 interface IActivitiesGridProps {
   data: IActivity[];
+  handleClickEditBtn: (id: string) => void;
+  handleClickDeleteBtn: (id: string) => void;
 }
 
-const ActivitiesGrid = ({ data }: IActivitiesGridProps) => {
+const ActivitiesGrid = ({
+  data,
+  handleClickEditBtn,
+  handleClickDeleteBtn,
+}: IActivitiesGridProps) => {
+  const sortedData = [...data].sort((a, b) => {
+    return moment(b.releaseTime).valueOf() - moment(a.releaseTime).valueOf();
+  });
+
+  const columns: GridColDef[] = [
+    { field: "id", headerName: "ID", width: 50 },
+    { field: "name", headerName: "Tên hoạt động", width: 500 },
+    { field: "location", headerName: "Địa điểm", width: 200 },
+    {
+      field: "releaseTime",
+      headerName: "Thời gian công bố",
+      width: 200,
+      renderCell: (params) =>
+        moment(params.row.releaseTime).format("DD/MM/YYYY HH:mm A"),
+    },
+    { field: "description", headerName: "Mô tả", width: 200 },
+    {
+      field: "actions",
+      headerName: "",
+      width: 100,
+      renderCell: (params) => (
+        <>
+          <IconButton
+            aria-label="edit"
+            size="small"
+            color="secondary"
+            style={{ marginRight: 8 }}
+            onClick={() => handleClickEditBtn(params.row.id)}
+          >
+            <Edit fontSize="inherit" />
+          </IconButton>
+          <IconButton
+            aria-label="delete"
+            size="small"
+            color="error"
+            onClick={() => handleClickDeleteBtn(params.row.id)}
+          >
+            <Delete fontSize="inherit" />
+          </IconButton>
+        </>
+      ),
+    },
+  ];
+
   return (
-    <Box sx={{ width: "100%", height: 450 }} className="activities-grid">
+    <Box className="grid">
       <DataGrid
-        rows={data}
-        columns={column}
+        rows={sortedData}
+        columns={columns}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 5,
+            },
+          },
+        }}
         getRowId={(row) => row.id}
         rowHeight={50}
+        disableRowSelectionOnClick
       />
     </Box>
   );

@@ -15,6 +15,8 @@ public partial class ActivityCategory
 
     public string? Description { get; set; }
 
+    public int? ParentCategoryId { get; set; }
+
     public virtual ICollection<Activity> Activities { get; set; } = new List<Activity>();
 
     public virtual Faculty? Faculty { get; set; }

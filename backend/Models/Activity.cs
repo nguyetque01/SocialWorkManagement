@@ -21,6 +21,8 @@ public partial class Activity
 
     public string? Description { get; set; }
 
+    public DateTime? ReleaseTimeWithDefault { get; set; }
+
     public virtual AcademicYear? AcademicYear { get; set; }
 
     public virtual ActivityCategory? ActivityCategory { get; set; }
