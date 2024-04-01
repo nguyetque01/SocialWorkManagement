@@ -96,7 +96,12 @@ public partial class SocialWorkDbContext : DbContext
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Location).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(255);
-            entity.Property(e => e.ReleaseTime).HasColumnType("datetime");
+            entity.Property(e => e.ReleaseTime)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.ReleaseTimeWithDefault)
+                .HasComputedColumnSql("(coalesce([ReleaseTime],getdate()))", false)
+                .HasColumnType("datetime");
             entity.Property(e => e.Status).HasDefaultValue(0);
 
             entity.HasOne(d => d.AcademicYear).WithMany(p => p.Activities)
@@ -118,6 +123,7 @@ public partial class SocialWorkDbContext : DbContext
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.FacultyId).HasColumnName("FacultyID");
             entity.Property(e => e.Name).HasMaxLength(255);
+            entity.Property(e => e.ParentCategoryId).HasColumnName("ParentCategoryID");
             entity.Property(e => e.Status).HasDefaultValue(0);
 
             entity.HasOne(d => d.Faculty).WithMany(p => p.ActivityCategories)

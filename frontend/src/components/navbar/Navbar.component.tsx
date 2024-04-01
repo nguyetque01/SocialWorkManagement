@@ -8,8 +8,6 @@ import { ThemeContext } from "../../context/theme.context";
 const links = [
   { href: "", label: "Home" },
   { href: "/activities", label: "Activities" },
-  { href: "/activity-categories", label: "Activity Categories" },
-  { href: "/academic-years", label: "Academic Years" },
 ];
 
 const Navbar = () => {
