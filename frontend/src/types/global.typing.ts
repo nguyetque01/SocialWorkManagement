@@ -50,3 +50,20 @@ export interface ICreateRecordHistory {
   deviceUsed?: string;
   location?: string;
 }
+
+export interface IAcademicYear {
+  id: number;
+  name: string;
+  starttime?: Date;
+  endtime?: Date;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateAcademicYear {
+  name: string;
+  starttime?: Date;
+  endtime?: Date;
+  status?: number;
+  description?: string;
+}
