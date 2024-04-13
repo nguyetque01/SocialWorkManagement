@@ -206,12 +206,12 @@ const AdminSidebar = ({
             <Divider className="divider" />
           </>
         )}
-        <Box className="brand">
+        <Link to={"/"} className="brand">
           <img src={imagePaths.LOGO_DNTU} alt="DNTU Logo" className="logo" />
           <Typography className="title">
             {isCompactMode ? "" : "Trường Đại Học Công Nghệ Đồng Nai"}
           </Typography>
-        </Box>
+        </Link>
         <Divider className="divider" />
 
         <List className="menu">
