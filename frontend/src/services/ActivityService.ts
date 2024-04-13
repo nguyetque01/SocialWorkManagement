@@ -13,7 +13,7 @@ const ActivityService = {
     }
   },
 
-  getActivityById: async (activityId: string): Promise<IActivity> => {
+  getActivityById: async (activityId: number): Promise<IActivity> => {
     try {
       const response = await httpModule.get<IActivity>(
         `${API_ENDPOINT}/${activityId}`
@@ -33,7 +33,7 @@ const ActivityService = {
   },
 
   updateActivity: async (
-    activityId: string,
+    activityId: number,
     activityData: ICreateActivity
   ): Promise<void> => {
     try {
@@ -43,7 +43,7 @@ const ActivityService = {
     }
   },
 
-  deleteActivity: async (activityId: string): Promise<void> => {
+  deleteActivity: async (activityId: number): Promise<void> => {
     try {
       await httpModule.delete(`${API_ENDPOINT}/${activityId}`);
     } catch (error) {
