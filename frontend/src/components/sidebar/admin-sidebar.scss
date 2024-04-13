@@ -1,0 +1,88 @@
+@import "../../styles/mixins";
+.drawer {
+  transition: 220px 225ms cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+
+  .MuiDrawer-paper {
+    box-sizing: border-box;
+    background-color: var(--dark-deep);
+    overflow-x: hidden;
+
+    .sidebar {
+      @include d-flex(column, center, center);
+      width: var(--full-sidebar-width);
+      height: 100%;
+
+      &.compact {
+        width: 60px;
+        height: 100vh;
+        .actions {
+          &.expand-actions {
+            text-align: center;
+          }
+        }
+        .menu {
+          .itemIcon--expand,
+          .itemText {
+            display: none;
+          }
+          .sub-menu {
+            display: none;
+          }
+        }
+      }
+
+      .divider {
+        border-color: var(--grey);
+        opacity: 0.1;
+        height: 1px;
+        width: 90%;
+      }
+
+      .icon {
+        color: var(--white);
+      }
+
+      .actions {
+        text-align: center;
+        width: 100%;
+        padding: 12px;
+        background-color: inherit;
+
+        &.expand-actions {
+          text-align: right;
+        }
+
+        .button {
+          background-color: var(--primary);
+          color: var(--white);
+          border-radius: 10px;
+          text-align: center;
+          padding: 10px;
+          margin: 20px;
+        }
+      }
+
+      .brand {
+        text-align: center;
+        padding: 16px 0;
+
+        .logo {
+          width: 28px;
+          height: auto;
+        }
+
+        .title {
+          padding: 8px 20px 0;
+          color: var(--white);
+          font-size: 16px;
+        }
+      }
+
+      .menu {
+        width: 100%;
+        flex: 1;
+        background-color: inherit;
+      }
+    }
+  }
+}
