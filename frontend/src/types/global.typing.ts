@@ -28,6 +28,19 @@ export interface ICreateActionType {
   description?: string;
 }
 
+export interface IFaculty {
+  id: number;
+  name: string;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateFaculty {
+  name: string;
+  status?: number;
+  description?: string;
+}
+
 export interface IRecordHistory {
   id: number;
   tableName: string;
