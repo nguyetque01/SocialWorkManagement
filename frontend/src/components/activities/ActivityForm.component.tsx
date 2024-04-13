@@ -15,7 +15,7 @@ import "../../styles/form.scss";
 interface IActivityFormProps {
   handleClickCancelBtn: () => void;
   onSaveSuccess: () => void;
-  activityId: string;
+  activityId: number;
 }
 
 const ActivityForm = ({
@@ -31,7 +31,7 @@ const ActivityForm = ({
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = activityId !== "0";
+  const isEditing = activityId !== 0;
 
   useEffect(() => {
     fetchActivityData();

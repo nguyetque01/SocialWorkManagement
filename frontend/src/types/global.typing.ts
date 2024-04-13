@@ -1,28 +1,52 @@
 export interface IActivity {
-  id: string;
+  id: number;
   name: string;
-  location: string;
-  releaseTime: string;
-  status: string;
-  description: string;
+  location?: string;
+  releaseTime?: string;
+  status?: number;
+  description?: string;
 }
 
 export interface ICreateActivity {
   name: string;
-  location: string;
-  releaseTime: string;
-  description: string;
+  location?: string;
+  releaseTime?: string;
+  status?: number;
+  description?: string;
 }
 
 export interface IActionType {
   id: number;
   name: string;
-  status: number;
-  description: string;
+  status?: number;
+  description?: string;
 }
 
 export interface ICreateActionType {
   name: string;
-  status: number;
-  description: string;
+  status?: number;
+  description?: string;
+}
+
+export interface IRecordHistory {
+  id: number;
+  tableName: string;
+  recordId?: number;
+  actionTypeId?: number;
+  actorId?: number;
+  actionTime?: Date;
+  description?: string;
+  deviceUsed?: string;
+  location?: string;
+}
+
+export interface ICreateRecordHistory {
+  tableName: string;
+  recordId?: number;
+  actionTypeId?: number;
+  actorId?: number;
+  actionTime?: Date;
+  description?: string;
+  deviceUsed?: string;
+  location?: string;
 }
