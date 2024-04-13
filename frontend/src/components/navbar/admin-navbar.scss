@@ -1,0 +1,27 @@
+.app-bar {
+  .navbar {
+    background-color: var(--dark-deep);
+    transition: all 0.3s ease-in-out;
+
+    &.sidebar-full {
+      padding-left: calc(var(--full-sidebar-width) + 20px);
+    }
+    &.sidebar-compact {
+      padding-left: calc(var(--small-sidebar-width) + 20px);
+    }
+    &.sidebar-none {
+      padding-left: 20px;
+    }
+
+    .menu-button {
+      margin-right: 12px;
+      .menu-icon {
+        color: var(--white);
+      }
+
+      &.hidden {
+        display: none;
+      }
+    }
+  }
+}

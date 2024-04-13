@@ -21,7 +21,11 @@
 
   --bg-color: #fff;
   --text-color1: #5c4e4e;
-  --text--color2: #555;
+  --text-color2: #555;
+
+  --full-sidebar-width: 220px;
+  --small-sidebar-width: 60px;
+  --navbar-height: 64px;
 }
 a {
   text-decoration: none;
@@ -37,6 +41,7 @@ ul {
 .content {
   @include d-flex(column, flex-start, center);
   gap: 2rem;
+  margin-top: var(--navbar-height);
 }
 .app {
   color: var(--text-color1);

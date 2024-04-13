@@ -7,34 +7,43 @@
   height: 60px;
   padding: 0 2rem;
 
-  .brand {
-    flex: 1;
-  }
-
-  .menu {
-    ul {
-      @include d-flex(row, flex-start, center);
-      gap: 1rem;
-
-      li {
-        a {
-          color: #fff;
-          cursor: pointer;
-        }
-      }
+  .navbar__left {
+    @include d-flex(row, space-between, center);
+    .menu-toggle {
+      padding: 2px;
+      @include d-flex(column, center, center);
+    }
+    .brand {
+      margin-left: 20px;
     }
   }
 
-  .hamburger {
-    display: none;
-    cursor: pointer;
-  }
+  .navbar__right {
+    @include d-flex(row, space-between, center);
+    .menu {
+      ul {
+        @include d-flex(row, flex-start, center);
+        gap: 1rem;
 
-  .toggle {
-    margin-left: 1rem;
-    cursor: pointer;
-    svg {
-      color: var(--primary-light);
+        li {
+          a {
+            color: #fff;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .hamburger {
+      display: none;
+      cursor: pointer;
+    }
+
+    .toggle {
+      margin-left: 1rem;
+      cursor: pointer;
+      svg {
+        color: var(--primary-light);
+      }
     }
   }
 }

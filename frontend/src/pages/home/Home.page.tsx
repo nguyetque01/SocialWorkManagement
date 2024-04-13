@@ -1,12 +1,12 @@
+import { Box, Toolbar, Typography } from "@mui/material";
 import "./home.scss";
 
 const Home = () => {
   return (
-    <div className="content home">
+    <Box className="content">
+      <Toolbar />
       <h3>Welcome To Website</h3>
-      <br />
-      <br />
-      <span>
+      <Typography paragraph>
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aperiam,
         temporibus mollitia consectetur at dolorum nobis veritatis porro beatae
         eius placeat ea repudiandae, id quo! Suscipit quis, porro impedit
@@ -19,8 +19,8 @@ const Home = () => {
         eveniet doloribus pariatur harum obcaecati officiis? Officia doloribus
         ea repellat, ipsam, quos voluptatibus, quas nam placeat voluptatem quae
         quaerat.
-      </span>
-    </div>
+      </Typography>
+    </Box>
   );
 };
 

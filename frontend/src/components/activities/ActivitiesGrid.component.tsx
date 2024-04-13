@@ -21,8 +21,8 @@ const ActivitiesGrid = ({
   });
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 50 },
-    { field: "name", headerName: "Tên hoạt động", width: 500 },
+    { field: "id", headerName: "ID", width: 80 },
+    { field: "name", headerName: "Tên hoạt động", width: 400 },
     { field: "location", headerName: "Địa điểm", width: 200 },
     {
       field: "releaseTime",
@@ -31,7 +31,7 @@ const ActivitiesGrid = ({
       renderCell: (params) =>
         moment(params.row.releaseTime).format("DD/MM/YYYY HH:mm A"),
     },
-    { field: "description", headerName: "Mô tả", width: 200 },
+    { field: "description", headerName: "Mô tả", width: 150 },
     {
       field: "actions",
       headerName: "",
