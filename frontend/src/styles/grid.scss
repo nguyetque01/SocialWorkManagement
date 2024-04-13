@@ -3,6 +3,9 @@
   * {
     color: var(--text-color1);
   }
+  &.small {
+    width: auto;
+  }
 }
 
 .MuiDataGrid-root {

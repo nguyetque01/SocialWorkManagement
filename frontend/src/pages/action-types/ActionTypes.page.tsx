@@ -2,32 +2,32 @@ import React, { useEffect, useState } from "react";
 import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { IActivity } from "../../types/global.typing";
-import ActivitiesGrid from "../../components/activities/ActivitiesGrid.component";
-import ActivityForm from "../../components/activities/ActivityForm.component";
-import ActivityService from "../../services/ActivityService";
+import { IActionType } from "../../types/global.typing";
+import ActionTypesGrid from "../../components/action-types/ActionTypesGrid.component";
+import ActionTypeForm from "../../components/action-types/ActionTypeForm.component";
+import ActionTypeService from "../../services/ActionTypeService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
 
-const Activities = () => {
-  const [activities, setActivities] = useState<IActivity[]>([]);
-  const [activityId, setActivityId] = useState<string>("0");
+const ActionTypes = () => {
+  const [ActionTypes, setActionTypes] = useState<IActionType[]>([]);
+  const [ActionTypeId, setActionTypeId] = useState<string>("0");
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("0");
 
   useEffect(() => {
-    fetchActivities();
+    fetchActionTypes();
   }, []);
 
-  const fetchActivities = async () => {
+  const fetchActionTypes = async () => {
     try {
       setLoading(true);
-      const activitiesData = await ActivityService.getAllActivities();
-      setActivities(activitiesData);
+      const ActionTypesData = await ActionTypeService.getAllActionTypes();
+      setActionTypes(ActionTypesData);
     } catch (error) {
-      console.error("Lỗi khi tải danh sách hoạt động:", error);
-      toast.error("Lỗi khi tải danh sách hoạt động. Vui lòng thử lại.");
+      console.error("Lỗi khi tải danh sách loại hành động:", error);
+      toast.error("Lỗi khi tải danh sách loại hành động. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -42,35 +42,35 @@ const Activities = () => {
   const closeDeleteDialog = () => setIsDeleteDialogOpen(false);
 
   const handleClickAddBtn = () => {
-    setActivityId("0");
+    setActionTypeId("0");
     openModal();
   };
 
-  const handleClickEditBtn = (activityId: string) => {
-    setActivityId(activityId);
+  const handleClickEditBtn = (ActionTypeId: string) => {
+    setActionTypeId(ActionTypeId);
     openModal();
   };
 
   const handleSaveSuccess = () => {
-    fetchActivities();
+    fetchActionTypes();
   };
 
   const handleClickCancelBtn = () => closeModal();
 
-  const handleClickDeleteBtn = async (activityId: string) => {
-    setDeleteItemId(activityId);
+  const handleClickDeleteBtn = async (ActionTypeId: string) => {
+    setDeleteItemId(ActionTypeId);
     openDeleteDialog();
   };
 
-  const deleteActivity = async () => {
+  const deleteActionType = async () => {
     try {
-      await ActivityService.deleteActivity(deleteItemId);
+      await ActionTypeService.deleteActionType(deleteItemId);
       closeModal();
-      fetchActivities();
-      toast.success("Hoạt động đã được xóa thành công!");
+      fetchActionTypes();
+      toast.success("loại hành động đã được xóa thành công!");
     } catch (error) {
-      console.error("Lỗi khi xóa hoạt động:", error);
-      toast.error("Lỗi khi xóa hoạt động. Vui lòng thử lại.");
+      console.error("Lỗi khi xóa loại hành động:", error);
+      toast.error("Lỗi khi xóa loại hành động. Vui lòng thử lại.");
     } finally {
       closeDeleteDialog();
     }
@@ -79,7 +79,7 @@ const Activities = () => {
   return (
     <div className="content">
       <div className="heading">
-        <h2>Danh sách hoạt động</h2>
+        <h2>Danh sách loại hành động</h2>
         <Button variant="outlined" onClick={handleClickAddBtn}>
           <Add />
         </Button>
@@ -91,8 +91,8 @@ const Activities = () => {
           className="modal-container"
         >
           <div className="modal-content">
-            <ActivityForm
-              activityId={activityId}
+            <ActionTypeForm
+              ActionTypeId={ActionTypeId}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
@@ -101,20 +101,20 @@ const Activities = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : activities.length === 0 ? (
-        <h1>Không tìm thấy hoạt động nào.</h1>
+      ) : ActionTypes.length === 0 ? (
+        <h1>Không tìm thấy loại hành động nào.</h1>
       ) : (
         <>
-          <ActivitiesGrid
-            data={activities}
+          <ActionTypesGrid
+            data={ActionTypes}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />
           <DeleteDialog
-            item={"hoạt động"}
+            item={"loại hành động"}
             isOpen={isDeleteDialogOpen}
             handleClose={() => setIsDeleteDialogOpen(false)}
-            handleConfirm={deleteActivity}
+            handleConfirm={deleteActionType}
           />
         </>
       )}
@@ -122,4 +122,4 @@ const Activities = () => {
   );
 };
 
-export default Activities;
+export default ActionTypes;

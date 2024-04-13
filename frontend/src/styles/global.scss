@@ -42,6 +42,11 @@ ul {
   @include d-flex(column, flex-start, center);
   gap: 2rem;
   margin-top: var(--navbar-height);
+
+  .heading {
+    @include d-flex(row, space-between, center);
+    width: 100%;
+  }
 }
 .app {
   color: var(--text-color1);
