@@ -13,3 +13,16 @@ export interface ICreateActivity {
   releaseTime: string;
   description: string;
 }
+
+export interface IActionType {
+  id: number;
+  name: string;
+  status: number;
+  description: string;
+}
+
+export interface ICreateActionType {
+  name: string;
+  status: number;
+  description: string;
+}

@@ -78,12 +78,12 @@ const AdminSidebar = ({
         {
           icon: <Settings />,
           text: "Permissions",
-          link: "/roles/permissions",
+          link: "permissions",
         },
         {
           icon: <Settings />,
           text: "Role Permissions",
-          link: "/roles/role-permissions",
+          link: "role-permissions",
         },
       ],
     },
@@ -122,17 +122,17 @@ const AdminSidebar = ({
         {
           icon: <Event />,
           text: "Academic Years",
-          link: "/school/academic-years",
+          link: "/academic-years",
         },
         {
           icon: <Event />,
           text: "Faculty",
-          link: "/school/faculty",
+          link: "/faculty",
         },
         {
           icon: <Event />,
           text: "Class",
-          link: "/school/class",
+          link: "/class",
         },
       ],
     },
@@ -156,7 +156,7 @@ const AdminSidebar = ({
         {
           icon: <Settings />,
           text: "Action Types",
-          link: "/record-histories/action-types",
+          link: "action-types",
         },
       ],
     },

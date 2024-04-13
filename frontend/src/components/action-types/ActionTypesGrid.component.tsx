@@ -1,36 +1,27 @@
 import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Edit, Delete } from "@mui/icons-material";
-import moment from "moment";
-import { IActivity } from "../../types/global.typing";
+import { IActionType } from "../../types/global.typing";
 import "../../styles/grid.scss";
 
-interface IActivitiesGridProps {
-  data: IActivity[];
+interface IActionTypesGridProps {
+  data: IActionType[];
   handleClickEditBtn: (id: string) => void;
   handleClickDeleteBtn: (id: string) => void;
 }
 
-const ActivitiesGrid = ({
+const ActionTypesGrid = ({
   data,
   handleClickEditBtn,
   handleClickDeleteBtn,
-}: IActivitiesGridProps) => {
+}: IActionTypesGridProps) => {
   const sortedData = [...data].sort((a, b) => {
-    return moment(b.releaseTime).valueOf() - moment(a.releaseTime).valueOf();
+    return b.id - a.id;
   });
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Tên hoạt động", width: 400 },
-    { field: "location", headerName: "Địa điểm", width: 200 },
-    {
-      field: "releaseTime",
-      headerName: "Thời gian công bố",
-      width: 200,
-      renderCell: (params) =>
-        moment(params.row.releaseTime).format("DD/MM/YYYY HH:mm A"),
-    },
+    { field: "name", headerName: "Tên", width: 150 },
     { field: "description", headerName: "Mô tả", width: 150 },
     {
       field: "actions",
@@ -61,7 +52,7 @@ const ActivitiesGrid = ({
   ];
 
   return (
-    <Box className="grid">
+    <Box className="grid small">
       <DataGrid
         rows={sortedData}
         columns={columns}
@@ -80,4 +71,4 @@ const ActivitiesGrid = ({
   );
 };
 
-export default ActivitiesGrid;
+export default ActionTypesGrid;

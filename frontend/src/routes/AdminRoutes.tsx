@@ -4,6 +4,9 @@ import CustomLinearProgress from "../components/common/custom-linear-progress/Cu
 
 const Home = lazy(() => import("../pages/home/Home.page"));
 const Activities = lazy(() => import("../pages/activities/Activities.page"));
+const ActionTypes = lazy(
+  () => import("../pages/action-types/ActionTypes.page")
+);
 
 const AdminRoutes = () => {
   return (
@@ -11,6 +14,7 @@ const AdminRoutes = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/activities" element={<Activities />} />
+        <Route path="/action-types" element={<ActionTypes />} />
       </Routes>
     </Suspense>
   );
