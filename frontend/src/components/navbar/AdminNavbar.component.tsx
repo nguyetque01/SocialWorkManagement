@@ -1,6 +1,7 @@
 import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./admin-navbar.scss";
+import { Link } from "react-router-dom";
 
 interface AdminNavbarProps {
   toggleSidebar: () => void;
@@ -23,7 +24,11 @@ const AdminNavbar = ({
         >
           <MenuIcon className="menu-icon" />
         </IconButton>
-        <Typography variant="h6">Hệ thống quản lý công tác xã hội</Typography>
+        <Link to={"/"}>
+          <Typography variant="h6" color={"white"}>
+            Hệ thống quản lý công tác xã hội
+          </Typography>
+        </Link>
       </Toolbar>
     </AppBar>
   );
