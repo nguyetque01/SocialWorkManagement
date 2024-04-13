@@ -19,6 +19,9 @@ const Activities = () => {
   const [deleteItemId, setDeleteItemId] = useState<number>(0);
   const { city, country, device } = useContext(MainContext);
 
+  const currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + 7);
+
   useEffect(() => {
     fetchActivities();
   }, []);
@@ -54,29 +57,35 @@ const Activities = () => {
     openModal();
   };
 
+  const saveRecordHistory = async (
+    actionTypeId: number,
+    description: string
+  ) => {
+    try {
+      await RecordHistoryService.createRecordHistory({
+        tableName: "Activities",
+        // recordId: 0,
+        actionTypeId: actionTypeId,
+        // actorId: 1,
+        actionTime: currentDate,
+        description: description,
+        deviceUsed: device,
+        location: `${city}, ${country}`,
+      });
+      fetchActivities();
+    } catch (error) {
+      console.error("Lỗi khi thực hiện hoạt động:", error);
+      toast.error("Lỗi khi thực hiện hoạt động. Vui lòng thử lại.");
+    } finally {
+      closeModal();
+    }
+  };
+
   const handleSaveSuccess = async () => {
     if (activityId === 0) {
-      await RecordHistoryService.createRecordHistory({
-        tableName: "Activities",
-        // recordId: 0,
-        actionTypeId: 1,
-        // actorId: 1,
-        actionTime: new Date(),
-        description: "Thêm mới hoạt động",
-        deviceUsed: device,
-        location: `${city}, ${country}`,
-      });
+      await saveRecordHistory(1, "Thêm mới hoạt động");
     } else {
-      await RecordHistoryService.createRecordHistory({
-        tableName: "Activities",
-        // recordId: 0,
-        actionTypeId: 2,
-        // actorId: 1,
-        actionTime: new Date(),
-        description: "Cập nhật hoạt động",
-        deviceUsed: device,
-        location: `${city}, ${country}`,
-      });
+      await saveRecordHistory(2, "Cập nhật hoạt động");
     }
     fetchActivities();
   };
@@ -91,16 +100,7 @@ const Activities = () => {
   const deleteActivity = async () => {
     try {
       await ActivityService.deleteActivity(deleteItemId);
-      await RecordHistoryService.createRecordHistory({
-        tableName: "Activities",
-        // recordId: 0,
-        actionTypeId: 3,
-        // actorId: 1,
-        actionTime: new Date(),
-        description: "Xóa hoạt động",
-        deviceUsed: device,
-        location: `${city}, ${country}`,
-      });
+      await saveRecordHistory(3, "Xóa hoạt động");
       closeModal();
       fetchActivities();
       toast.success("Hoạt động đã được xóa thành công!");

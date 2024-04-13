@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IActionType, IRecordHistory } from "../../types/global.typing";
 import "../../styles/grid.scss";
+import moment from "moment";
 
 interface IRecordHistoriesGridProps {
   data: IRecordHistory[];
@@ -32,7 +33,13 @@ const RecordHistoriesGrid = ({
       valueGetter: (params) => getActionTypeName(params.row.actionTypeId || 0),
     },
     { field: "actorId", headerName: "ID Người Thực Hiện", width: 150 },
-    { field: "actionTime", headerName: "Thời Gian Hành Động", width: 200 },
+    {
+      field: "actionTime",
+      headerName: "Thời Gian Hành Động",
+      width: 200,
+      renderCell: (params) =>
+        moment(params.row.actionTime).format("DD/MM/YYYY HH:mm A"),
+    },
     { field: "description", headerName: "Mô Tả", width: 150 },
     { field: "deviceUsed", headerName: "Thiết Bị Sử Dụng", width: 150 },
     { field: "location", headerName: "Vị Trí", width: 150 },
