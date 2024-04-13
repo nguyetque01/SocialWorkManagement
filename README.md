@@ -1,8 +1,8 @@
-# **🚀 Social Activities Management System**
+# **🚀 Social Work Management System**
 
 ## **Introduction**
 
-The Social Activities Management System is a web application developed using React and ASP.NET Core, utilizing TypeScript and SCSS for the codebase. This application is designed to manage the registration process, attendance, and calculation of Social Work Days for students in various activities organized by the school and faculty.
+The Social Work Management System is a web application developed using React and ASP.NET Core, utilizing TypeScript and SCSS for the codebase. This application is designed to manage the registration process, attendance, and calculation of Social Work Days for students in various activities organized by the school and faculty.
 
 ## **Key Components**
 
