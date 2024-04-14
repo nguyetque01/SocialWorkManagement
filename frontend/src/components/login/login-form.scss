@@ -1,0 +1,13 @@
+@import "../../styles/mixins";
+
+.login-form {
+  .login-btn {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .actions {
+    @include d-flex(row, space-between, center);
+    width: 100%;
+    margin-top: 20px;
+  }
+}

@@ -1,5 +1,9 @@
+@import "../../styles/mixins";
+
 .app-bar {
   .navbar {
+    @include d-flex(row, center, center);
+
     background-color: var(--dark-deep);
     transition: all 0.3s ease-in-out;
 
@@ -13,6 +17,10 @@
       padding-left: 20px;
     }
 
+    .navbar__middle {
+      flex: 1;
+    }
+
     .menu-button {
       margin-right: 12px;
       .menu-icon {
@@ -21,6 +29,13 @@
 
       &.hidden {
         display: none;
+      }
+    }
+
+    .account {
+      .icon {
+        color: var(--white);
+        font-size: 30px;
       }
     }
   }

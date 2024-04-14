@@ -1,0 +1,24 @@
+@import "../../styles/mixins";
+
+.login-page {
+  @include d-flex(row, center, center);
+  min-height: 100vh;
+
+  .login-box {
+    @include d-flex(column, center, center);
+    width: 1000px;
+    height: 500px;
+
+    .tiltle {
+      text-align: center;
+      .app-name {
+        font-size: 28px;
+        color: var(--primary);
+        text-shadow: 1px 0.5px 1px rgba(0, 0, 0, 0.5);
+      }
+      .school-name {
+        font-size: 24px;
+      }
+    }
+  }
+}

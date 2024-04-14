@@ -50,3 +50,14 @@ export interface ICreateRecordHistory {
   deviceUsed?: string;
   location?: string;
 }
+
+export interface IUser {
+  id: number;
+  email: string;
+  password: string;
+}
+
+export interface ILoginUser {
+  email: string;
+  password: string;
+}
