@@ -28,6 +28,36 @@ export interface ICreateActionType {
   description?: string;
 }
 
+export interface IFaculty {
+  id: number;
+  name: string;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateFaculty {
+  name: string;
+  status?: number;
+  description?: string;
+}
+
+export interface IClass {
+  id: number;
+  name: string;
+  advisorId?: number;
+  facultyId?: number;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateClass {
+  name: string;
+  advisorId?: number;
+  facultyId?: number;
+  status?: number;
+  description?: string;
+}
+
 export interface IRecordHistory {
   id: number;
   tableName: string;
@@ -60,4 +90,20 @@ export interface IUser {
 export interface ILoginUser {
   email: string;
   password: string;
+
+export interface IAcademicYear {
+  id: number;
+  name: string;
+  starttime?: Date;
+  endtime?: Date;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateAcademicYear {
+  name: string;
+  starttime?: Date;
+  endtime?: Date;
+  status?: number;
+  description?: string;
 }
