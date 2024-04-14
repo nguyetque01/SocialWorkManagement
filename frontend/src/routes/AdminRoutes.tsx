@@ -7,6 +7,8 @@ const Activities = lazy(() => import("../pages/activities/Activities.page"));
 const ActionTypes = lazy(
   () => import("../pages/action-types/ActionTypes.page")
 );
+const Faculty = lazy(
+  () => import("../pages/faculty/Faculty.page")
 const AcademicYear = lazy(
   () => import("../pages/academic-year/AcademicYear.page")
 );
@@ -21,6 +23,7 @@ const AdminRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/action-types" element={<ActionTypes />} />
+        <Route path="/faculty" element={<Faculty />} />
         <Route path="/academic-year" element={<AcademicYear />} />
         <Route path="/record-histories" element={<RecordHistories />} />
       </Routes>
