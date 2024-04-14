@@ -41,6 +41,23 @@ export interface ICreateFaculty {
   description?: string;
 }
 
+export interface IClass {
+  id: number;
+  name: string;
+  advisorId?: number;
+  facultyId?: number;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateClass {
+  name: string;
+  advisorId?: number;
+  facultyId?: number;
+  status?: number;
+  description?: string;
+}
+
 export interface IRecordHistory {
   id: number;
   tableName: string;
