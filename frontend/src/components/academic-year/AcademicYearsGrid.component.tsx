@@ -4,17 +4,17 @@ import { Edit, Delete } from "@mui/icons-material";
 import { IAcademicYear } from "../../types/global.typing";
 import "../../styles/grid.scss";
 
-interface IAcademicYearGridProps {
+interface IAcademicYearsGridProps {
   data: IAcademicYear[];
   handleClickEditBtn: (id: string) => void;
   handleClickDeleteBtn: (id: string) => void;
 }
 
-const AcademicYearGrid = ({
+const AcademicYearsGrid = ({
   data,
   handleClickEditBtn,
   handleClickDeleteBtn,
-}: IAcademicYearGridProps) => {
+}: IAcademicYearsGridProps) => {
   const sortedData = [...data].sort((a, b) => {
     return b.id - a.id;
   });
@@ -71,4 +71,4 @@ const AcademicYearGrid = ({
   );
 };
 
-export default AcademicYearGrid;
+export default AcademicYearsGrid;

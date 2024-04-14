@@ -10,3 +10,4 @@ bin
 */data-mssql
 **/data-mssql
 *.user
+appsettings.json

@@ -43,8 +43,8 @@ const ClassForm = ({
         const data = await ClassService.getClassById(ClassId);
         setClass(data);
       } catch (error) {
-        console.error("Lỗi khi tải dữ liệu loại hành động:", error);
-        toast.error("Lỗi khi tải dữ liệu loại hành động. Vui lòng thử lại!");
+        console.error("Lỗi khi tải dữ liệu lớp học:", error);
+        toast.error("Lỗi khi tải dữ liệu lớp học. Vui lòng thử lại!");
       } finally {
         // setLoading(false);
       }
@@ -60,7 +60,7 @@ const ClassForm = ({
 
   const handleClickSaveBtn = () => {
     if (Class.name === "") {
-      toast.error("Vui lòng nhập tên loại hành động!");
+      toast.error("Vui lòng nhập tên lớp học!");
       return;
     }
 
@@ -72,13 +72,13 @@ const ClassForm = ({
 
     savePromise
       .then(() => {
-        toast.success("loại hành động đã được lưu thành công!");
+        toast.success("lớp học đã được lưu thành công!");
         handleClickCancelBtn();
         onSaveSuccess();
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Đã xảy ra lỗi khi lưu loại hành động!");
+        toast.error("Đã xảy ra lỗi khi lưu lớp học!");
       })
       .finally(() => {
         setLoading(false);
@@ -94,13 +94,13 @@ const ClassForm = ({
       ) : (
         <Paper elevation={3} className="form">
           <Typography variant="h5" gutterBottom>
-            {isEditing ? "Chỉnh sửa loại hành động" : "Thêm loại hành động mới"}
+            {isEditing ? "Chỉnh sửa lớp học" : "Thêm lớp học mới"}
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Tên loại hành động"
+                label="Tên lớp học"
                 variant="outlined"
                 value={Class.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}

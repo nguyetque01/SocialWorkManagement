@@ -126,13 +126,13 @@ const AdminSidebar = ({
         },
         {
           icon: <Event />,
-          text: "Faculty",
-          link: "/faculty",
+          text: "Faculties",
+          link: "/faculties",
         },
         {
           icon: <Event />,
-          text: "Class",
-          link: "/class",
+          text: "Classes",
+          link: "/classes",
         },
       ],
     },

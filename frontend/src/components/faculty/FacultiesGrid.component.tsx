@@ -4,25 +4,25 @@ import { Edit, Delete } from "@mui/icons-material";
 import { IFaculty } from "../../types/global.typing";
 import "../../styles/grid.scss";
 
-interface IFacultysGridProps {
+interface IFacultiesGridProps {
   data: IFaculty[];
   handleClickEditBtn: (id: string) => void;
   handleClickDeleteBtn: (id: string) => void;
 }
 
-const FacultysGrid = ({
+const FacultiesGrid = ({
   data,
   handleClickEditBtn,
   handleClickDeleteBtn,
-}: IFacultysGridProps) => {
+}: IFacultiesGridProps) => {
   const sortedData = [...data].sort((a, b) => {
     return b.id - a.id;
   });
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Tên", width: 150 },
-    { field: "description", headerName: "Mô tả", width: 150 },
+    { field: "name", headerName: "Tên", width: 300 },
+    { field: "description", headerName: "Mô tả", width: 300 },
     {
       field: "actions",
       headerName: "Thao tác",
@@ -71,4 +71,4 @@ const FacultysGrid = ({
   );
 };
 
-export default FacultysGrid;
+export default FacultiesGrid;

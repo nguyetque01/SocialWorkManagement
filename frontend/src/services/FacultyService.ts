@@ -1,10 +1,10 @@
 import httpModule from "../helpers/http.module";
 import { IFaculty, ICreateFaculty } from "../types/global.typing";
 
-const API_ENDPOINT = "/Facultys";
+const API_ENDPOINT = "/Faculties";
 
 const FacultyService = {
-  getAllFacultys: async (): Promise<IFaculty[]> => {
+  getAllFaculties: async (): Promise<IFaculty[]> => {
     try {
       const response = await httpModule.get<IFaculty[]>(API_ENDPOINT);
       return response.data;
@@ -24,9 +24,7 @@ const FacultyService = {
     }
   },
 
-  createFaculty: async (
-    FacultyData: ICreateFaculty
-  ): Promise<void> => {
+  createFaculty: async (FacultyData: ICreateFaculty): Promise<void> => {
     try {
       await httpModule.post(API_ENDPOINT, FacultyData);
     } catch (error) {

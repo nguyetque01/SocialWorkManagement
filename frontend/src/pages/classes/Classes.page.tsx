@@ -2,32 +2,32 @@ import React, { useEffect, useState } from "react";
 import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { IFaculty } from "../../types/global.typing";
-import FacultysGrid from "../../components/faculty/FacultysGrid.component";
-import FacultyForm from "../../components/faculty/FacultyForm.component";
-import FacultyService from "../../services/FacultyService";
+import { IClass } from "../../types/global.typing";
+import ClassesGrid from "../../components/classes/ClassesGrid.component";
+import ClassForm from "../../components/classes/ClassForm.component";
+import ClassService from "../../services/ClassService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
 
-const Facultys = () => {
-  const [Facultys, setFacultys] = useState<IFaculty[]>([]);
-  const [FacultyId, setFacultyId] = useState<string>("0");
+const Classes = () => {
+  const [Classes, setClasses] = useState<IClass[]>([]);
+  const [ClassId, setClassId] = useState<string>("0");
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("0");
 
   useEffect(() => {
-    fetchFacultys();
+    fetchClasses();
   }, []);
 
-  const fetchFacultys = async () => {
+  const fetchClasses = async () => {
     try {
       setLoading(true);
-      const FacultysData = await FacultyService.getAllFacultys();
-      setFacultys(FacultysData);
+      const ClassesData = await ClassService.getAllClasses();
+      setClasses(ClassesData);
     } catch (error) {
-      console.error("Lỗi khi tải danh sách loại hành động:", error);
-      toast.error("Lỗi khi tải danh sách loại hành động. Vui lòng thử lại.");
+      console.error("Lỗi khi tải danh sách lớp học:", error);
+      toast.error("Lỗi khi tải danh sách lớp học. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -42,35 +42,35 @@ const Facultys = () => {
   const closeDeleteDialog = () => setIsDeleteDialogOpen(false);
 
   const handleClickAddBtn = () => {
-    setFacultyId("0");
+    setClassId("0");
     openModal();
   };
 
-  const handleClickEditBtn = (FacultyId: string) => {
-    setFacultyId(FacultyId);
+  const handleClickEditBtn = (ClassId: string) => {
+    setClassId(ClassId);
     openModal();
   };
 
   const handleSaveSuccess = () => {
-    fetchFacultys();
+    fetchClasses();
   };
 
   const handleClickCancelBtn = () => closeModal();
 
-  const handleClickDeleteBtn = async (FacultyId: string) => {
-    setDeleteItemId(FacultyId);
+  const handleClickDeleteBtn = async (ClassId: string) => {
+    setDeleteItemId(ClassId);
     openDeleteDialog();
   };
 
-  const deleteFaculty = async () => {
+  const deleteClass = async () => {
     try {
-      await FacultyService.deleteFaculty(deleteItemId);
+      await ClassService.deleteClass(deleteItemId);
       closeModal();
-      fetchFacultys();
-      toast.success("loại hành động đã được xóa thành công!");
+      fetchClasses();
+      toast.success("lớp học đã được xóa thành công!");
     } catch (error) {
-      console.error("Lỗi khi xóa loại hành động:", error);
-      toast.error("Lỗi khi xóa loại hành động. Vui lòng thử lại.");
+      console.error("Lỗi khi xóa lớp học:", error);
+      toast.error("Lỗi khi xóa lớp học. Vui lòng thử lại.");
     } finally {
       closeDeleteDialog();
     }
@@ -79,7 +79,7 @@ const Facultys = () => {
   return (
     <div className="content">
       <div className="heading">
-        <h2>Danh sách loại hành động</h2>
+        <h2>Danh sách lớp học</h2>
         <Button variant="outlined" onClick={handleClickAddBtn}>
           <Add />
         </Button>
@@ -91,8 +91,8 @@ const Facultys = () => {
           className="modal-container"
         >
           <div className="modal-content">
-            <FacultyForm
-              FacultyId={FacultyId}
+            <ClassForm
+              ClassId={ClassId}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
@@ -101,20 +101,20 @@ const Facultys = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : Facultys.length === 0 ? (
-        <h1>Không tìm thấy loại hành động nào.</h1>
+      ) : Classes.length === 0 ? (
+        <h1>Không tìm thấy lớp học nào.</h1>
       ) : (
         <>
-          <FacultysGrid
-            data={Facultys}
+          <ClassesGrid
+            data={Classes}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />
           <DeleteDialog
-            item={"loại hành động"}
+            item={"lớp học"}
             isOpen={isDeleteDialogOpen}
             handleClose={() => setIsDeleteDialogOpen(false)}
-            handleConfirm={deleteFaculty}
+            handleConfirm={deleteClass}
           />
         </>
       )}
@@ -122,4 +122,4 @@ const Facultys = () => {
   );
 };
 
-export default Facultys;
+export default Classes;

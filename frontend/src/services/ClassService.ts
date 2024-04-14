@@ -3,7 +3,7 @@ import { IClass, ICreateClass } from "../types/global.typing";
 
 const API_ENDPOINT = "/Classes";
 
-const Classeservice = {
+const ClassService = {
   getAllClasses: async (): Promise<IClass[]> => {
     try {
       const response = await httpModule.get<IClass[]>(API_ENDPOINT);
@@ -24,9 +24,7 @@ const Classeservice = {
     }
   },
 
-  createClass: async (
-    ClassData: ICreateClass
-  ): Promise<void> => {
+  createClass: async (ClassData: ICreateClass): Promise<void> => {
     try {
       await httpModule.post(API_ENDPOINT, ClassData);
     } catch (error) {
@@ -54,4 +52,4 @@ const Classeservice = {
   },
 };
 
-export default Classeservice;
+export default ClassService;

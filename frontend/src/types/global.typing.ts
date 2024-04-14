@@ -90,6 +90,7 @@ export interface IUser {
 export interface ILoginUser {
   email: string;
   password: string;
+}
 
 export interface IAcademicYear {
   id: number;
