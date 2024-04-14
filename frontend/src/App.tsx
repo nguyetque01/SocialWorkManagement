@@ -3,6 +3,7 @@ import { ThemeContext } from "./context/theme.context";
 import CustomToastContainer from "./components/common/custom-toast-container/CustomToastContainer.component";
 import AdminLayout from "./layouts/AdminLayout";
 import UserLayout from "./layouts/UserLayout";
+import VisitorLayout from "./layouts/VisitorLayout";
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -12,8 +13,9 @@ const App = () => {
     <>
       <CustomToastContainer />
       <div className={appStyles}>
-        <AdminLayout />
+        {/* <VisitorLayout /> */}
         {/* <UserLayout /> */}
+        <AdminLayout />
       </div>
     </>
   );

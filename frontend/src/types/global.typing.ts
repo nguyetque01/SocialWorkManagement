@@ -81,6 +81,16 @@ export interface ICreateRecordHistory {
   location?: string;
 }
 
+export interface IUser {
+  id: number;
+  email: string;
+  password: string;
+}
+
+export interface ILoginUser {
+  email: string;
+  password: string;
+
 export interface IAcademicYear {
   id: number;
   name: string;

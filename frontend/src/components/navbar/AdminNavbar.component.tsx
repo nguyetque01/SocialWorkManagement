@@ -1,5 +1,6 @@
-import { AppBar, Toolbar, IconButton, Typography } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
+import { Menu, AccountCircle } from "@mui/icons-material";
+
 import "./admin-navbar.scss";
 import { Link } from "react-router-dom";
 
@@ -17,18 +18,26 @@ const AdminNavbar = ({
   return (
     <AppBar className="app-bar">
       <Toolbar className={`navbar sidebar-${sidebarMode}`}>
-        <IconButton
-          edge="start"
-          onClick={toggleSidebar}
-          className={`menu-button ${isMobile ? "" : "hidden"}`}
-        >
-          <MenuIcon className="menu-icon" />
-        </IconButton>
-        <Link to={"/"}>
-          <Typography variant="h6" color={"white"}>
-            Hệ thống quản lý công tác xã hội
-          </Typography>
-        </Link>
+        <Box className="navbar__left">
+          <IconButton
+            edge="start"
+            onClick={toggleSidebar}
+            className={`menu-button ${isMobile ? "" : "hidden"}`}
+          >
+            <Menu className="menu-icon" />
+          </IconButton>
+          <Link to={"/"} className="brand">
+            <Typography variant="h6" color={"white"}>
+              Hệ thống quản lý công tác xã hội
+            </Typography>
+          </Link>
+        </Box>
+        <Box className="navbar__middle"></Box>
+        <Box className="navbar__right">
+          <IconButton className="account">
+            <AccountCircle className="icon" />
+          </IconButton>
+        </Box>
       </Toolbar>
     </AppBar>
   );
