@@ -58,6 +58,23 @@ export interface ICreateClass {
   description?: string;
 }
 
+export interface IActivityCategory {
+  id: number;
+  name: string;
+  facultyId?: number;
+  status?: number;
+  description?: string;
+  parentCategoryId?: number;
+}
+
+export interface ICreateActivityCategory {
+  name: string;
+  facultyId?: number;
+  status?: number;
+  description?: string;
+  parentCategoryId?: number;
+}
+
 export interface IRecordHistory {
   id: number;
   tableName: string;

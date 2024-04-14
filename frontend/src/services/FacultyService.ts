@@ -9,7 +9,7 @@ const FacultyService = {
       const response = await httpModule.get<IFaculty[]>(API_ENDPOINT);
       return response.data;
     } catch (error) {
-      throw new Error("Failed to fetch action types");
+      throw new Error("Failed to fetch faculties");
     }
   },
 
@@ -20,7 +20,7 @@ const FacultyService = {
       );
       return response.data;
     } catch (error) {
-      throw new Error("Failed to fetch action type");
+      throw new Error("Failed to fetch faculty");
     }
   },
 
@@ -28,7 +28,7 @@ const FacultyService = {
     try {
       await httpModule.post(API_ENDPOINT, FacultyData);
     } catch (error) {
-      throw new Error("Failed to create action type");
+      throw new Error("Failed to create faculty");
     }
   },
 
@@ -39,7 +39,7 @@ const FacultyService = {
     try {
       await httpModule.put(`${API_ENDPOINT}/${FacultyId}`, FacultyData);
     } catch (error) {
-      throw new Error("Failed to update action type");
+      throw new Error("Failed to update faculty");
     }
   },
 
@@ -47,7 +47,7 @@ const FacultyService = {
     try {
       await httpModule.delete(`${API_ENDPOINT}/${FacultyId}`);
     } catch (error) {
-      throw new Error("Failed to delete action type");
+      throw new Error("Failed to delete faculty");
     }
   },
 };
