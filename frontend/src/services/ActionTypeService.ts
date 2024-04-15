@@ -13,10 +13,10 @@ const ActionTypeService = {
     }
   },
 
-  getActionTypeById: async (ActionTypeId: string): Promise<IActionType> => {
+  getActionTypeById: async (actionTypeId: number): Promise<IActionType> => {
     try {
       const response = await httpModule.get<IActionType>(
-        `${API_ENDPOINT}/${ActionTypeId}`
+        `${API_ENDPOINT}/${actionTypeId}`
       );
       return response.data;
     } catch (error) {
@@ -25,29 +25,33 @@ const ActionTypeService = {
   },
 
   createActionType: async (
-    ActionTypeData: ICreateActionType
-  ): Promise<void> => {
+    actionTypeData: ICreateActionType
+  ): Promise<IActionType> => {
     try {
-      await httpModule.post(API_ENDPOINT, ActionTypeData);
+      const response = await httpModule.post<IActionType>(
+        API_ENDPOINT,
+        actionTypeData
+      );
+      return response.data;
     } catch (error) {
       throw new Error("Failed to create action type");
     }
   },
 
   updateActionType: async (
-    ActionTypeId: string,
-    ActionTypeData: ICreateActionType
+    actionTypeId: number,
+    actionTypeData: ICreateActionType
   ): Promise<void> => {
     try {
-      await httpModule.put(`${API_ENDPOINT}/${ActionTypeId}`, ActionTypeData);
+      await httpModule.put(`${API_ENDPOINT}/${actionTypeId}`, actionTypeData);
     } catch (error) {
       throw new Error("Failed to update action type");
     }
   },
 
-  deleteActionType: async (ActionTypeId: string): Promise<void> => {
+  deleteActionType: async (actionTypeId: number): Promise<void> => {
     try {
-      await httpModule.delete(`${API_ENDPOINT}/${ActionTypeId}`);
+      await httpModule.delete(`${API_ENDPOINT}/${actionTypeId}`);
     } catch (error) {
       throw new Error("Failed to delete action type");
     }

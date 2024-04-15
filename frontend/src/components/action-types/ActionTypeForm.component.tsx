@@ -14,33 +14,33 @@ import "../../styles/form.scss";
 
 interface IActionTypeFormProps {
   handleClickCancelBtn: () => void;
-  onSaveSuccess: () => void;
-  ActionTypeId: string;
+  onSaveSuccess: (newActionType: number) => void;
+  actionTypeId: number;
 }
 
 const ActionTypeForm = ({
-  ActionTypeId,
+  actionTypeId,
   onSaveSuccess,
   handleClickCancelBtn,
 }: IActionTypeFormProps) => {
-  const [ActionType, setActionType] = useState<ICreateActionType>({
+  const [actionType, setActionType] = useState<ICreateActionType>({
     name: "",
     status: 0,
     description: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = ActionTypeId !== "0";
+  const isEditing = actionTypeId !== 0;
 
   useEffect(() => {
     fetchActionTypeData();
-  }, [ActionTypeId]);
+  }, [actionTypeId]);
 
   const fetchActionTypeData = async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await ActionTypeService.getActionTypeById(ActionTypeId);
+        const data = await ActionTypeService.getActionTypeById(actionTypeId);
         setActionType(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu loại hành động:", error);
@@ -59,7 +59,7 @@ const ActionTypeForm = ({
   };
 
   const handleClickSaveBtn = () => {
-    if (ActionType.name === "") {
+    if (actionType.name === "") {
       toast.error("Vui lòng nhập tên loại hành động!");
       return;
     }
@@ -67,14 +67,15 @@ const ActionTypeForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? ActionTypeService.updateActionType(ActionTypeId, ActionType)
-      : ActionTypeService.createActionType(ActionType);
+      ? ActionTypeService.updateActionType(actionTypeId, actionType)
+      : ActionTypeService.createActionType(actionType);
 
     savePromise
-      .then(() => {
-        toast.success("loại hành động đã được lưu thành công!");
+      .then((newActionType) => {
+        const newActionTypeId = newActionType?.id || 0;
+        toast.success("Loại hành động đã được lưu thành công!");
         handleClickCancelBtn();
-        onSaveSuccess();
+        onSaveSuccess(newActionTypeId);
       })
       .catch((error) => {
         console.log(error);
@@ -102,7 +103,7 @@ const ActionTypeForm = ({
                 fullWidth
                 label="Tên loại hành động"
                 variant="outlined"
-                value={ActionType.name}
+                value={actionType.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
               />
             </Grid>
@@ -113,7 +114,7 @@ const ActionTypeForm = ({
                 rows={3}
                 label="Mô tả"
                 variant="outlined"
-                value={ActionType.description}
+                value={actionType.description}
                 onChange={(e) =>
                   handleInputChange("description", e.target.value)
                 }

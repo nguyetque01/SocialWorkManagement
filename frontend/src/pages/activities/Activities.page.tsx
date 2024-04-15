@@ -18,7 +18,6 @@ const Activities = () => {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
   const [deleteItemId, setDeleteItemId] = useState<number>(0);
   const { city, country, device } = useContext(MainContext);
-
   const currentDate = new Date();
   currentDate.setHours(currentDate.getHours() + 7);
 

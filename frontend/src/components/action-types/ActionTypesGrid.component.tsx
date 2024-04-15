@@ -6,8 +6,8 @@ import "../../styles/grid.scss";
 
 interface IActionTypesGridProps {
   data: IActionType[];
-  handleClickEditBtn: (id: string) => void;
-  handleClickDeleteBtn: (id: string) => void;
+  handleClickEditBtn: (id: number) => void;
+  handleClickDeleteBtn: (id: number) => void;
 }
 
 const ActionTypesGrid = ({
