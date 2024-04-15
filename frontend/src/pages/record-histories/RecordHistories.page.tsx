@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
 import { IActionType, IRecordHistory } from "../../types/global.typing";
-import RecordHistoriesGrid from "../../components/record-history/RecordHistoriesGrid.component";
+import RecordHistoriesGrid from "../../components/record-histories/RecordHistoriesGrid.component";
 import RecordHistoryService from "../../services/RecordHistoryService";
 import ActionTypeService from "../../services/ActionTypeService";
 

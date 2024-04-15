@@ -95,22 +95,22 @@ const AdminSidebar = ({
         {
           icon: <Category />,
           text: "Activity Categories",
-          link: "/activities/categories",
+          link: "/activity-categories",
         },
         {
           icon: <Event />,
           text: "Activity Sessions",
-          link: "/activities/sessions",
+          link: "/activity-sessions",
         },
         {
           icon: <Event />,
           text: "Activity Participations",
-          link: "/activities/participations",
+          link: "/activity-participations",
         },
         {
           icon: <Event />,
           text: "Attendance Complaints",
-          link: "/activities/attendance-complaints",
+          link: "/activity-attendance-complaints",
         },
       ],
     },
@@ -144,7 +144,7 @@ const AdminSidebar = ({
         {
           icon: <Event />,
           text: "Notification Types",
-          link: "/notifications/types",
+          link: "/notification-types",
         },
       ],
     },

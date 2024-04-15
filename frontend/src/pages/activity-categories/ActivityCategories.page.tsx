@@ -3,13 +3,15 @@ import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { IActivityCategory } from "../../types/global.typing";
-import ActivityCategoriesGrid from "../../components/activity-category/ActivityCategoriesGrid.component";
-import ActivityCategoryForm from "../../components/activity-category/ActivityCategoryForm.component";
+import ActivityCategoriesGrid from "../../components/activity-categories/ActivityCategoriesGrid.component";
+import ActivityCategoryForm from "../../components/activity-categories/ActivityCategoryForm.component";
 import ActivityCategorieservice from "../../services/ActivityCategoryService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
 
 const ActivityCategories = () => {
-  const [ActivityCategories, setActivityCategories] = useState<IActivityCategory[]>([]);
+  const [ActivityCategories, setActivityCategories] = useState<
+    IActivityCategory[]
+  >([]);
   const [ActivityCategoryId, setActivityCategoryId] = useState<string>("0");
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -23,11 +25,14 @@ const ActivityCategories = () => {
   const fetchActivityCategories = async () => {
     try {
       setLoading(true);
-      const ActivityCategoriesData = await ActivityCategorieservice.getAllActivityCategories();
+      const ActivityCategoriesData =
+        await ActivityCategorieservice.getAllActivityCategories();
       setActivityCategories(ActivityCategoriesData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách danh mục hoạt động:", error);
-      toast.error("Lỗi khi tải danh sách danh mục hoạt động. Vui lòng thử lại.");
+      toast.error(
+        "Lỗi khi tải danh sách danh mục hoạt động. Vui lòng thử lại."
+      );
     } finally {
       setLoading(false);
     }

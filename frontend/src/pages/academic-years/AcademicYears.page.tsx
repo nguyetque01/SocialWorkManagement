@@ -3,8 +3,8 @@ import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { IAcademicYear } from "../../types/global.typing";
-import AcademicYearsGrid from "../../components/academic-year/AcademicYearsGrid.component";
-import AcademicYearForm from "../../components/academic-year/AcademicYearForm.component";
+import AcademicYearsGrid from "../../components/academic-years/AcademicYearsGrid.component";
+import AcademicYearForm from "../../components/academic-years/AcademicYearForm.component";
 import AcademicYearService from "../../services/AcademicYearService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
 

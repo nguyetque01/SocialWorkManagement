@@ -3,8 +3,8 @@ import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { IFaculty } from "../../types/global.typing";
-import FacultiesGrid from "../../components/faculty/FacultiesGrid.component";
-import FacultyForm from "../../components/faculty/FacultyForm.component";
+import FacultiesGrid from "../../components/faculties/FacultiesGrid.component";
+import FacultyForm from "../../components/faculties/FacultyForm.component";
 import Facultieservice from "../../services/FacultyService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
 
