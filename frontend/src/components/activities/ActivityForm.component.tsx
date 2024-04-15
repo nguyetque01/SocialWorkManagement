@@ -14,7 +14,7 @@ import "../../styles/form.scss";
 
 interface IActivityFormProps {
   handleClickCancelBtn: () => void;
-  onSaveSuccess: () => void;
+  onSaveSuccess: (newActivityId: number) => void;
   activityId: number;
 }
 
@@ -72,10 +72,11 @@ const ActivityForm = ({
       : ActivityService.createActivity(activity);
 
     savePromise
-      .then(() => {
+      .then((newActivity) => {
+        const newActivityId = newActivity?.id || 0;
         toast.success("Hoạt động đã được lưu thành công!");
         handleClickCancelBtn();
-        onSaveSuccess();
+        onSaveSuccess(newActivityId);
       })
       .catch((error) => {
         console.log(error);

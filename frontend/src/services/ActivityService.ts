@@ -24,9 +24,13 @@ const ActivityService = {
     }
   },
 
-  createActivity: async (activityData: ICreateActivity): Promise<void> => {
+  createActivity: async (activityData: ICreateActivity): Promise<IActivity> => {
     try {
-      await httpModule.post(API_ENDPOINT, activityData);
+      const response = await httpModule.post<IActivity>(
+        API_ENDPOINT,
+        activityData
+      );
+      return response.data;
     } catch (error) {
       throw new Error("Failed to create activity");
     }

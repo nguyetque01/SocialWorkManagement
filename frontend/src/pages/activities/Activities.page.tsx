@@ -58,13 +58,14 @@ const Activities = () => {
   };
 
   const saveRecordHistory = async (
+    recordId: number,
     actionTypeId: number,
     description: string
   ) => {
     try {
       await RecordHistoryService.createRecordHistory({
         tableName: "Activities",
-        // recordId: 0,
+        recordId: recordId,
         actionTypeId: actionTypeId,
         // actorId: 1,
         actionTime: currentDate,
@@ -72,20 +73,17 @@ const Activities = () => {
         deviceUsed: device,
         location: `${city}, ${country}`,
       });
-      fetchActivities();
     } catch (error) {
-      console.error("Lỗi khi thực hiện hoạt động:", error);
-      toast.error("Lỗi khi thực hiện hoạt động. Vui lòng thử lại.");
-    } finally {
-      closeModal();
+      console.error("Lỗi khi lưu lịch sử:", error);
     }
   };
 
-  const handleSaveSuccess = async () => {
+  const handleSaveSuccess = async (newActivityId: number) => {
     if (activityId === 0) {
-      await saveRecordHistory(1, "Thêm mới hoạt động");
+      setActivityId(newActivityId);
+      await saveRecordHistory(newActivityId, 1, "Thêm mới hoạt động");
     } else {
-      await saveRecordHistory(2, "Cập nhật hoạt động");
+      await saveRecordHistory(activityId, 2, "Cập nhật hoạt động");
     }
     fetchActivities();
   };
@@ -100,7 +98,7 @@ const Activities = () => {
   const deleteActivity = async () => {
     try {
       await ActivityService.deleteActivity(deleteItemId);
-      await saveRecordHistory(3, "Xóa hoạt động");
+      await saveRecordHistory(deleteItemId, 3, "Xóa hoạt động");
       closeModal();
       fetchActivities();
       toast.success("Hoạt động đã được xóa thành công!");
