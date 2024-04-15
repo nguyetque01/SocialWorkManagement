@@ -75,6 +75,37 @@ export interface ICreateActivityCategory {
   parentCategoryId?: number;
 }
 
+export interface IActivitySession {
+  id: number;
+  activityId?: number;
+  activityDate?: Date; 
+  session?: string;
+  startTime?: Date;
+  endTime?: Date;
+  daysCount?: number;
+  maxParticipants?: number;
+  registrationStartTime?: Date;
+  registrationEndTime?: Date;
+  registrationStatus?: number;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateActivitySession {
+  activityId?: number;
+  activityDate?: Date; 
+  session?: string;
+  startTime?: Date;
+  endTime?: Date;
+  daysCount?: number;
+  maxParticipants?: number;
+  registrationStartTime?: Date;
+  registrationEndTime?: Date;
+  registrationStatus?: number;
+  status?: number;
+  description?: string;
+}
+
 export interface IRecordHistory {
   id: number;
   tableName: string;
