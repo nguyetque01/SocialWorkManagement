@@ -9,14 +9,14 @@ const AcademicYearService = {
       const response = await httpModule.get<IAcademicYear[]>(API_ENDPOINT);
       return response.data;
     } catch (error) {
-      throw new Error("Failed to fetch action types");
+      throw new Error("Failed to fetch academic years");
     }
   },
 
-  getAcademicYearById: async (AcademicYearId: string): Promise<IAcademicYear> => {
+  getAcademicYearById: async (academicYearId: number): Promise<IAcademicYear> => {
     try {
       const response = await httpModule.get<IAcademicYear>(
-        `${API_ENDPOINT}/${AcademicYearId}`
+        `${API_ENDPOINT}/${academicYearId}`
       );
       return response.data;
     } catch (error) {
@@ -25,29 +25,30 @@ const AcademicYearService = {
   },
 
   createAcademicYear: async (
-    AcademicYearData: ICreateAcademicYear
-  ): Promise<void> => {
+    academicYearData: ICreateAcademicYear
+  ): Promise<IAcademicYear> => {
     try {
-      await httpModule.post(API_ENDPOINT, AcademicYearData);
+      const response = await httpModule.post<IAcademicYear>(API_ENDPOINT, academicYearData);
+      return response.data;
     } catch (error) {
       throw new Error("Failed to create action type");
     }
   },
 
   updateAcademicYear: async (
-    AcademicYearId: string,
+    academicYearId: number,
     AcademicYearData: ICreateAcademicYear
   ): Promise<void> => {
     try {
-      await httpModule.put(`${API_ENDPOINT}/${AcademicYearId}`, AcademicYearData);
+      await httpModule.put(`${API_ENDPOINT}/${academicYearId}`, AcademicYearData);
     } catch (error) {
       throw new Error("Failed to update action type");
     }
   },
 
-  deleteAcademicYear: async (AcademicYearId: string): Promise<void> => {
+  deleteAcademicYear: async (academicYearId: number): Promise<void> => {
     try {
-      await httpModule.delete(`${API_ENDPOINT}/${AcademicYearId}`);
+      await httpModule.delete(`${API_ENDPOINT}/${academicYearId}`);
     } catch (error) {
       throw new Error("Failed to delete action type");
     }

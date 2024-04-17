@@ -14,16 +14,16 @@ import "../../styles/form.scss";
 
 interface IAcademicYearFormProps {
   handleClickCancelBtn: () => void;
-  onSaveSuccess: () => void;
-  AcademicYearId: string;
+  onSaveSuccess: (newAcademicYear: number) => void;
+  academicYearId: number;
 }
 
 const AcademicYearForm = ({
-  AcademicYearId,
+  academicYearId,
   onSaveSuccess,
   handleClickCancelBtn,
 }: IAcademicYearFormProps) => {
-  const [AcademicYear, setAcademicYear] = useState<ICreateAcademicYear>({
+  const [academicYear, setAcademicYear] = useState<ICreateAcademicYear>({
     name: "",
     starttime: new Date(),
     endtime: new Date(),
@@ -32,19 +32,17 @@ const AcademicYearForm = ({
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = AcademicYearId !== "0";
+  const isEditing = academicYearId !== 0;
 
   useEffect(() => {
     fetchAcademicYearData();
-  }, [AcademicYearId]);
+  }, [academicYearId]);
 
   const fetchAcademicYearData = async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await AcademicYearService.getAcademicYearById(
-          AcademicYearId
-        );
+        const data = await AcademicYearService.getAcademicYearById(academicYearId);
         setAcademicYear(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu năm học:", error);
@@ -63,7 +61,7 @@ const AcademicYearForm = ({
   };
 
   const handleClickSaveBtn = () => {
-    if (AcademicYear.name === "") {
+    if (academicYear.name === "") {
       toast.error("Vui lòng nhập tên năm học!");
       return;
     }
@@ -71,14 +69,14 @@ const AcademicYearForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? AcademicYearService.updateAcademicYear(AcademicYearId, AcademicYear)
-      : AcademicYearService.createAcademicYear(AcademicYear);
+      ? AcademicYearService.updateAcademicYear(academicYearId, academicYear)
+      : AcademicYearService.createAcademicYear(academicYear);
 
     savePromise
-      .then(() => {
-        toast.success("Năm học đã được lưu thành công!");
+    .then((newAcademicYear) => {
+      const newAcademicYearId = newAcademicYear?.id || 0;
         handleClickCancelBtn();
-        onSaveSuccess();
+        onSaveSuccess(newAcademicYearId);
       })
       .catch((error) => {
         console.log(error);
@@ -106,7 +104,7 @@ const AcademicYearForm = ({
                 fullWidth
                 label="Tên năm học"
                 variant="outlined"
-                value={AcademicYear.name}
+                value={academicYear.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
               />
             </Grid>
@@ -117,7 +115,7 @@ const AcademicYearForm = ({
                 rows={3}
                 label="Mô tả"
                 variant="outlined"
-                value={AcademicYear.description}
+                value={academicYear.description}
                 onChange={(e) =>
                   handleInputChange("description", e.target.value)
                 }

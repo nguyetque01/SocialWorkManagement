@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { IActivitySession } from "../../types/global.typing";
 import ActivitySessionsGrid from "../../components/activity-sessions/ActivitySessionsGrid.component";
 import ActivitySessionForm from "../../components/activity-sessions/ActivitySessionForm.component";
-import ActivitySessionservice from "../../services/ActivitySessionService";
+import ActivitySessionService from "../../services/ActivitySessionService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
 import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
@@ -31,7 +31,7 @@ const ActivitySessions = () => {
     try {
       setLoading(true);
       const ActivitySessionsData =
-        await ActivitySessionservice.getAllactivitySessions();
+        await ActivitySessionService.getAllactivitySessions();
       setActivitySessions(ActivitySessionsData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách phiên hoạt động:", error);
@@ -101,7 +101,7 @@ const ActivitySessions = () => {
 
   const deleteActivitySession = async () => {
     try {
-      await ActivitySessionservice.deleteActivitySession(deleteItemId);
+      await ActivitySessionService.deleteActivitySession(deleteItemId);
       await saveRecordHistory(deleteItemId, 3, "Xóa phiên hành động");
       closeModal();
       fetchActivitySessions();

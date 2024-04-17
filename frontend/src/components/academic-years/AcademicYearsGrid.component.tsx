@@ -6,8 +6,8 @@ import "../../styles/grid.scss";
 
 interface IAcademicYearsGridProps {
   data: IAcademicYear[];
-  handleClickEditBtn: (id: string) => void;
-  handleClickDeleteBtn: (id: string) => void;
+  handleClickEditBtn: (id: number) => void;
+  handleClickDeleteBtn: (id: number) => void;
 }
 
 const AcademicYearsGrid = ({
