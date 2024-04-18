@@ -106,6 +106,27 @@ export interface ICreateActivitySession {
   description?: string;
 }
 
+export interface IActivityParticipation {
+  id: number;
+  activitySessionId?: number;
+  studentId?: number;
+  registrationStatus?: number;
+  attendanceStatus?: number;
+  approvalAttendanceStatus?: number;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateActivityParticipation {
+  activitySessionId?: number;
+  studentId?: number;
+  registrationStatus?: number;
+  attendanceStatus?: number;
+  approvalAttendanceStatus?: number;
+  status?: number;
+  description?: string;
+}
+
 export interface IRecordHistory {
   id: number;
   tableName: string;
