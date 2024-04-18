@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
@@ -7,14 +7,19 @@ import AcademicYearsGrid from "../../components/academic-years/AcademicYearsGrid
 import AcademicYearForm from "../../components/academic-years/AcademicYearForm.component";
 import AcademicYearService from "../../services/AcademicYearService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
+import RecordHistoryService from "../../services/RecordHistoryService";
+import { MainContext } from "../../context/main.context";
 
 const AcademicYear = () => {
   const [AcademicYears, setAcademicYears] = useState<IAcademicYear[]>([]);
-  const [AcademicYearId, setAcademicYearId] = useState<string>("0");
+  const [academicYearId, setAcademicYearId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
-  const [deleteItemId, setDeleteItemId] = useState<string>("0");
+  const [deleteItemId, setDeleteItemId] = useState<number>(0);
+  const { city, country, device } = useContext(MainContext);
+  const currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + 7);
 
   useEffect(() => {
     fetchAcademicYears();
@@ -42,29 +47,57 @@ const AcademicYear = () => {
   const closeDeleteDialog = () => setIsDeleteDialogOpen(false);
 
   const handleClickAddBtn = () => {
-    setAcademicYearId("0");
+    setAcademicYearId(0);
     openModal();
   };
 
-  const handleClickEditBtn = (AcademicYearId: string) => {
-    setAcademicYearId(AcademicYearId);
+  const handleClickEditBtn = (academicYearId: number) => {
+    setAcademicYearId(academicYearId);
     openModal();
   };
 
-  const handleSaveSuccess = () => {
+  const saveRecordHistory = async (
+    recordId: number,
+    actionTypeId: number,
+    description: string
+  ) => {
+    try {
+      await RecordHistoryService.createRecordHistory({
+        tableName: "AcademicYears",
+        recordId: recordId,
+        actionTypeId: actionTypeId,
+        // actorId: 1,
+        actionTime: currentDate,
+        description: description,
+        deviceUsed: device,
+        location: `${city}, ${country}`,
+      });
+    } catch (error) {
+      console.error("Lỗi khi lưu lịch sử:", error);
+    }
+  };
+
+  const handleSaveSuccess = async (newAcademicYearId: number) => {
+    if (academicYearId === 0) {
+      setAcademicYearId(newAcademicYearId);
+      await saveRecordHistory(newAcademicYearId, 1, "Thêm mới năm học");
+    } else {
+      await saveRecordHistory(academicYearId, 2, "Cập nhật năm học");
+    }
     fetchAcademicYears();
   };
 
   const handleClickCancelBtn = () => closeModal();
 
-  const handleClickDeleteBtn = async (AcademicYearId: string) => {
-    setDeleteItemId(AcademicYearId);
+  const handleClickDeleteBtn = async (academicYearId: number) => {
+    setDeleteItemId(academicYearId);
     openDeleteDialog();
   };
 
   const deleteAcademicYear = async () => {
     try {
       await AcademicYearService.deleteAcademicYear(deleteItemId);
+      await saveRecordHistory(deleteItemId, 3, "Xóa năm học");
       closeModal();
       fetchAcademicYears();
       toast.success("Năm học đã được xóa thành công!");
@@ -92,7 +125,7 @@ const AcademicYear = () => {
         >
           <div className="modal-content">
             <AcademicYearForm
-              AcademicYearId={AcademicYearId}
+              academicYearId={academicYearId}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
