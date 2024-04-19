@@ -26,6 +26,9 @@ const ActivitySessions = lazy(
 const ActivityParticipations = lazy(
   () => import("../pages/activity-participations/ActivityParticipations.page")
 );
+const AttendanceComplaints = lazy(
+  () => import("../pages/attendance-complaints/AttendanceComplaints.page")
+);
 const Classes = lazy(() => import("../pages/classes/Classes.page"));
 const RecordHistories = lazy(
   () => import("../pages/record-histories/RecordHistories.page")
@@ -50,6 +53,10 @@ const AdminRoutes = () => {
         <Route
           path="/activity-participations"
           element={<ActivityParticipations />}
+        />
+        <Route
+          path="/activity-attendance-complaints"
+          element={<AttendanceComplaints />}
         />
         <Route path="/record-histories" element={<RecordHistories />} />
       </Routes>

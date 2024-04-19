@@ -249,3 +249,23 @@ export interface ICreateActivityParticipation {
   status?: number;
   description?: string;
 }
+
+export interface IAttendanceComplaint {
+  id: number;
+  activityParticipationId?: number;
+  evidenceUrl?: string;
+  requestStatus?: number;
+  approvalStatus?: number;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateAttendanceComplaint {
+  activityParticipationId?: number;
+  evidenceUrl?: string;
+  requestStatus?: number;
+  approvalStatus?: number;
+  status?: number;
+  description?: string;
+}
+
