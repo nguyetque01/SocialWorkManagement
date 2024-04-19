@@ -3,6 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { IActionType, IRecordHistory } from "../../types/global.typing";
 import "../../styles/grid.scss";
 import moment from "moment";
+import { getActionTypeName } from "../../utils/global.utils";
 
 interface IRecordHistoriesGridProps {
   data: IRecordHistory[];
@@ -17,11 +18,6 @@ const RecordHistoriesGrid = ({
     return b.id - a.id;
   });
 
-  const getActionTypeName = (actionTypeId: number) => {
-    const actionType = actionTypes.find((type) => type.id === actionTypeId);
-    return actionType ? actionType.name : "";
-  };
-
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 60 },
     { field: "tableName", headerName: "Tên Bảng", width: 150 },
@@ -30,7 +26,8 @@ const RecordHistoriesGrid = ({
       field: "actionTypeId",
       headerName: "Loại Hành Động",
       width: 150,
-      valueGetter: (params) => getActionTypeName(params.row.actionTypeId || 0),
+      valueGetter: (params) =>
+        getActionTypeName(actionTypes, params.row.actionTypeId || 0),
     },
     { field: "actorId", headerName: "ID Người Thực Hiện", width: 150 },
     {

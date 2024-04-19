@@ -3,6 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import CustomLinearProgress from "../components/common/custom-linear-progress/CustomLinearProgress.component";
 
 const Home = lazy(() => import("../pages/home/Home.page"));
+const Users = lazy(() => import("../pages/users/Users.page"));
+const Roles = lazy(() => import("../pages/roles/Roles.page"));
+const Permissions = lazy(() => import("../pages/permissions/Permissions.page"));
+const RolePermissions = lazy(
+  () => import("../pages/role-permissions/RolePermissions.page")
+);
 const Activities = lazy(() => import("../pages/activities/Activities.page"));
 const ActionTypes = lazy(
   () => import("../pages/action-types/ActionTypes.page")
@@ -30,6 +36,10 @@ const AdminRoutes = () => {
     <Suspense fallback={<CustomLinearProgress />}>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/roles" element={<Roles />} />
+        <Route path="/permissions" element={<Permissions />} />
+        <Route path="/role-permissions" element={<RolePermissions />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/action-types" element={<ActionTypes />} />
         <Route path="/faculties" element={<Faculties />} />
@@ -37,7 +47,10 @@ const AdminRoutes = () => {
         <Route path="/academic-years" element={<AcademicYears />} />
         <Route path="/activity-categories" element={<ActivityCategories />} />
         <Route path="/activity-sessions" element={<ActivitySessions />} />
-        <Route path="/activity-participations" element={<ActivityParticipations />} />
+        <Route
+          path="/activity-participations"
+          element={<ActivityParticipations />}
+        />
         <Route path="/record-histories" element={<RecordHistories />} />
       </Routes>
     </Suspense>
