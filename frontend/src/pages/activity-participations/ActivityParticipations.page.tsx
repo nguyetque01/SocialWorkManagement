@@ -11,8 +11,11 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const ActivityParticipations = () => {
-  const [activityParticipations, setActivityParticipations] = useState<IActivityParticipation[]>([]);
-  const [activityParticipationId, setActivityParticipationId] = useState<number>(0);
+  const [activityParticipations, setActivityParticipations] = useState<
+    IActivityParticipation[]
+  >([]);
+  const [activityParticipationId, setActivityParticipationId] =
+    useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
@@ -28,11 +31,14 @@ const ActivityParticipations = () => {
   const fetchActivityParticipations = async () => {
     try {
       setLoading(true);
-      const activityParticipationsData = await ActivityParticipationService.getAllActivityParticipations();
+      const activityParticipationsData =
+        await ActivityParticipationService.getAllActivityParticipations();
       setActivityParticipations(activityParticipationsData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách hoạt động tham gia:", error);
-      toast.error("Lỗi khi tải danh sách hoạt động tham gia. Vui lòng thử lại.");
+      toast.error(
+        "Lỗi khi tải danh sách hoạt động tham gia. Vui lòng thử lại."
+      );
     } finally {
       setLoading(false);
     }
@@ -80,9 +86,17 @@ const ActivityParticipations = () => {
   const handleSaveSuccess = async (newActivityParticipationId: number) => {
     if (activityParticipationId === 0) {
       setActivityParticipationId(newActivityParticipationId);
-      await saveRecordHistory(newActivityParticipationId, 1, "Thêm mới hoạt động tham gia");
+      await saveRecordHistory(
+        newActivityParticipationId,
+        1,
+        "Thêm mới hoạt động tham gia"
+      );
     } else {
-      await saveRecordHistory(activityParticipationId, 2, "Cập nhật hoạt động tham gia");
+      await saveRecordHistory(
+        activityParticipationId,
+        2,
+        "Cập nhật hoạt động tham gia"
+      );
     }
     fetchActivityParticipations();
   };
@@ -96,7 +110,9 @@ const ActivityParticipations = () => {
 
   const deleteActivityParticipation = async () => {
     try {
-      await ActivityParticipationService.deleteActivityParticipation(deleteItemId);
+      await ActivityParticipationService.deleteActivityParticipation(
+        deleteItemId
+      );
       await saveRecordHistory(deleteItemId, 3, "Xóa hoạt động tham gia");
       closeModal();
       fetchActivityParticipations();
@@ -134,7 +150,7 @@ const ActivityParticipations = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : ActivityParticipations.length === 0 ? (
+      ) : activityParticipations.length === 0 ? (
         <h1>Không tìm thấy hoạt động tham gia nào.</h1>
       ) : (
         <>
