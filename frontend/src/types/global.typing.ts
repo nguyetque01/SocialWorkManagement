@@ -1,16 +1,82 @@
-export interface IActivity {
+export interface IUser {
+  id: number;
+  email: string;
+  password: string;
+}
+
+export interface ILoginUser {
+  email: string;
+  password: string;
+}
+
+export interface ICreateUser {
+  email?: string;
+  password?: string;
+  fullName?: string;
+  dateOfBirth?: string;
+  gender?: string | null;
+  address?: string;
+  phoneNumber?: string | null;
+  roleId?: number | null;
+  facultyId?: number | null;
+  classId?: number | null;
+  status?: number | null;
+  description?: string | null;
+}
+
+export interface IUserDetail {
+  id: number;
+  email: string;
+  password: string;
+  fullName?: string;
+  dateOfBirth?: string;
+  gender?: string | null;
+  address?: string;
+  phoneNumber?: string | null;
+  roleId?: number | null;
+  facultyId?: number | null;
+  classId?: number | null;
+  status?: number | null;
+  description?: string | null;
+}
+
+export interface IRole {
   id: number;
   name: string;
-  location?: string;
-  releaseTime?: string;
   status?: number;
   description?: string;
 }
 
-export interface ICreateActivity {
+export interface ICreateRole {
   name: string;
-  location?: string;
-  releaseTime?: string;
+  status?: number;
+  description?: string;
+}
+
+export interface IPermission {
+  id: number;
+  name: string;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreatePermission {
+  name: string;
+  status?: number;
+  description?: string;
+}
+
+export interface IRolePermission {
+  id: number;
+  roleId: number;
+  permissionId: number;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateRolePermission {
+  roleId: number;
+  permissionId: number;
   status?: number;
   description?: string;
 }
@@ -24,6 +90,46 @@ export interface IActionType {
 
 export interface ICreateActionType {
   name: string;
+  status?: number;
+  description?: string;
+}
+
+export interface IRecordHistory {
+  id: number;
+  tableName: string;
+  recordId?: number;
+  actionTypeId?: number;
+  actorId?: number;
+  actionTime?: Date;
+  description?: string;
+  deviceUsed?: string;
+  location?: string;
+}
+
+export interface ICreateRecordHistory {
+  tableName: string;
+  recordId?: number;
+  actionTypeId?: number;
+  actorId?: number;
+  actionTime?: Date;
+  description?: string;
+  deviceUsed?: string;
+  location?: string;
+}
+
+export interface IAcademicYear {
+  id: number;
+  name: string;
+  starttime?: Date;
+  endtime?: Date;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateAcademicYear {
+  name: string;
+  starttime?: Date;
+  endtime?: Date;
   status?: number;
   description?: string;
 }
@@ -58,6 +164,23 @@ export interface ICreateClass {
   description?: string;
 }
 
+export interface IActivity {
+  id: number;
+  name: string;
+  location?: string;
+  releaseTime?: string;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateActivity {
+  name: string;
+  location?: string;
+  releaseTime?: string;
+  status?: number;
+  description?: string;
+}
+
 export interface IActivityCategory {
   id: number;
   name: string;
@@ -78,7 +201,7 @@ export interface ICreateActivityCategory {
 export interface IActivitySession {
   id: number;
   activityId?: number;
-  activityDate?: Date; 
+  activityDate?: Date;
   session?: string;
   startTime?: Date;
   endTime?: Date;
@@ -93,7 +216,7 @@ export interface IActivitySession {
 
 export interface ICreateActivitySession {
   activityId?: number;
-  activityDate?: Date; 
+  activityDate?: Date;
   session?: string;
   startTime?: Date;
   endTime?: Date;
@@ -123,57 +246,6 @@ export interface ICreateActivityParticipation {
   registrationStatus?: number;
   attendanceStatus?: number;
   approvalAttendanceStatus?: number;
-  status?: number;
-  description?: string;
-}
-
-export interface IRecordHistory {
-  id: number;
-  tableName: string;
-  recordId?: number;
-  actionTypeId?: number;
-  actorId?: number;
-  actionTime?: Date;
-  description?: string;
-  deviceUsed?: string;
-  location?: string;
-}
-
-export interface ICreateRecordHistory {
-  tableName: string;
-  recordId?: number;
-  actionTypeId?: number;
-  actorId?: number;
-  actionTime?: Date;
-  description?: string;
-  deviceUsed?: string;
-  location?: string;
-}
-
-export interface IUser {
-  id: number;
-  email: string;
-  password: string;
-}
-
-export interface ILoginUser {
-  email: string;
-  password: string;
-}
-
-export interface IAcademicYear {
-  id: number;
-  name: string;
-  starttime?: Date;
-  endtime?: Date;
-  status?: number;
-  description?: string;
-}
-
-export interface ICreateAcademicYear {
-  name: string;
-  starttime?: Date;
-  endtime?: Date;
   status?: number;
   description?: string;
 }
