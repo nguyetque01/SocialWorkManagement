@@ -11,9 +11,9 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const ActivitySessions = () => {
-  const [ActivitySessions, setActivitySessions] = useState<
-    IActivitySession[]
-  >([]);
+  const [activitySessions, setActivitySessions] = useState<IActivitySession[]>(
+    []
+  );
   const [activitySessionId, setActivitySessionId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -35,9 +35,7 @@ const ActivitySessions = () => {
       setActivitySessions(ActivitySessionsData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách phiên hoạt động:", error);
-      toast.error(
-        "Lỗi khi tải danh sách phiên hoạt động. Vui lòng thử lại."
-      );
+      toast.error("Lỗi khi tải danh sách phiên hoạt động. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -85,7 +83,11 @@ const ActivitySessions = () => {
   const handleSaveSuccess = async (newActivitySessionId: number) => {
     if (activitySessionId === 0) {
       setActivitySessionId(newActivitySessionId);
-      await saveRecordHistory(newActivitySessionId, 1, "Thêm mới loại hành động");
+      await saveRecordHistory(
+        newActivitySessionId,
+        1,
+        "Thêm mới loại hành động"
+      );
     } else {
       await saveRecordHistory(activitySessionId, 2, "Cập nhật loại hành động");
     }
@@ -139,12 +141,12 @@ const ActivitySessions = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : ActivitySessions.length === 0 ? (
+      ) : activitySessions.length === 0 ? (
         <h1>Không tìm thấy phiên hoạt động nào.</h1>
       ) : (
         <>
           <ActivitySessionsGrid
-            data={ActivitySessions}
+            data={activitySessions}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />
