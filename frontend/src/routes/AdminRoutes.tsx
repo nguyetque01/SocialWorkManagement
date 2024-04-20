@@ -33,6 +33,12 @@ const Classes = lazy(() => import("../pages/classes/Classes.page"));
 const RecordHistories = lazy(
   () => import("../pages/record-histories/RecordHistories.page")
 );
+const Notifications = lazy(
+  () => import("../pages/notifications/Notifications.page")
+);
+const NotificationTypes = lazy(
+  () => import("../pages/notification-types/NotificationTypes.page")
+);
 
 const AdminRoutes = () => {
   return (
@@ -59,6 +65,8 @@ const AdminRoutes = () => {
           element={<AttendanceComplaints />}
         />
         <Route path="/record-histories" element={<RecordHistories />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/notification-types" element={<NotificationTypes />} />
       </Routes>
     </Suspense>
   );

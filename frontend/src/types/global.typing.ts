@@ -269,3 +269,34 @@ export interface ICreateAttendanceComplaint {
   description?: string;
 }
 
+export interface INotificationType {
+  id: number;
+  name: string;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateNotificationType {
+  name: string;
+  status?: number;
+  description?: string;
+}
+
+export interface INotification {
+  id: number;
+  title?: string;
+  content?: string;
+  typeId?: number;
+  sentTo?: number;
+  status?: number;
+  description?: string;
+}
+
+export interface ICreateNotification {
+  title?: string;
+  content?: string;
+  typeId?: number;
+  sentTo?: number;
+  status?: number;
+  description?: string;
+}

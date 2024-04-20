@@ -1,4 +1,9 @@
-import { IActionType, IPermission, IRole } from "../types/global.typing";
+import {
+  IActionType,
+  INotificationType,
+  IPermission,
+  IRole,
+} from "../types/global.typing";
 
 export const getActionTypeName = (
   actionTypes: IActionType[],
@@ -19,4 +24,14 @@ export const getPermissionName = (
 ): string => {
   const permission = permissions.find((type) => type.id === permissionId);
   return permission ? permission.name : "";
+};
+
+export const getNotificationTypeName = (
+  notificationTypes: INotificationType[],
+  notificationTypeId: number
+): string => {
+  const notificationType = notificationTypes.find(
+    (type) => type.id === notificationTypeId
+  );
+  return notificationType ? notificationType.name : "";
 };
