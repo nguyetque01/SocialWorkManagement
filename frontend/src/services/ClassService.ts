@@ -9,11 +9,11 @@ const ClassService = {
       const response = await httpModule.get<IClass[]>(API_ENDPOINT);
       return response.data;
     } catch (error) {
-      throw new Error("Failed to fetch action types");
+      throw new Error("Failed to fetch classes");
     }
   },
 
-  getClassById: async (ClassId: string): Promise<IClass> => {
+  getClassById: async (ClassId: number): Promise<IClass> => {
     try {
       const response = await httpModule.get<IClass>(
         `${API_ENDPOINT}/${ClassId}`
@@ -24,30 +24,31 @@ const ClassService = {
     }
   },
 
-  createClass: async (ClassData: ICreateClass): Promise<void> => {
+  createClass: async (ClassData: ICreateClass): Promise<IClass> => {
     try {
-      await httpModule.post(API_ENDPOINT, ClassData);
+      const response = await httpModule.post<IClass>(API_ENDPOINT, ClassData);
+      return response.data;
     } catch (error) {
-      throw new Error("Failed to create action type");
+      throw new Error("Failed to create class");
     }
   },
 
   updateClass: async (
-    ClassId: string,
+    ClassId: number,
     ClassData: ICreateClass
   ): Promise<void> => {
     try {
       await httpModule.put(`${API_ENDPOINT}/${ClassId}`, ClassData);
     } catch (error) {
-      throw new Error("Failed to update action type");
+      throw new Error("Failed to update class");
     }
   },
 
-  deleteClass: async (ClassId: string): Promise<void> => {
+  deleteClass: async (ClassId: number): Promise<void> => {
     try {
       await httpModule.delete(`${API_ENDPOINT}/${ClassId}`);
     } catch (error) {
-      throw new Error("Failed to delete action type");
+      throw new Error("Failed to delete class");
     }
   },
 };
