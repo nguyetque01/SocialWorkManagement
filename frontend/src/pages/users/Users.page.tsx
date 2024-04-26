@@ -100,7 +100,7 @@ const Users = () => {
       await saveRecordHistory(deleteItemId, 3, "Xóa người dùng");
       closeModal();
       fetchUsers();
-      toast.success("người dùng đã được xóa thành công!");
+      toast.success("Người dùng đã được xóa thành công!");
     } catch (error) {
       console.error("Lỗi khi xóa người dùng:", error);
       toast.error("Lỗi khi xóa người dùng. Vui lòng thử lại.");
