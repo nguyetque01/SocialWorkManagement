@@ -14,8 +14,8 @@ import "../../styles/form.scss";
 
 interface IFacultyFormProps {
   handleClickCancelBtn: () => void;
-  onSaveSuccess: () => void;
-  FacultyId: string;
+  onSaveSuccess: (newFaculty: number) => void;
+  FacultyId: number;
 }
 
 const FacultyForm = ({
@@ -30,7 +30,7 @@ const FacultyForm = ({
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = FacultyId !== "0";
+  const isEditing = FacultyId !== 0;
 
   useEffect(() => {
     fetchFacultyData();
@@ -71,10 +71,11 @@ const FacultyForm = ({
       : FacultyService.createFaculty(Faculty);
 
     savePromise
-      .then(() => {
+      .then((newFaculty) => {
+        const newFacultyId = newFaculty?.id || 0;
         toast.success("khoa đã được lưu thành công!");
         handleClickCancelBtn();
-        onSaveSuccess();
+        onSaveSuccess(newFacultyId);
       })
       .catch((error) => {
         console.log(error);

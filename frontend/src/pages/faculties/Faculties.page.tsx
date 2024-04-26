@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { IFaculty } from "../../types/global.typing";
 import FacultiesGrid from "../../components/faculties/FacultiesGrid.component";
 import FacultyForm from "../../components/faculties/FacultyForm.component";
-import Facultieservice from "../../services/FacultyService";
+import FacultyService from "../../services/FacultyService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
+import RecordHistoryService from "../../services/RecordHistoryService";
+import { MainContext } from "../../context/main.context";
 
 const Faculties = () => {
   const [Faculties, setFaculties] = useState<IFaculty[]>([]);
-  const [FacultyId, setFacultyId] = useState<string>("0");
+  const [FacultyId, setFacultyId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
-  const [deleteItemId, setDeleteItemId] = useState<string>("0");
+  const [deleteItemId, setDeleteItemId] = useState<number>(0);
+  const { city, country, device } = useContext(MainContext);
+  const currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + 7);
 
   useEffect(() => {
     fetchFaculties();
@@ -23,11 +28,11 @@ const Faculties = () => {
   const fetchFaculties = async () => {
     try {
       setLoading(true);
-      const FacultiesData = await Facultieservice.getAllFaculties();
+      const FacultiesData = await FacultyService.getAllFaculties();
       setFaculties(FacultiesData);
     } catch (error) {
-      console.error("Lỗi khi tải danh sách loại hành động:", error);
-      toast.error("Lỗi khi tải danh sách loại hành động. Vui lòng thử lại.");
+      console.error("Lỗi khi tải danh sách khoa:", error);
+      toast.error("Lỗi khi tải danh sách khoa. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -42,35 +47,63 @@ const Faculties = () => {
   const closeDeleteDialog = () => setIsDeleteDialogOpen(false);
 
   const handleClickAddBtn = () => {
-    setFacultyId("0");
+    setFacultyId(0);
     openModal();
   };
 
-  const handleClickEditBtn = (FacultyId: string) => {
+  const handleClickEditBtn = (FacultyId: number) => {
     setFacultyId(FacultyId);
     openModal();
   };
 
-  const handleSaveSuccess = () => {
+  const saveRecordHistory = async (
+    recordId: number,
+    actionTypeId: number,
+    description: string
+  ) => {
+    try {
+      await RecordHistoryService.createRecordHistory({
+        tableName: "Faculties",
+        recordId: recordId,
+        actionTypeId: actionTypeId,
+        // actorId: 1,
+        actionTime: currentDate,
+        description: description,
+        deviceUsed: device,
+        location: `${city}, ${country}`,
+      });
+    } catch (error) {
+      console.error("Lỗi khi lưu lịch sử:", error);
+    }
+  };
+
+  const handleSaveSuccess = async (newFacultyId: number) => {
+    if (FacultyId === 0) {
+      setFacultyId(newFacultyId);
+      await saveRecordHistory(newFacultyId, 1, "Thêm mới khoa");
+    } else {
+      await saveRecordHistory(FacultyId, 2, "Cập nhật khoa");
+    }
     fetchFaculties();
   };
 
   const handleClickCancelBtn = () => closeModal();
 
-  const handleClickDeleteBtn = async (FacultyId: string) => {
+  const handleClickDeleteBtn = async (FacultyId: number) => {
     setDeleteItemId(FacultyId);
     openDeleteDialog();
   };
 
   const deleteFaculty = async () => {
     try {
-      await Facultieservice.deleteFaculty(deleteItemId);
+      await FacultyService.deleteFaculty(deleteItemId);
+      await saveRecordHistory(deleteItemId, 3, "Xóa khoa");
       closeModal();
       fetchFaculties();
-      toast.success("loại hành động đã được xóa thành công!");
+      toast.success("khoa đã được xóa thành công!");
     } catch (error) {
-      console.error("Lỗi khi xóa loại hành động:", error);
-      toast.error("Lỗi khi xóa loại hành động. Vui lòng thử lại.");
+      console.error("Lỗi khi xóa khoa:", error);
+      toast.error("Lỗi khi xóa khoa. Vui lòng thử lại.");
     } finally {
       closeDeleteDialog();
     }
@@ -79,7 +112,7 @@ const Faculties = () => {
   return (
     <div className="content">
       <div className="heading">
-        <h2>Danh sách loại hành động</h2>
+        <h2>Danh sách khoa</h2>
         <Button variant="outlined" onClick={handleClickAddBtn}>
           <Add />
         </Button>
@@ -102,7 +135,7 @@ const Faculties = () => {
       {loading ? (
         <CircularProgress size={100} />
       ) : Faculties.length === 0 ? (
-        <h1>Không tìm thấy loại hành động nào.</h1>
+        <h1>Không tìm thấy khoa nào.</h1>
       ) : (
         <>
           <FacultiesGrid
@@ -111,7 +144,7 @@ const Faculties = () => {
             handleClickDeleteBtn={handleClickDeleteBtn}
           />
           <DeleteDialog
-            item={"loại hành động"}
+            item={"khoa"}
             isOpen={isDeleteDialogOpen}
             handleClose={() => setIsDeleteDialogOpen(false)}
             handleConfirm={deleteFaculty}

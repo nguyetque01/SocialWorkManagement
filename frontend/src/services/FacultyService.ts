@@ -13,7 +13,7 @@ const FacultyService = {
     }
   },
 
-  getFacultyById: async (FacultyId: string): Promise<IFaculty> => {
+  getFacultyById: async (FacultyId: number): Promise<IFaculty> => {
     try {
       const response = await httpModule.get<IFaculty>(
         `${API_ENDPOINT}/${FacultyId}`
@@ -24,16 +24,17 @@ const FacultyService = {
     }
   },
 
-  createFaculty: async (FacultyData: ICreateFaculty): Promise<void> => {
+  createFaculty: async (FacultyData: ICreateFaculty): Promise<IFaculty> => {
     try {
-      await httpModule.post(API_ENDPOINT, FacultyData);
+      const reponse = await httpModule.post<IFaculty>(API_ENDPOINT, FacultyData);
+      return reponse.data;
     } catch (error) {
       throw new Error("Failed to create faculty");
     }
   },
 
   updateFaculty: async (
-    FacultyId: string,
+    FacultyId: number,
     FacultyData: ICreateFaculty
   ): Promise<void> => {
     try {
@@ -43,7 +44,7 @@ const FacultyService = {
     }
   },
 
-  deleteFaculty: async (FacultyId: string): Promise<void> => {
+  deleteFaculty: async (FacultyId: number): Promise<void> => {
     try {
       await httpModule.delete(`${API_ENDPOINT}/${FacultyId}`);
     } catch (error) {
