@@ -25,11 +25,11 @@ const NotificationsGrid = ({
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 80 },
     { field: "title", headerName: "Tiêu đề", width: 150 },
-    { field: "content", headerName: "Nội dung", width: 150 },
+    { field: "content", headerName: "Nội dung", width: 200 },
     {
       field: "typeId",
       headerName: "Loại thông báo",
-      width: 150,
+      width: 200,
       valueGetter: (params) =>
         getNotificationTypeName(notificationTypes, params.row.typeId || 0),
     },
@@ -63,7 +63,7 @@ const NotificationsGrid = ({
   ];
 
   return (
-    <Box className="grid small">
+    <Box className="grid">
       <DataGrid
         rows={sortedData}
         columns={columns}

@@ -260,17 +260,6 @@ const AdminSidebar = ({
             </>
           ))}
         </List>
-        <Divider className="divider" />
-
-        <div className="actions">
-          {isCompactMode ? (
-            <IconButton>
-              <Login className="icon" />
-            </IconButton>
-          ) : (
-            <Button className="button">Đăng nhập</Button>
-          )}
-        </div>
       </Box>
     </Drawer>
   );

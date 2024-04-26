@@ -1,6 +1,7 @@
 import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Edit, Delete } from "@mui/icons-material";
+import moment from "moment";
 import { IUserDetail } from "../../types/global.typing";
 import "../../styles/grid.scss";
 
@@ -23,8 +24,26 @@ const UsersGrid = ({
     { field: "id", headerName: "ID", width: 80 },
     { field: "email", headerName: "Email", width: 150 },
     { field: "fullName", headerName: "Họ tên", width: 150 },
-    { field: "dateOfBirth", headerName: "Ngày sinh", width: 150 },
-    { field: "gender", headerName: "Giới tính", width: 150 },
+    {
+      field: "dateOfBirth",
+      headerName: "Ngày sinh",
+      width: 150,
+      renderCell: (params) =>
+        moment(params.row.dateOfBirth).format("DD/MM/YYYY"),
+    },
+    {
+      field: "gender",
+      headerName: "Giới tính",
+      width: 150,
+      renderCell: (params) => {
+        const gender = params.row.gender;
+        return gender === "Male"
+          ? "Nam"
+          : gender === "Female"
+          ? "Nữ"
+          : "Không xác định";
+      },
+    },
     { field: "address", headerName: "Địa chỉ", width: 150 },
     { field: "phoneNumber", headerName: "Điện thoại", width: 150 },
     { field: "roleId", headerName: "ID Vai trò", width: 150 },
@@ -61,7 +80,7 @@ const UsersGrid = ({
   ];
 
   return (
-    <Box className="grid small">
+    <Box className="grid">
       <DataGrid
         rows={sortedData}
         columns={columns}

@@ -10,7 +10,6 @@
     .sidebar {
       @include d-flex(column, center, center);
       width: var(--full-sidebar-width);
-      height: 100%;
 
       &.compact {
         width: 60px;
@@ -82,6 +81,7 @@
         width: 100%;
         flex: 1;
         background-color: inherit;
+        @include d-flex(column, flex-end, space-between);
       }
     }
   }
