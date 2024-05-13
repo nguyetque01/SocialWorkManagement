@@ -11,9 +11,9 @@ const ActivityCategoryService = {
     } catch (error) {
       throw new Error("Failed to fetch activity categories");
     }
-  },
+  }, 
 
-  getActivityCategoryById: async (ActivityCategoryId: string): Promise<IActivityCategory> => {
+  getActivityCategoryById: async (ActivityCategoryId: number): Promise<IActivityCategory> => {
     try {
       const response = await httpModule.get<IActivityCategory>(
         `${API_ENDPOINT}/${ActivityCategoryId}`
@@ -24,28 +24,32 @@ const ActivityCategoryService = {
     }
   },
 
-  createActivityCategory: async (ActivityCategoryData: ICreateActivityCategory): Promise<void> => {
+  createActivityCategory: async (activityCategoryData: ICreateActivityCategory): Promise<IActivityCategory> => {
     try {
-      await httpModule.post(API_ENDPOINT, ActivityCategoryData);
+      const response = await httpModule.post(
+        API_ENDPOINT, 
+        activityCategoryData
+      );
+      return response.data;
     } catch (error) {
       throw new Error("Failed to create activity category");
     }
   },
 
   updateActivityCategory: async (
-    ActivityCategoryId: string,
-    ActivityCategoryData: ICreateActivityCategory
+    activityCategoryId: number,
+    activityCategoryData: ICreateActivityCategory
   ): Promise<void> => {
     try {
-      await httpModule.put(`${API_ENDPOINT}/${ActivityCategoryId}`, ActivityCategoryData);
+      await httpModule.put(`${API_ENDPOINT}/${activityCategoryId}`, activityCategoryData);
     } catch (error) {
       throw new Error("Failed to update activity category");
     }
   },
 
-  deleteActivityCategory: async (ActivityCategoryId: string): Promise<void> => {
+  deleteActivityCategory: async (activityCategoryId: number): Promise<void> => {
     try {
-      await httpModule.delete(`${API_ENDPOINT}/${ActivityCategoryId}`);
+      await httpModule.delete(`${API_ENDPOINT}/${activityCategoryId}`);
     } catch (error) {
       throw new Error("Failed to delete activity category");
     }

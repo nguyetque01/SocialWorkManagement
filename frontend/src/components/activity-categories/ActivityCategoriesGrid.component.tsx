@@ -6,11 +6,11 @@ import "../../styles/grid.scss";
 
 interface IActivityCategoriesGridProps {
   data: IActivityCategory[];
-  handleClickEditBtn: (id: string) => void;
-  handleClickDeleteBtn: (id: string) => void;
+  handleClickEditBtn: (id: number) => void;
+  handleClickDeleteBtn: (id: number) => void;
 }
 
-const ActivityCategoriesGrid = ({
+const ActivityCategoriesGrid = ({ 
   data,
   handleClickEditBtn,
   handleClickDeleteBtn,
@@ -59,7 +59,7 @@ const ActivityCategoriesGrid = ({
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 15,
             },
           },
         }}

@@ -67,95 +67,95 @@ const AdminSidebar = ({
   const menuItems: MenuItem[] = [
     {
       icon: <Person />,
-      text: "Users",
+      text: "Người dùng",
       link: "/users",
       children: [
         {
           icon: <Group />,
-          text: "Roles",
+          text: "Vai trò",
           link: "/roles",
         },
         {
           icon: <Settings />,
-          text: "Permissions",
+          text: "Quyền hạn",
           link: "permissions",
         },
         {
           icon: <Settings />,
-          text: "Role Permissions",
+          text: "Phân quyền",
           link: "role-permissions",
         },
       ],
     },
     {
       icon: <Timeline />,
-      text: "Activities",
+      text: "Hoạt động",
       link: "/activities",
       children: [
         {
           icon: <Category />,
-          text: "Activity Categories",
+          text: "Danh mục hoạt động",
           link: "/activity-categories",
         },
         {
           icon: <Event />,
-          text: "Activity Sessions",
+          text: "Phiên hoạt động",
           link: "/activity-sessions",
         },
         {
           icon: <Event />,
-          text: "Activity Participations",
+          text: "Hoạt động tham gia",
           link: "/activity-participations",
         },
         {
           icon: <Event />,
-          text: "Attendance Complaints",
+          text: "Khiếu nại",
           link: "/activity-attendance-complaints",
         },
       ],
     },
     {
       icon: <School />,
-      text: "School",
+      text: "Trường",
       link: "/school",
       children: [
         {
           icon: <Event />,
-          text: "Academic Years",
+          text: "Năm học",
           link: "/academic-years",
         },
         {
           icon: <Event />,
-          text: "Faculties",
+          text: "Khoa",
           link: "/faculties",
         },
         {
           icon: <Event />,
-          text: "Classes",
+          text: "Lớp",
           link: "/classes",
         },
       ],
     },
     {
       icon: <Notifications />,
-      text: "Notifications",
+      text: "Thông báo",
       link: "/notifications",
       children: [
         {
           icon: <Event />,
-          text: "Notification Types",
+          text: "Loại thông báo",
           link: "/notification-types",
         },
       ],
     },
     {
       icon: <History />,
-      text: "Record Histories",
+      text: "Lịch sử bản ghi",
       link: "/record-histories",
       children: [
         {
           icon: <Settings />,
-          text: "Action Types",
+          text: "Loại hành động",
           link: "action-types",
         },
       ],

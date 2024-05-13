@@ -6,7 +6,7 @@ import {
   Typography,
   Paper,
   Grid,
-  CircularProgress,
+  CircularProgress, 
 } from "@mui/material";
 import { toast } from "react-toastify";
 import ActivityCategoryService from "../../services/ActivityCategoryService";
@@ -14,33 +14,33 @@ import "../../styles/form.scss";
 
 interface IActivityCategoryFormProps {
   handleClickCancelBtn: () => void;
-  onSaveSuccess: () => void;
-  ActivityCategoryId: string;
+  onSaveSuccess: (newActivityCategory: number) => void;
+  activityCategoryId: number;
 }
 
 const ActivityCategoryForm = ({
-  ActivityCategoryId,
+  activityCategoryId,
   onSaveSuccess,
   handleClickCancelBtn,
 }: IActivityCategoryFormProps) => {
-  const [ActivityCategory, setActivityCategory] = useState<ICreateActivityCategory>({
+  const [activityCategory, setActivityCategory] = useState<ICreateActivityCategory>({
     name: "",
     status: 0,
     description: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = ActivityCategoryId !== "0";
+  const isEditing = activityCategoryId !== 0;
 
   useEffect(() => {
     fetchActivityCategoryData();
-  }, [ActivityCategoryId]);
+  }, [activityCategoryId]);
 
   const fetchActivityCategoryData = async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await ActivityCategoryService.getActivityCategoryById(ActivityCategoryId);
+        const data = await ActivityCategoryService.getActivityCategoryById(activityCategoryId);
         setActivityCategory(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu danh mục hoạt động:", error);
@@ -59,7 +59,7 @@ const ActivityCategoryForm = ({
   };
 
   const handleClickSaveBtn = () => {
-    if (ActivityCategory.name === "") {
+    if (activityCategory.name === "") {
       toast.error("Vui lòng nhập tên danh mục hoạt động!");
       return;
     }
@@ -67,14 +67,15 @@ const ActivityCategoryForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? ActivityCategoryService.updateActivityCategory(ActivityCategoryId, ActivityCategory)
-      : ActivityCategoryService.createActivityCategory(ActivityCategory);
+      ? ActivityCategoryService.updateActivityCategory(activityCategoryId, activityCategory)
+      : ActivityCategoryService.createActivityCategory(activityCategory);
 
     savePromise
-      .then(() => {
+      .then((newActivityCategory) => {
+        const newActivityCategoryId = newActivityCategory?.id || 0;
         toast.success("danh mục hoạt động đã được lưu thành công!");
         handleClickCancelBtn();
-        onSaveSuccess();
+        onSaveSuccess(newActivityCategoryId);
       })
       .catch((error) => {
         console.log(error);
@@ -102,7 +103,7 @@ const ActivityCategoryForm = ({
                 fullWidth
                 label="Tên danh mục hoạt động"
                 variant="outlined"
-                value={ActivityCategory.name}
+                value={activityCategory.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
               />
             </Grid>
@@ -113,7 +114,7 @@ const ActivityCategoryForm = ({
                 rows={3}
                 label="Mô tả"
                 variant="outlined"
-                value={ActivityCategory.description}
+                value={activityCategory.description}
                 onChange={(e) =>
                   handleInputChange("description", e.target.value)
                 }
