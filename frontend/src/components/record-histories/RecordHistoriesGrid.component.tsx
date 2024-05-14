@@ -50,7 +50,7 @@ const RecordHistoriesGrid = ({
         initialState={{
           pagination: {
             paginationModel: {
-              pageSize: 5,
+              pageSize: 15,
             },
           },
         }}
