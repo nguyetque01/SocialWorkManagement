@@ -4,11 +4,6 @@ export interface IUser {
   password: string;
 }
 
-export interface ILoginUser {
-  email: string;
-  password: string;
-}
-
 export interface ICreateUser {
   email?: string;
   password?: string;
@@ -22,6 +17,16 @@ export interface ICreateUser {
   classId?: number | null;
   status?: number | null;
   description?: string | null;
+}
+
+export interface IAuthRequest {
+  email: string;
+  password: string;
+}
+
+export interface IAuthResponse {
+  email: string;
+  token: string;
 }
 
 export interface IUserDetail {

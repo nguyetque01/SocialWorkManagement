@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { ILoginUser } from "../../types/global.typing";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   TextField,
@@ -9,44 +9,53 @@ import {
   Box,
   FormGroup,
   FormControlLabel,
+  FormControl,
+  InputLabel,
+  InputAdornment,
+  IconButton,
+  OutlinedInput,
   Checkbox,
 } from "@mui/material";
 import { toast } from "react-toastify";
-import UserService from "../../services/UserService";
 import "../../styles/form.scss";
 import "./login-form.scss";
-import { Link } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-const LoginForm = () => {
-  const [User, setUser] = useState<ILoginUser>({
-    email: "",
-    password: "",
-  });
+interface LoginFormProps {
+  onLogin: (email: string, password: string) => void;
+}
 
-  useEffect(() => {
-    fetchUserData();
-  });
+const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+  const [user, setUser] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState(false);
 
-  const fetchUserData = async () => {
-    // if (isEditing) {
-    //   try {
-    //     // setLoading(true);
-    //     const data = await UserService.getUserById(UserId);
-    //     setUser(data);
-    //   } catch (error) {
-    //     console.error("Lỗi khi tải dữ liệu hoạt động:", error);
-    //     toast.error("Lỗi khi tải dữ liệu hoạt động. Vui lòng thử lại!");
-    //   } finally {
-    //     // setLoading(false);
-    //   }
-    // }
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      [field]: value,
-    }));
+    setUser((prevUser) => ({ ...prevUser, [field]: value }));
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent): any => {
+    if (event.key === "Enter") {
+      handleLogin();
+    }
+  };
+
+  const handleLogin = async () => {
+    if (!user.email) {
+      toast.error("Vui lòng nhập email");
+      return;
+    }
+    if (!user.password) {
+      toast.error("Vui lòng nhập mật khẩu");
+      return;
+    }
+    onLogin(user.email, user.password);
   };
 
   return (
@@ -60,32 +69,48 @@ const LoginForm = () => {
             fullWidth
             label="Email"
             variant="outlined"
-            value={User.email}
+            value={user.email}
             onChange={(e) => handleInputChange("email", e.target.value)}
           />
         </Grid>
         <Grid item xs={12}>
-          <TextField
-            fullWidth
-            label="Mật khẩu"
-            variant="outlined"
-            value={User.password}
-            onChange={(e) => handleInputChange("password", e.target.value)}
-          />
+          <FormControl fullWidth variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              Mật khẩu
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? "text" : "password"}
+              value={user.password}
+              onChange={(e) => handleInputChange("password", e.target.value)}
+              onKeyDown={handleKeyDown}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="Toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Mật khẩu"
+            />
+          </FormControl>
         </Grid>
       </Grid>
-      <Button
-        className="login-btn"
-        variant="contained"
-        //   onClick={handleClickSaveBtn}
-      >
+      <Button className="login-btn" variant="contained" onClick={handleLogin}>
         Đăng nhập
       </Button>
       <Box className="actions">
         <FormGroup>
-          <FormControlLabel control={<Checkbox />} label="Ghi nhớ mật khẩu" />
+          <FormControlLabel control={<Checkbox />} label="Nhớ tài khoản" />
         </FormGroup>
-        <Link to={"/forget-password"}>Quên mật khẩu?</Link>
+        <Link to="/forget-password" className="link">
+          Quên mật khẩu?
+        </Link>
       </Box>
     </Paper>
   );

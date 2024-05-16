@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Box,
-  Button,
   Collapse,
   Divider,
   Drawer,
@@ -17,7 +16,6 @@ import {
   ChevronRight,
   ExpandLess,
   ExpandMore,
-  Login,
   Person,
   Timeline,
   Notifications,
@@ -27,10 +25,12 @@ import {
   Group,
   School,
   History,
+  Logout,
 } from "@mui/icons-material";
 import { imagePaths } from "../../constants/imagePaths.contants";
 import "./admin-sidebar.scss";
 import { useState } from "react";
+import LogoutDialog from "../common/dialog/LogoutDialog.component";
 
 interface AdminSidebarProps {
   isOpen: boolean;
@@ -54,15 +54,10 @@ const AdminSidebar = ({
   onSidebarModeChange,
   isMobile,
 }: AdminSidebarProps) => {
+  const navigate = useNavigate();
   const [openMenu, setOpenMenu] = useState<string | null>(null);
   const [openIndex, setOpenIndex] = useState(-1);
-  const handleClick = (index: number) => () => {
-    if (index === openIndex) {
-      setOpenIndex(-1);
-    } else {
-      setOpenIndex(index);
-    }
-  };
+  const [confirmLogoutOpen, setConfirmLogoutOpen] = useState(false);
 
   const menuItems: MenuItem[] = [
     {
@@ -160,6 +155,11 @@ const AdminSidebar = ({
         },
       ],
     },
+    {
+      icon: <Logout />,
+      text: "Đăng xuất",
+      link: "#",
+    },
   ];
 
   const isCompactMode = sidebarMode === "compact";
@@ -177,91 +177,116 @@ const AdminSidebar = ({
     setOpenMenu(openMenu === `${index}` ? null : `${index}`);
   };
 
-  return (
-    <Drawer
-      variant={isMobile ? "temporary" : "permanent"}
-      anchor="left"
-      open={isOpen}
-      onClose={onClose}
-      ModalProps={{
-        keepMounted: true,
-      }}
-      className="drawer"
-    >
-      <Box className={`sidebar ${isCompactMode ? "compact" : ""}`}>
-        {!isMobile && (
-          <>
-            <div className="actions expand-actions">
-              <IconButton
-                onClick={handleToggleChangeCompactFull}
-                className="expand-button"
-              >
-                {isCompactMode ? (
-                  <ChevronRight className="icon" />
-                ) : (
-                  <ChevronLeft className="icon" />
-                )}
-              </IconButton>
-            </div>
-            <Divider className="divider" />
-          </>
-        )}
-        <Link to={"/"} className="brand">
-          <img src={imagePaths.LOGO_DNTU} alt="DNTU Logo" className="logo" />
-          <Typography className="title">
-            {isCompactMode ? "" : "Trường Đại Học Công Nghệ Đồng Nai"}
-          </Typography>
-        </Link>
-        <Divider className="divider" />
+  const handleClick = (index: number) => () => {
+    if (index === openIndex) {
+      setOpenIndex(-1);
+    } else {
+      setOpenIndex(index);
+    }
 
-        <List className="menu">
-          {menuItems.map((item, index) => (
+    if (index == 5) {
+      setConfirmLogoutOpen(true);
+    }
+  };
+
+  const handleLogout = () => {
+    navigate("/logout");
+  };
+
+  return (
+    <>
+      <Drawer
+        variant={isMobile ? "temporary" : "permanent"}
+        anchor="left"
+        open={isOpen}
+        onClose={onClose}
+        ModalProps={{
+          keepMounted: true,
+        }}
+        className="drawer"
+      >
+        <Box className={`sidebar ${isCompactMode ? "compact" : ""}`}>
+          {!isMobile && (
             <>
-              <ListItemButton
-                key={item.text}
-                onClick={handleClick(index)}
-                sx={{ color: "white" }}
-                component={Link}
-                to={item.link}
-              >
-                <ListItemIcon sx={{ color: "white" }}>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} className="itemText" />
-                {item.children && (
-                  <IconButton
-                    onClick={() => handleToggleSubMenu(index)}
-                    sx={{ color: "white" }}
-                    className="itemIcon itemIcon--expand"
-                  >
-                    {openIndex === index ? <ExpandLess /> : <ExpandMore />}
-                  </IconButton>
-                )}
-              </ListItemButton>
-              <Collapse
-                in={openIndex === index}
-                timeout="auto"
-                unmountOnExit
-                className="sub-menu"
-              >
-                <>
-                  <List component="div" disablePadding>
-                    {item.children?.map((subItem, i) => (
-                      <ListItemButton
-                        key={i}
-                        sx={{ color: "white", pl: 4 }}
-                        component={Link}
-                        to={subItem.link}
-                      >
-                        <ListItemText primary={subItem.text} />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </>
-              </Collapse>
+              <div className="actions expand-actions">
+                <IconButton
+                  onClick={handleToggleChangeCompactFull}
+                  className="expand-button"
+                >
+                  {isCompactMode ? (
+                    <ChevronRight className="icon" />
+                  ) : (
+                    <ChevronLeft className="icon" />
+                  )}
+                </IconButton>
+              </div>
+              <Divider className="divider" />
             </>
-          ))}
-        </List>
-      </Box>
-    </Drawer>
+          )}
+          <Link to={"/"} className="brand">
+            <img src={imagePaths.LOGO_DNTU} alt="DNTU Logo" className="logo" />
+            <Typography className="title">
+              {isCompactMode ? "" : "Trường Đại Học Công Nghệ Đồng Nai"}
+            </Typography>
+          </Link>
+          <Divider className="divider" />
+
+          <List className="menu">
+            {menuItems.map((item, index) => (
+              <>
+                <ListItemButton
+                  key={item.text}
+                  onClick={handleClick(index)}
+                  sx={{ color: "white" }}
+                  component={Link}
+                  to={item.link}
+                >
+                  <ListItemIcon sx={{ color: "white" }}>
+                    {item.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={item.text} className="itemText" />
+                  {item.children && (
+                    <IconButton
+                      onClick={() => handleToggleSubMenu(index)}
+                      sx={{ color: "white" }}
+                      className="itemIcon itemIcon--expand"
+                    >
+                      {openIndex === index ? <ExpandLess /> : <ExpandMore />}
+                    </IconButton>
+                  )}
+                </ListItemButton>
+                <Collapse
+                  in={openIndex === index}
+                  timeout="auto"
+                  unmountOnExit
+                  className="sub-menu"
+                >
+                  <>
+                    <List component="div" disablePadding>
+                      {item.children?.map((subItem, i) => (
+                        <ListItemButton
+                          key={i}
+                          sx={{ color: "white", pl: 4 }}
+                          component={Link}
+                          to={subItem.link}
+                        >
+                          <ListItemText primary={subItem.text} />
+                        </ListItemButton>
+                      ))}
+                    </List>
+                  </>
+                </Collapse>
+              </>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
+      <LogoutDialog
+        isOpen={confirmLogoutOpen}
+        handleClose={() => setConfirmLogoutOpen(false)}
+        handleConfirm={handleLogout}
+      />
+    </>
   );
 };
 
