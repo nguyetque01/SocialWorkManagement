@@ -41,6 +41,12 @@
       background-color: var(--red-light);
       color: var(--white);
     }
+
+    &.btn--logout {
+      background-color: var(--red-light);
+      color: var(--white);
+      padding: 4px 12px;
+    }
   }
 
   .btn:hover {
