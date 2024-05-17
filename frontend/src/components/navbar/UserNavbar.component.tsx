@@ -4,12 +4,13 @@ import { Menu, LightMode, DarkMode } from "@mui/icons-material";
 import { ToggleButton } from "@mui/material";
 import { ThemeContext } from "../../context/theme.context";
 import "./user-navbar.scss";
+import Account from "../account/Account.component";
 
 interface UserNavbarProps {
   toggleSidebar: () => void;
 }
 
-const links = [{ href: "/account", label: "Account" }];
+const links = [{ href: "/activities", label: "Hoạt động CTXH" }];
 
 const UserNavbar = ({ toggleSidebar }: UserNavbarProps) => {
   const [open, setOpen] = useState<boolean>(true);
@@ -31,7 +32,7 @@ const UserNavbar = ({ toggleSidebar }: UserNavbarProps) => {
           <span>Social Work Management</span>
         </div>
       </div>
-      <div className="navbar__right">
+      <div className="navbar__middle">
         <div className={menuStyles}>
           <ul>
             {links.map((item) => (
@@ -43,6 +44,8 @@ const UserNavbar = ({ toggleSidebar }: UserNavbarProps) => {
             ))}
           </ul>
         </div>
+      </div>
+      <div className="navbar__right">
         <div className="hamburger">
           <Menu onClick={toggleOpenMenu} />
         </div>
@@ -55,6 +58,7 @@ const UserNavbar = ({ toggleSidebar }: UserNavbarProps) => {
             {darkMode ? <LightMode /> : <DarkMode />}
           </ToggleButton>
         </div>
+        <Account />
       </div>
     </div>
   );

@@ -40,26 +40,26 @@ namespace backend.Controllers
 
                 if (user == null || user.Password != request.Password)
                 {
-
                     return BadRequest("Invalid email or password.");
                 }
 
-                var token = _tokenService.CreateToken(user);       
+                var token = _tokenService.CreateToken(user);
 
                 var roleName = await _context.Users
-                 .Where(u => u.Email == user.Email) 
-                 .Select(u => u.Role != null ? u.Role.Name : "Unknown") 
-                 .FirstOrDefaultAsync();
+                    .Where(u => u.Email == user.Email)
+                    .Select(u => u.Role != null ? u.Role.Name : "Unknown")
+                    .FirstOrDefaultAsync();
 
-                HttpContext.Session.SetString("UserId", user.Id.ToString());
-                HttpContext.Session.SetString("UserEmail", user.Email);
-                HttpContext.Session.SetString("UserRole", roleName);
-         
+                Response.Cookies.Append("UserId", user.Id.ToString());
+                Response.Cookies.Append("UserEmail", user.Email);
+                Response.Cookies.Append("UserRole", roleName);
+
                 return Ok(new AuthResponse
                 {
+                    Id = user.Id.ToString(),
                     Email = user.Email,
+                    Role = roleName,
                     Token = token,
-                    Role = roleName
                 });
             }
             catch (Exception ex)
@@ -67,5 +67,59 @@ namespace backend.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
             }
         }
+
+
+        [HttpGet]
+        [Route("account")]
+        public async Task<ActionResult<User>> GetAccount()
+        {
+            try
+            {
+                var userId = Request.Cookies["UserId"];
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized("User not authenticated.");
+                }
+
+                var user = await _context.Users.FindAsync(int.Parse(userId));
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                return Ok(user);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+
+        [HttpPost]
+        [Route("logout")]
+        public async Task<ActionResult> Logout()
+        {
+            try
+            {
+                var userId = Request.Cookies["UserId"];
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return Unauthorized("User not authenticated.");
+                }
+
+                Response.Cookies.Delete("UserId");
+                Response.Cookies.Delete("UserEmail");
+                Response.Cookies.Delete("UserRole");
+
+                return Ok("Logout successful.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while processing your request.");
+            }
+        }
+
+
     }
 }

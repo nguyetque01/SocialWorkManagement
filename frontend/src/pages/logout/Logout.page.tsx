@@ -1,14 +1,30 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import AuthService from "../../services/AuthService";
+import { AuthContext } from "../../context/auth.context";
 
 const LogoutPage = () => {
-  const navigate = useNavigate();
+  const authContext = useContext(AuthContext);
+
+  if (!authContext) {
+    throw new Error("AuthContext is not provided");
+  }
+
+  const { logout } = authContext;
 
   useEffect(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("role");
-    window.location.href = "/";
-  }, [navigate]);
+    const performLogout = async () => {
+      try {
+        await AuthService.logout();
+        localStorage.clear();
+        logout();
+        window.location.href = "/";
+      } catch (error) {
+        console.error("Failed to logout:", error);
+      }
+    };
+
+    performLogout();
+  }, []);
 
   return null;
 };

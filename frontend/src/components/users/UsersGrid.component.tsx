@@ -2,11 +2,11 @@ import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Edit, Delete } from "@mui/icons-material";
 import moment from "moment";
-import { IUserDetail } from "../../types/global.typing";
+import { IUser } from "../../types/global.typing";
 import "../../styles/grid.scss";
 
 interface IUsersGridProps {
-  data: IUserDetail[];
+  data: IUser[];
   handleClickEditBtn: (id: number) => void;
   handleClickDeleteBtn: (id: number) => void;
 }

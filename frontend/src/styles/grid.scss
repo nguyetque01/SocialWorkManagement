@@ -1,11 +1,7 @@
 .grid {
-  max-width: 78vw;
-  margin-right: auto;
+  width: 100%;
   * {
     color: var(--text-color1);
-  }
-  &.small {
-    width: auto;
   }
 }
 

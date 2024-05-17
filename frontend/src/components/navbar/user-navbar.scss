@@ -9,41 +9,41 @@
 
   .navbar__left {
     @include d-flex(row, space-between, center);
-    .menu-toggle {
-      padding: 2px;
-      @include d-flex(column, center, center);
-    }
-    .brand {
-      margin-left: 20px;
-    }
   }
 
   .navbar__right {
     @include d-flex(row, space-between, center);
-    .menu {
-      ul {
-        @include d-flex(row, flex-start, center);
-        gap: 1rem;
+  }
+  .menu-toggle {
+    padding: 2px;
+    @include d-flex(column, center, center);
+  }
+  .brand {
+    margin-left: 20px;
+  }
+  .menu {
+    ul {
+      @include d-flex(row, flex-start, center);
+      gap: 1rem;
 
-        li {
-          a {
-            color: #fff;
-            cursor: pointer;
-          }
+      li {
+        a {
+          color: #fff;
+          cursor: pointer;
         }
       }
     }
-    .hamburger {
-      display: none;
-      cursor: pointer;
-    }
+  }
+  .hamburger {
+    display: none;
+    cursor: pointer;
+  }
 
-    .toggle {
-      margin-left: 1rem;
-      cursor: pointer;
-      svg {
-        color: var(--primary-light);
-      }
+  .toggle {
+    margin-left: 1rem;
+    cursor: pointer;
+    svg {
+      color: var(--primary-light);
     }
   }
 }

@@ -11,7 +11,7 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const Users = () => {
-  const [Users, setUsers] = useState<IUser[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
   const [userId, setuserId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -134,12 +134,12 @@ const Users = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : Users.length === 0 ? (
+      ) : users.length === 0 ? (
         <h1>Không tìm thấy người dùng nào.</h1>
       ) : (
         <>
           <UsersGrid
-            data={Users}
+            data={users}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />

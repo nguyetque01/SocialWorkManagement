@@ -81,7 +81,7 @@
         width: 100%;
         flex: 1;
         background-color: inherit;
-        @include d-flex(column, flex-end, space-between);
+        @include d-flex(column, space-between, space-between);
       }
     }
   }

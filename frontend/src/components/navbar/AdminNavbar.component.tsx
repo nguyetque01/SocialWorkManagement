@@ -1,8 +1,9 @@
-import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
-import { Menu, AccountCircle } from "@mui/icons-material";
-
-import "./admin-navbar.scss";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AppBar, Toolbar, IconButton, Typography, Box } from "@mui/material";
+import { Menu } from "@mui/icons-material";
+import Account from "../account/Account.component";
+import "./admin-navbar.scss";
 
 interface AdminNavbarProps {
   toggleSidebar: () => void;
@@ -34,9 +35,7 @@ const AdminNavbar = ({
         </Box>
         <Box className="navbar__middle"></Box>
         <Box className="navbar__right">
-          <IconButton className="account">
-            <AccountCircle className="icon" />
-          </IconButton>
+          <Account />
         </Box>
       </Toolbar>
     </AppBar>
