@@ -1,9 +1,6 @@
-import React, { createContext, useState, useContext } from "react";
-
-interface IUser {
-  email: string;
-  role: "user" | "admin";
-}
+import React, { createContext, useState, useContext, useEffect } from "react";
+import AuthService from "../services/AuthService";
+import { IUser } from "../types/global.typing";
 
 interface IAuthContextInterface {
   user: IUser | null;
@@ -29,6 +26,19 @@ interface IAuthContextProviderProps {
 
 const AuthContextProvider = ({ children }: IAuthContextProviderProps) => {
   const [user, setUser] = useState<IUser | null>(null);
+
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      try {
+        const currentUser = await AuthService.getAccount();
+        setUser(currentUser);
+      } catch (error) {
+        console.error("Failed to fetch current user:", error);
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
 
   const login = (userData: IUser) => {
     setUser(userData);

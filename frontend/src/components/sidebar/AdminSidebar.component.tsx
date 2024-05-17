@@ -233,7 +233,7 @@ const AdminSidebar = ({
 
           <List className="menu">
             {menuItems.map((item, index) => (
-              <>
+              <div key={index}>
                 <ListItemButton
                   key={item.text}
                   onClick={handleClick(index)}
@@ -276,7 +276,7 @@ const AdminSidebar = ({
                     </List>
                   </>
                 </Collapse>
-              </>
+              </div>
             ))}
           </List>
         </Box>
