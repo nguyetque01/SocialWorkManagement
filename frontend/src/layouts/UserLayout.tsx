@@ -1,18 +1,40 @@
-import { useState } from "react";
 import Routes from "../routes/UserRoutes";
 import Navbar from "../components/navbar/UserNavbar.component";
-import Sidebar from "../components/sidebar/UserSidebar.component";
+import Header from "../components/header/Header.component";
 
 const UserLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen);
-  };
+  const menuItems = [
+    {
+      label: "Trang chủ",
+      link: "/",
+    },
+    {
+      label: "Đoàn Trường",
+      link: "doan-truong",
+    },
+    {
+      label: "Đăng ký CTXH",
+      link: "activities",
+    },
+    {
+      label: "Quản lý CTXH cá nhân",
+      subMenuItems: [
+        {
+          label: "CTXH đã tham gia",
+          link: "/item1",
+        },
+        {
+          label: "Khiếu nại",
+          link: "/item2",
+        },
+      ],
+    },
+  ];
 
   return (
     <>
-      <Navbar toggleSidebar={toggleSidebar} />
-      <Sidebar isOpen={sidebarOpen} onClose={toggleSidebar} />
+      <Header />
+      <Navbar menuItems={menuItems} />
       <div className="wrapper">
         <Routes />
       </div>

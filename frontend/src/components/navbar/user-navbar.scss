@@ -1,83 +1,56 @@
 @import "../../styles/mixins";
-.navbar {
-  @include d-flex(row, space-between, center);
-  color: #fff;
-  background-color: var(--dark);
+
+.user-navbar {
+  background-color: var(--dntu);
+  color: var(--white);
   width: 100%;
-  height: 60px;
-  padding: 0 2rem;
+  display: flex;
+  justify-content: center;
 
-  .navbar__left {
-    @include d-flex(row, space-between, center);
-  }
+  .menu-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    @include d-flex(row, center, center);
 
-  .navbar__right {
-    @include d-flex(row, space-between, center);
-  }
-  .menu-toggle {
-    padding: 2px;
-    @include d-flex(column, center, center);
-  }
-  .brand {
-    margin-left: 20px;
-  }
-  .menu {
-    ul {
-      @include d-flex(row, flex-start, center);
-      gap: 1rem;
+    .menu-item {
+      position: relative;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
 
-      li {
-        a {
-          color: #fff;
+      a {
+        color: inherit;
+      }
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+
+      .sub-menu-items {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        display: none;
+        background-color: var(--white);
+        color: var(--dntu);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1;
+
+        .sub-menu-item {
+          padding: 10px;
           cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+          }
         }
       }
-    }
-  }
-  .hamburger {
-    display: none;
-    cursor: pointer;
-  }
 
-  .toggle {
-    margin-left: 1rem;
-    cursor: pointer;
-    svg {
-      color: var(--primary-light);
-    }
-  }
-}
-
-@media (max-width: 600px) {
-  .navbar {
-    padding: 0 2rem;
-
-    .menu {
-      @include d-flex(column, flex-start, center);
-      gap: 1rem;
-      color: #fff;
-      background-color: var(--dark);
-      width: 240px;
-      height: 100vh;
-      position: fixed;
-      top: 0;
-      left: -240px;
-      z-index: 100;
-      transition: all 0.3s ease-in-out;
-
-      &.open {
-        left: 0;
+      &:hover .sub-menu-items {
+        display: block;
       }
-
-      ul {
-        @include d-flex(column, center, center);
-        gap: 2rem;
-        height: 100%;
-      }
-    }
-
-    .hamburger {
-      display: block;
     }
   }
 }

@@ -18,7 +18,6 @@ import {
   ExitToApp,
 } from "@mui/icons-material";
 import { AuthContext } from "../../context/auth.context";
-import AuthService from "../../services/AuthService";
 import LogoutDialog from "../common/dialog/LogoutDialog.component";
 import { useNavigate } from "react-router-dom";
 
