@@ -1,0 +1,47 @@
+@import "../../styles/mixins";
+
+.app-bar {
+  position: static;
+  .header {
+    @include d-flex(row, center, center);
+
+    background-color: var(--white);
+    transition: all 0.3s ease-in-out;
+
+    padding-left: 20px;
+
+    .header__left {
+      .brand {
+        @include d-flex(row, center, center);
+
+        text-align: center;
+        padding: 16px 0;
+
+        .logo-img {
+          width: 28px;
+          height: auto;
+        }
+
+        .brand-name {
+          padding: 8px 20px 0;
+          color: var(--dntu);
+          font-size: 16px;
+          * {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    .header__middle {
+      flex: 1;
+    }
+
+    .header__right {
+      @include d-flex(row, center, center);
+      .header__right-icons {
+        margin: 0 8px;
+      }
+    }
+  }
+}

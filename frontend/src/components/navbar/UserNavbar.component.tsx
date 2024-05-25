@@ -1,66 +1,50 @@
-import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, LightMode, DarkMode } from "@mui/icons-material";
-import { ToggleButton } from "@mui/material";
-import { ThemeContext } from "../../context/theme.context";
+import React, { useState } from "react";
 import "./user-navbar.scss";
-import Account from "../account/Account.component";
 
-interface UserNavbarProps {
-  toggleSidebar: () => void;
+interface MenuItem {
+  label: string;
+  link?: string;
+  subMenuItems?: MenuItem[];
 }
 
-const links = [{ href: "/activities", label: "Hoạt động CTXH" }];
+interface UserNavbarProps {
+  menuItems: MenuItem[];
+}
 
-const UserNavbar = ({ toggleSidebar }: UserNavbarProps) => {
-  const [open, setOpen] = useState<boolean>(true);
-  const { darkMode, toggleDarkMode } = useContext(ThemeContext);
+const UserNavbar: React.FC<UserNavbarProps> = ({ menuItems }) => {
+  const [activeSubMenu, setActiveSubMenu] = useState<string | null>(null);
 
-  const toggleOpenMenu = () => {
-    setOpen((prevState) => !prevState);
+  const handleMouseEnter = (label: string) => {
+    setActiveSubMenu(label);
   };
 
-  const menuStyles = open ? "menu open" : "menu";
+  const handleMouseLeave = () => {
+    setActiveSubMenu(null);
+  };
 
   return (
-    <div className="navbar">
-      <div className="navbar__left">
-        <button className="menu-toggle" onClick={toggleSidebar}>
-          <Menu />
-        </button>
-        <div className="brand">
-          <span>Social Work Management</span>
-        </div>
-      </div>
-      <div className="navbar__middle">
-        <div className={menuStyles}>
-          <ul>
-            {links.map((item) => (
-              <li key={item.href} onClick={toggleOpenMenu}>
-                <Link to={item.href} onClick={toggleOpenMenu}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-      <div className="navbar__right">
-        <div className="hamburger">
-          <Menu onClick={toggleOpenMenu} />
-        </div>
-        <div className="toggle">
-          <ToggleButton
-            value={"check"}
-            selected={darkMode}
-            onChange={toggleDarkMode}
+    <nav className="user-navbar" onMouseLeave={handleMouseLeave}>
+      <ul className="menu-items">
+        {menuItems.map((item, index) => (
+          <li
+            key={index}
+            className="menu-item"
+            onMouseEnter={() => handleMouseEnter(item.label)}
           >
-            {darkMode ? <LightMode /> : <DarkMode />}
-          </ToggleButton>
-        </div>
-        <Account />
-      </div>
-    </div>
+            <a href={item.link}>{item.label}</a>
+            {item.subMenuItems && activeSubMenu === item.label && (
+              <ul className="sub-menu-items">
+                {item.subMenuItems.map((subItem, subIndex) => (
+                  <li key={subIndex} className="sub-menu-item">
+                    <a href={subItem.link}>{subItem.label}</a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 

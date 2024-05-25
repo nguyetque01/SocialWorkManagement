@@ -1,3 +1,9 @@
+export interface MenuItemType {
+  label: string;
+  link: string;
+  subItems?: MenuItemType[];
+}
+
 export interface IUser {
   id: number;
   email: string;

@@ -11,11 +11,12 @@
     @include d-flex(column, center, center);
     width: 1000px;
     height: 500px;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 
     .tiltle {
       text-align: center;
       margin-bottom: 16px;
+
       .app-name {
         font-size: 28px;
         color: var(--primary);
