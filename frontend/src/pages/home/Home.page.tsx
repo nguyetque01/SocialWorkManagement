@@ -1,11 +1,13 @@
-import { Box, Toolbar, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import "./home.scss";
+import UserSliders from "../../components/UI/user-dashboard/user-sliders/UserSliders.component";
 
 const Home = () => {
   return (
-    <Box className="content">
-      
-    </Box>
+    <div>
+      <UserSliders />
+      <Box className="content"></Box>
+    </div>
   );
 };
 

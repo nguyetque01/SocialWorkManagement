@@ -1,7 +1,6 @@
 import Routes from "../routes/UserRoutes";
 import Navbar from "../components/navbar/UserNavbar.component";
 import Header from "../components/header/Header.component";
-import UserSliders from "../components/UI/user-dashboard/user-sliders/UserSliders.component";
 
 const UserLayout = () => {
   const menuItems = [
@@ -36,10 +35,7 @@ const UserLayout = () => {
     <>
       <Header />
       <Navbar menuItems={menuItems} />
-      <UserSliders />
-      <div className="wrapper">
-        <Routes />
-      </div>
+      <Routes />
     </>
   );
 };
