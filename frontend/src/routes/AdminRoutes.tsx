@@ -2,7 +2,9 @@ import { Suspense, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import CustomLinearProgress from "../components/common/custom-linear-progress/CustomLinearProgress.component";
 
-const Home = lazy(() => import("../pages/home/Home.page"));
+const AdminDashboard = lazy(
+  () => import("../pages/admin-dashboard/AdminDashboard.page")
+);
 const Logout = lazy(() => import("../pages/logout/Logout.page"));
 const Users = lazy(() => import("../pages/users/Users.page"));
 const Roles = lazy(() => import("../pages/roles/Roles.page"));
@@ -45,7 +47,7 @@ const AdminRoutes = () => {
   return (
     <Suspense fallback={<CustomLinearProgress />}>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<AdminDashboard />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/users" element={<Users />} />
         <Route path="/roles" element={<Roles />} />
