@@ -52,10 +52,7 @@ const AdminLayout = () => {
         }}
       >
         <AdminRoutes />
-        
       </Box>
-      
-      
     </Box>
   );
 };

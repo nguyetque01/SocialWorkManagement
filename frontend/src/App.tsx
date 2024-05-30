@@ -30,12 +30,11 @@ const App = () => {
   return (
     <>
       <CustomToastContainer />
-      
+
       <div className={appStyles}>
-        <UserLayout />
-        {/* {auth === "visitor" && <VisitorLayout />}
+        {auth === "visitor" && <VisitorLayout />}
         {auth === "user" && <UserLayout />}
-        {auth === "admin" && <AdminLayout />} */}
+        {auth === "admin" && <AdminLayout />}
       </div>
     </>
   );
