@@ -17,6 +17,7 @@ public partial class SocialWorkDbContext : DbContext
     }
 
     public DbSet<UserDetailDto> UserDetails { get; set; }
+    public DbSet<ActivityDetailDto> ActivityDetails { get; set; }
 
     public virtual DbSet<AcademicYear> AcademicYears { get; set; }
 

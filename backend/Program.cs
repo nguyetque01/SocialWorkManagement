@@ -72,6 +72,7 @@ builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddScoped<ResponseHelper>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<IActivityRepository, ActivityRepository>();
 
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>

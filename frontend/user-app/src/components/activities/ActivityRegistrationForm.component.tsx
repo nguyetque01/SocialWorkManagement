@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { ICreateActivity } from "../../types/global.typing";
+import { ICreateActivity } from "../../types/activity.typing";
 import { Button, TextField, Typography, Paper, Grid } from "@mui/material";
 import { toast } from "react-toastify";
 import ActivityService from "../../services/ActivityService";
@@ -19,7 +19,7 @@ const ActivityRegistrationForm = ({
   const [activity, setActivity] = useState<ICreateActivity>({
     name: "",
     location: "",
-    releaseTime: "",
+    releaseTime: null,
     description: "",
   });
 

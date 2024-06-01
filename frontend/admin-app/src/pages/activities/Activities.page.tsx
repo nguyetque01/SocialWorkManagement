@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { IActivity } from "../../types/global.typing";
+import { IActivityDetail } from "../../types/activity.typing";
 import ActivitiesGrid from "../../components/activities/ActivitiesGrid.component";
 import ActivityForm from "../../components/activities/ActivityForm.component";
 import ActivityService from "../../services/ActivityService";
@@ -11,7 +11,7 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const Activities = () => {
-  const [activities, setActivities] = useState<IActivity[]>([]);
+  const [activities, setActivities] = useState<IActivityDetail[]>([]);
   const [activityId, setActivityId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const Activities = () => {
   const fetchActivities = async () => {
     try {
       setLoading(true);
-      const activitiesData = await ActivityService.getAllActivities();
+      const activitiesData = await ActivityService.getAllActivityDetails();
       setActivities(activitiesData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách hoạt động:", error);

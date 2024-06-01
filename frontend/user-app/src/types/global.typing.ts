@@ -11,49 +11,6 @@ export interface ApiResponse<T> {
   timeStamp: string;
 }
 
-export interface IUser {
-  id: number;
-  email: string;
-  password: string;
-  fullName?: string;
-  dateOfBirth?: string;
-  gender?: string | null;
-  address?: string;
-  phoneNumber?: string | null;
-  roleId?: number | null;
-  facultyId?: number | null;
-  classId?: number | null;
-  status?: number | null;
-  description?: string | null;
-}
-
-export interface ICreateUser {
-  email?: string;
-  password?: string;
-  fullName?: string;
-  dateOfBirth?: string;
-  gender?: string | null;
-  address?: string;
-  phoneNumber?: string | null;
-  roleId?: number | null;
-  facultyId?: number | null;
-  classId?: number | null;
-  status?: number | null;
-  description?: string | null;
-}
-
-export interface IAuthRequest {
-  email: string;
-  password: string;
-}
-
-export interface IAuthResponse {
-  id: string;
-  email: string;
-  token: string;
-  role: string;
-}
-
 export interface IRole {
   id: number;
   name: string;
@@ -174,23 +131,6 @@ export interface ICreateClass {
   name: string;
   advisorId?: number;
   facultyId?: number;
-  status?: number;
-  description?: string;
-}
-
-export interface IActivity {
-  id: number;
-  name: string;
-  location?: string;
-  releaseTime?: string;
-  status?: number;
-  description?: string;
-}
-
-export interface ICreateActivity {
-  name: string;
-  location?: string;
-  releaseTime?: string;
   status?: number;
   description?: string;
 }

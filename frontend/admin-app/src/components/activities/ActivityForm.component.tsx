@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { ICreateActivity } from "../../types/global.typing";
+import { ICreateActivity } from "../../types/activity.typing";
 import {
   Button,
   TextField,
@@ -26,7 +26,7 @@ const ActivityForm = ({
   const [activity, setActivity] = useState<ICreateActivity>({
     name: "",
     location: "",
-    releaseTime: "",
+    releaseTime: null,
     description: "",
   });
 

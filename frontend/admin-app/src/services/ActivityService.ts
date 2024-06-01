@@ -1,59 +1,104 @@
 import httpModule from "../helpers/http.module";
-import { IActivity, ICreateActivity } from "../types/global.typing";
+import { ApiResponse } from "../types/global.typing";
+import {
+  ICreateActivity,
+  IActivity,
+  IActivityDetail,
+} from "../types/activity.typing";
 
 const API_ENDPOINT = "/Activities";
 
-const ActivityService = {
+const Activitieservice = {
   getAllActivities: async (): Promise<IActivity[]> => {
     try {
-      const response = await httpModule.get<IActivity[]>(API_ENDPOINT);
-      return response.data;
-    } catch (error) {
-      throw new Error("Failed to fetch activities");
-    }
-  },
-
-  getActivityById: async (activityId: number): Promise<IActivity> => {
-    try {
-      const response = await httpModule.get<IActivity>(
-        `${API_ENDPOINT}/${activityId}`
+      const response = await httpModule.get<ApiResponse<IActivity[]>>(
+        API_ENDPOINT
       );
-      return response.data;
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to fetch activity");
+      throw new Error("Failed to fetch Activities");
     }
   },
 
-  createActivity: async (activityData: ICreateActivity): Promise<IActivity> => {
+  getAllActivityDetails: async (): Promise<IActivityDetail[]> => {
     try {
-      const response = await httpModule.post<IActivity>(
+      const response = await httpModule.get<ApiResponse<IActivityDetail[]>>(
+        `${API_ENDPOINT}/details`
+      );
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      throw new Error("Failed to fetch Activities");
+    }
+  },
+
+  getActivityById: async (ActivityId: number): Promise<IActivity> => {
+    try {
+      const response = await httpModule.get<ApiResponse<IActivity>>(
+        `${API_ENDPOINT}/${ActivityId}`
+      );
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      throw new Error("Failed to fetch Activity");
+    }
+  },
+
+  createActivity: async (ActivityData: ICreateActivity): Promise<IActivity> => {
+    try {
+      const response = await httpModule.post<ApiResponse<IActivity>>(
         API_ENDPOINT,
-        activityData
+        ActivityData
       );
-      return response.data;
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to create activity");
+      throw new Error("Failed to create Activity");
     }
   },
 
   updateActivity: async (
-    activityId: number,
-    activityData: ICreateActivity
+    ActivityId: number,
+    ActivityData: ICreateActivity
   ): Promise<void> => {
     try {
-      await httpModule.put(`${API_ENDPOINT}/${activityId}`, activityData);
+      const response = await httpModule.put<ApiResponse<any>>(
+        `${API_ENDPOINT}/${ActivityId}`,
+        ActivityData
+      );
+      if (response.data.status === "fail") {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to update activity");
+      throw new Error("Failed to update Activity");
     }
   },
 
-  deleteActivity: async (activityId: number): Promise<void> => {
+  deleteActivity: async (ActivityId: number): Promise<void> => {
     try {
-      await httpModule.delete(`${API_ENDPOINT}/${activityId}`);
+      const response = await httpModule.delete<ApiResponse<any>>(
+        `${API_ENDPOINT}/${ActivityId}`
+      );
+      if (response.data.status === "fail") {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to delete activity");
+      throw new Error("Failed to delete Activity");
     }
   },
 };
 
-export default ActivityService;
+export default Activitieservice;

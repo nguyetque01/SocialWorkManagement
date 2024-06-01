@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using backend.Repositories;
+using backend.Helpers;
 
 namespace backend.Controllers
 {
@@ -13,95 +12,121 @@ namespace backend.Controllers
     [ApiController]
     public class ActivitiesController : ControllerBase
     {
-        private readonly SocialWorkDbContext _context;
+        private readonly IActivityRepository _activityRepository;
+        private readonly ResponseHelper _responseHelper;
 
-        public ActivitiesController(SocialWorkDbContext context)
+        public ActivitiesController(IActivityRepository activityRepository, ResponseHelper responseHelper)
         {
-            _context = context;
+            _activityRepository = activityRepository;
+            _responseHelper = responseHelper;
         }
 
         // GET: api/Activities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Activity>>> GetActivities()
+        public async Task<IActionResult> GetActivities()
         {
-            return await _context.Activities.ToListAsync();
+            try
+            {
+                var Activities = await _activityRepository.GetAllActivities();
+                return _responseHelper.CreateResponse("Activities retrieved successfully", Activities, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
+        }
+
+        // GET: api/Activities/details
+        [HttpGet("details")]
+        public async Task<IActionResult> GetAllactivityDetails()
+        {
+            try
+            {
+                var activityDetails = await _activityRepository.GetAllActivityDetails();
+                return _responseHelper.CreateResponse("activity details retrieved successfully", activityDetails, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // GET: api/Activities/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Activity>> GetActivity(int id)
+        public async Task<IActionResult> Getactivity(int id)
         {
-            var activity = await _context.Activities.FindAsync(id);
-
-            if (activity == null)
+            try
             {
-                return NotFound();
+                var activity = await _activityRepository.GetActivityById(id);
+                if (activity == null)
+                {
+                    return _responseHelper.CreateResponse("activity not found", null, "fail");
+                }
+                return _responseHelper.CreateResponse("activity retrieved successfully", activity, "success");
             }
-
-            return activity;
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // PUT: api/Activities/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutActivity(int id, Activity activity)
+        public async Task<IActionResult> Putactivity(int id, Activity activity)
         {
-            if (id != activity.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(activity).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ActivityExists(id))
+                if (id != activity.Id)
                 {
-                    return NotFound();
+                    return _responseHelper.CreateResponse("activity ID mismatch", null, "fail");
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                await _activityRepository.UpdateActivity(activity);
+
+                return _responseHelper.CreateResponse("activity updated successfully", null, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // POST: api/Activities
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Activity>> PostActivity(Activity activity)
+        public async Task<IActionResult> Postactivity(Activity activity)
         {
-            _context.Activities.Add(activity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _activityRepository.AddActivity(activity);
 
-            return CreatedAtAction("GetActivity", new { id = activity.Id }, activity);
+                return _responseHelper.CreateResponse("activity added successfully", activity, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // DELETE: api/Activities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActivity(int id)
+        public async Task<IActionResult> Deleteactivity(int id)
         {
-            var activity = await _context.Activities.FindAsync(id);
-            if (activity == null)
+            try
             {
-                return NotFound();
+                var activityExists = await _activityRepository.ActivityExists(id);
+                if (!activityExists)
+                {
+                    return _responseHelper.CreateResponse("activity not found", null, "fail");
+                }
+
+                await _activityRepository.DeleteActivity(id);
+
+                return _responseHelper.CreateResponse("activity deleted successfully", null, "success");
             }
-
-            _context.Activities.Remove(activity);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ActivityExists(int id)
-        {
-            return _context.Activities.Any(e => e.Id == id);
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
     }
 }

@@ -20,7 +20,7 @@ import { toast } from "react-toastify";
 import "../../styles/form.scss";
 import "./login-form.scss";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { IAuthRequest } from "../../types/global.typing";
+import { IAuthRequest } from "../../types/auth.typing";
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => void;
