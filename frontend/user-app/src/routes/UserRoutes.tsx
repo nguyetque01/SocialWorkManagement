@@ -5,6 +5,7 @@ import CustomLinearProgress from "../components/common/custom-linear-progress/Cu
 const Login = lazy(() => import("../pages/login/Login.page"));
 const Logout = lazy(() => import("../pages/logout/Logout.page"));
 const Home = lazy(() => import("../pages/home/Home.page"));
+const Activities = lazy(() => import("../pages/activities/Activities.page"));
 
 const UserRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const UserRoutes = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/activities" element={<Activities />} />
       </Routes>
     </Suspense>
   );

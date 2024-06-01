@@ -1,5 +1,5 @@
 import httpModule from "../helpers/http.module";
-import { IAuthRequest, IAuthResponse, IUser } from "../types/global.typing";
+import { IAuthResponse, IUser } from "../types/global.typing";
 
 const API_ENDPOINT = "/Auth";
 

@@ -43,7 +43,7 @@ ul {
 .content {
   @include d-flex(column, flex-start, center);
   gap: 2rem;
-  margin-top: var(--navbar-height);
+  padding: 40px;
 
   .heading {
     @include d-flex(row, space-between, center);
