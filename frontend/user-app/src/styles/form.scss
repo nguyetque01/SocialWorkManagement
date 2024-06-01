@@ -1,0 +1,64 @@
+@import "./mixins";
+
+.modal-container {
+  @include d-flex(column, center, center);
+  height: 100%;
+  .modal-content {
+    background-color: var(--primary-light);
+    padding: 20px;
+    border-radius: 8px;
+    outline: none;
+  }
+}
+
+.form {
+  @include d-flex(column, center, center);
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  background-color: var(--bg-color);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+
+  .form-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: var(--text-color1);
+    font-weight: bold;
+  }
+
+  .text-field {
+    width: 100%;
+    margin-bottom: 20px;
+
+    input {
+      width: 100%;
+      background-color: var(--bg-color);
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 12px;
+      color: var(--text-color1);
+      transition: border-color 0.3s ease-in-out;
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary);
+      }
+    }
+  }
+
+  .btns {
+    @include d-flex(row, center, center);
+    margin-top: 25px;
+    margin-left: auto;
+    .cancel-btn {
+      margin-right: 10px;
+      background-color: var(--grey);
+      color: var(--text-color1);
+    }
+    .save-btn {
+      background-color: var(--primary);
+    }
+  }
+}

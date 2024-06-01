@@ -1,0 +1,56 @@
+@import "./mixins";
+
+.dialog {
+  .dialogTitle {
+    padding: 16px 20px;
+    outline: none;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .closeBtn {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    color: var(--text-color1);
+  }
+
+  .dialogContent {
+    padding: 20px 20px 30px 20px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .dialogActions {
+    padding: 16px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .btn {
+    padding: 4px 0;
+    transition: opacity 0.3s ease;
+
+    &.btn--cancel {
+      background-color: var(--grey);
+      color: var(--text-color1);
+    }
+
+    &.btn--save {
+      background-color: var(--primary);
+    }
+
+    &.btn--delete {
+      background-color: var(--red-light);
+      color: var(--white);
+    }
+
+    &.btn--logout {
+      background-color: var(--red-light);
+      color: var(--white);
+      padding: 4px 12px;
+    }
+  }
+
+  .btn:hover {
+    cursor: pointer;
+    opacity: 0.9;
+  }
+}
