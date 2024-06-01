@@ -2,11 +2,11 @@ import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { EditNote } from "@mui/icons-material";
 import moment from "moment";
-import { IActivity } from "../../types/global.typing";
+import { IActivityDetail } from "../../types/activity.typing";
 import "../../styles/grid.scss";
 
 interface IActivitiesGridProps {
-  data: IActivity[];
+  data: IActivityDetail[];
   handleClickRegisterBtn: (id: number) => void;
 }
 
@@ -22,6 +22,8 @@ const ActivitiesGrid = ({
     { field: "id", headerName: "ID", width: 80 },
     { field: "name", headerName: "Tên hoạt động", width: 400 },
     { field: "location", headerName: "Địa điểm", width: 200 },
+    { field: "academicYear", headerName: "Năm học", width: 150 },
+    { field: "activityCategory", headerName: "Loại hoạt động", width: 150 },
     {
       field: "releaseTime",
       headerName: "Thời gian công bố",
@@ -29,6 +31,7 @@ const ActivitiesGrid = ({
       renderCell: (params) =>
         moment(params.row.releaseTime).format("DD/MM/YYYY HH:mm A"),
     },
+    { field: "statusText", headerName: "Trạng thái", width: 150 },
     { field: "description", headerName: "Mô tả", width: 150 },
     {
       field: "actions",

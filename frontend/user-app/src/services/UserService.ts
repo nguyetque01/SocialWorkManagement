@@ -1,5 +1,6 @@
 import httpModule from "../helpers/http.module";
-import { IUser, ICreateUser, ApiResponse } from "../types/global.typing";
+import { ApiResponse } from "../types/global.typing";
+import { ICreateUser, IUser, IUserDetail } from "../types/user.typing";
 
 const API_ENDPOINT = "/Users";
 
@@ -17,9 +18,11 @@ const UserService = {
     }
   },
 
-  getAllUserDetails: async (): Promise<IUser[]> => {
+  getAllUserDetails: async (): Promise<IUserDetail[]> => {
     try {
-      const response = await httpModule.get<ApiResponse<IUser[]>>(API_ENDPOINT);
+      const response = await httpModule.get<ApiResponse<IUserDetail[]>>(
+        `${API_ENDPOINT}/details`
+      );
       if (response.data.status === "success") {
         return response.data.responseData;
       } else {

@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import AuthService from "../services/AuthService";
-import { IUser } from "../types/global.typing";
+import { IUser } from "../types/user.typing";
 
 interface IAuthContextInterface {
   user: IUser | null;
