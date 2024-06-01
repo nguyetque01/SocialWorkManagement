@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ICreateActivitySession } from "../../types/global.typing";
 import {
   Button,
@@ -23,24 +23,23 @@ const ActivitySessionForm = ({
   onSaveSuccess,
   handleClickCancelBtn,
 }: IActivitySessionFormProps) => {
-  const [ActivitySession, setActivitySession] = useState<ICreateActivitySession>({
-    session: "",
-    status: 0,
-    description: "",
-  });
+  const [ActivitySession, setActivitySession] =
+    useState<ICreateActivitySession>({
+      session: "",
+      status: 0,
+      description: "",
+    });
 
   const [loading, setLoading] = useState(false);
   const isEditing = activitySessionId !== 0;
 
-  useEffect(() => {
-    fetchActivitySessionData();
-  }, [activitySessionId]);
-
-  const fetchActivitySessionData = async () => {
+  const fetchActivitySessionData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await ActivitySessionService.getActivitySessionById(activitySessionId);
+        const data = await ActivitySessionService.getActivitySessionById(
+          activitySessionId
+        );
         setActivitySession(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu phiên hoạt động:", error);
@@ -49,7 +48,11 @@ const ActivitySessionForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, activitySessionId]);
+
+  useEffect(() => {
+    fetchActivitySessionData();
+  }, [fetchActivitySessionData]);
 
   const handleInputChange = (field: string, value: string) => {
     setActivitySession((prevActivitySession) => ({
@@ -67,7 +70,10 @@ const ActivitySessionForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? ActivitySessionService.updateActivitySession(activitySessionId, ActivitySession)
+      ? ActivitySessionService.updateActivitySession(
+          activitySessionId,
+          ActivitySession
+        )
       : ActivitySessionService.createActivitySession(ActivitySession);
 
     savePromise
@@ -95,7 +101,9 @@ const ActivitySessionForm = ({
       ) : (
         <Paper elevation={3} className="form">
           <Typography variant="h5" gutterBottom>
-            {isEditing ? "Chỉnh sửa phiên hoạt động" : "Thêm phiên hoạt động mới"}
+            {isEditing
+              ? "Chỉnh sửa phiên hoạt động"
+              : "Thêm phiên hoạt động mới"}
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12}>

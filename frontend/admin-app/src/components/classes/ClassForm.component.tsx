@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ICreateClass } from "../../types/global.typing";
 import {
   Button,
@@ -15,11 +15,11 @@ import "../../styles/form.scss";
 interface IClassFormProps {
   handleClickCancelBtn: () => void;
   onSaveSuccess: (newClass: number) => void;
-  ClassId: number;
+  classId: number;
 }
 
 const ClassForm = ({
-  ClassId,
+  classId,
   onSaveSuccess,
   handleClickCancelBtn,
 }: IClassFormProps) => {
@@ -30,17 +30,13 @@ const ClassForm = ({
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = ClassId !== 0;
+  const isEditing = classId !== 0;
 
-  useEffect(() => {
-    fetchClassData();
-  }, [ClassId]);
-
-  const fetchClassData = async () => {
+  const fetchClassData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await ClassService.getClassById(ClassId);
+        const data = await ClassService.getClassById(classId);
         setClass(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu loại hành động:", error);
@@ -49,7 +45,11 @@ const ClassForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, classId]);
+
+  useEffect(() => {
+    fetchClassData();
+  }, [fetchClassData]);
 
   const handleInputChange = (field: string, value: string) => {
     setClass((prevClass) => ({
@@ -67,15 +67,15 @@ const ClassForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? ClassService.updateClass(ClassId, Class)
+      ? ClassService.updateClass(classId, Class)
       : ClassService.createClass(Class);
 
     savePromise
       .then((newClass) => {
-        const newClassId = newClass?.id || 0;
+        const newclassId = newClass?.id || 0;
         toast.success("Loại hành động đã được lưu thành công!");
         handleClickCancelBtn();
-        onSaveSuccess(newClassId);
+        onSaveSuccess(newclassId);
       })
       .catch((error) => {
         console.log(error);

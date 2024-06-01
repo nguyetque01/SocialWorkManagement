@@ -11,8 +11,8 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const Roles = () => {
-  const [Roles, setRoles] = useState<IRole[]>([]);
-  const [RoleId, setRoleId] = useState<number>(0);
+  const [roles, setRoles] = useState<IRole[]>([]);
+  const [roleId, setRoleId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
@@ -28,8 +28,8 @@ const Roles = () => {
   const fetchRoles = async () => {
     try {
       setLoading(true);
-      const RolesData = await RoleService.getAllRoles();
-      setRoles(RolesData);
+      const rolesData = await RoleService.getAllRoles();
+      setRoles(rolesData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách vai trò:", error);
       toast.error("Lỗi khi tải danh sách vai trò. Vui lòng thử lại.");
@@ -78,19 +78,19 @@ const Roles = () => {
   };
 
   const handleSaveSuccess = async (newRoleId: number) => {
-    if (RoleId === 0) {
+    if (roleId === 0) {
       setRoleId(newRoleId);
       await saveRecordHistory(newRoleId, 1, "Thêm mới vai trò");
     } else {
-      await saveRecordHistory(RoleId, 2, "Cập nhật vai trò");
+      await saveRecordHistory(roleId, 2, "Cập nhật vai trò");
     }
     fetchRoles();
   };
 
   const handleClickCancelBtn = () => closeModal();
 
-  const handleClickDeleteBtn = async (RoleId: number) => {
-    setDeleteItemId(RoleId);
+  const handleClickDeleteBtn = async (roleId: number) => {
+    setDeleteItemId(roleId);
     openDeleteDialog();
   };
 
@@ -125,7 +125,7 @@ const Roles = () => {
         >
           <div className="modal-content">
             <RoleForm
-              RoleId={RoleId}
+              roleId={roleId}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
@@ -134,12 +134,12 @@ const Roles = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : Roles.length === 0 ? (
+      ) : roles.length === 0 ? (
         <h1>Không tìm thấy vai trò nào.</h1>
       ) : (
         <>
           <RolesGrid
-            data={Roles}
+            data={roles}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />

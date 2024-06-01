@@ -11,8 +11,8 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const Classes = () => {
-  const [Classes, setClasses] = useState<IClass[]>([]);
-  const [ClassId, setClassId] = useState<number>(0);
+  const [classes, setClasses] = useState<IClass[]>([]);
+  const [classId, setClassId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
@@ -51,8 +51,8 @@ const Classes = () => {
     openModal();
   };
 
-  const handleClickEditBtn = (ClassId: number) => {
-    setClassId(ClassId);
+  const handleClickEditBtn = (classId: number) => {
+    setClassId(classId);
     openModal();
   };
 
@@ -78,19 +78,19 @@ const Classes = () => {
   };
 
   const handleSaveSuccess = async (newClassId: number) => {
-    if (ClassId === 0) {
+    if (classId === 0) {
       setClassId(newClassId);
       await saveRecordHistory(newClassId, 1, "Thêm mới loại hành động");
     } else {
-      await saveRecordHistory(ClassId, 2, "Cập nhật loại hành động");
+      await saveRecordHistory(classId, 2, "Cập nhật loại hành động");
     }
     fetchClasss();
   };
 
   const handleClickCancelBtn = () => closeModal();
 
-  const handleClickDeleteBtn = async (ClassId: number) => {
-    setDeleteItemId(ClassId);
+  const handleClickDeleteBtn = async (classId: number) => {
+    setDeleteItemId(classId);
     openDeleteDialog();
   };
 
@@ -125,7 +125,7 @@ const Classes = () => {
         >
           <div className="modal-content">
             <ClassForm
-              ClassId={ClassId}
+              classId={classId}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
@@ -134,12 +134,12 @@ const Classes = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : Classes.length === 0 ? (
+      ) : classes.length === 0 ? (
         <h1>Không tìm thấy loại hành động nào.</h1>
       ) : (
         <>
           <ClassesGrid
-            data={Classes}
+            data={classes}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />

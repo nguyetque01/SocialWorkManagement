@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ICreateActionType } from "../../types/global.typing";
 import {
   Button,
@@ -34,9 +34,9 @@ const ActionTypeForm = ({
 
   useEffect(() => {
     fetchActionTypeData();
-  }, [actionTypeId]);
+  });
 
-  const fetchActionTypeData = async () => {
+  const fetchActionTypeData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
@@ -49,7 +49,7 @@ const ActionTypeForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [actionTypeId, isEditing]);
 
   const handleInputChange = (field: string, value: string) => {
     setActionType((prevActionType) => ({

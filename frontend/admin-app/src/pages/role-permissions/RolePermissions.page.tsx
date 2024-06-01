@@ -13,10 +13,10 @@ import RoleService from "../../services/RoleService";
 import PermissionService from "../../services/PermissionService";
 
 const RolePermissions = () => {
-  const [RolePermissions, setRolePermissions] = useState<IRolePermission[]>([]);
-  const [Roles, setRoles] = useState<IRole[]>([]);
-  const [Permissions, setPermissions] = useState<IPermission[]>([]);
-  const [RolePermissionId, setRolePermissionId] = useState<number>(0);
+  const [rolePermissions, setRolePermissions] = useState<IRolePermission[]>([]);
+  const [roles, setRoles] = useState<IRole[]>([]);
+  const [permissions, setPermissions] = useState<IPermission[]>([]);
+  const [rolePermissionId, setRolePermissionId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
@@ -111,11 +111,11 @@ const RolePermissions = () => {
   };
 
   const handleSaveSuccess = async (newRolePermissionId: number) => {
-    if (RolePermissionId === 0) {
+    if (rolePermissionId === 0) {
       setRolePermissionId(newRolePermissionId);
       await saveRecordHistory(newRolePermissionId, 1, "Thêm mới phân quyền");
     } else {
-      await saveRecordHistory(RolePermissionId, 2, "Cập nhật phân quyền");
+      await saveRecordHistory(rolePermissionId, 2, "Cập nhật phân quyền");
     }
     fetchRolePermissions();
   };
@@ -158,9 +158,9 @@ const RolePermissions = () => {
         >
           <div className="modal-content">
             <RolePermissionForm
-              RolePermissionId={RolePermissionId}
-              roles={Roles}
-              permissions={Permissions}
+              rolePermissionId={rolePermissionId}
+              roles={roles}
+              permissions={permissions}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
@@ -169,14 +169,14 @@ const RolePermissions = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : RolePermissions.length === 0 ? (
+      ) : rolePermissions.length === 0 ? (
         <h1>Không tìm thấy phân quyền nào.</h1>
       ) : (
         <>
           <RolePermissionsGrid
-            data={RolePermissions}
-            roles={Roles}
-            permissions={Permissions}
+            data={rolePermissions}
+            roles={roles}
+            permissions={permissions}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ICreateActivity } from "../../types/global.typing";
 import {
   Button,
@@ -33,11 +33,7 @@ const ActivityForm = ({
   const [loading, setLoading] = useState(false);
   const isEditing = activityId !== 0;
 
-  useEffect(() => {
-    fetchActivityData();
-  }, [activityId]);
-
-  const fetchActivityData = async () => {
+  const fetchActivityData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
@@ -50,7 +46,11 @@ const ActivityForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, activityId]);
+
+  useEffect(() => {
+    fetchActivityData();
+  }, [fetchActivityData]);
 
   const handleInputChange = (field: string, value: string) => {
     setActivity((prevActivity) => ({

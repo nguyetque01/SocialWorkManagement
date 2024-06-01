@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ICreateActivityCategory } from "../../types/global.typing";
 import {
   Button,
@@ -6,7 +6,7 @@ import {
   Typography,
   Paper,
   Grid,
-  CircularProgress, 
+  CircularProgress,
 } from "@mui/material";
 import { toast } from "react-toastify";
 import ActivityCategoryService from "../../services/ActivityCategoryService";
@@ -23,33 +23,38 @@ const ActivityCategoryForm = ({
   onSaveSuccess,
   handleClickCancelBtn,
 }: IActivityCategoryFormProps) => {
-  const [activityCategory, setActivityCategory] = useState<ICreateActivityCategory>({
-    name: "",
-    status: 0,
-    description: "",
-  });
+  const [activityCategory, setActivityCategory] =
+    useState<ICreateActivityCategory>({
+      name: "",
+      status: 0,
+      description: "",
+    });
 
   const [loading, setLoading] = useState(false);
   const isEditing = activityCategoryId !== 0;
 
-  useEffect(() => {
-    fetchActivityCategoryData();
-  }, [activityCategoryId]);
-
-  const fetchActivityCategoryData = async () => {
+  const fetchActivityCategoryData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await ActivityCategoryService.getActivityCategoryById(activityCategoryId);
+        const data = await ActivityCategoryService.getActivityCategoryById(
+          activityCategoryId
+        );
         setActivityCategory(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu danh mục hoạt động:", error);
-        toast.error("Lỗi khi tải dữ liệu danh mục hoạt động. Vui lòng thử lại!");
+        toast.error(
+          "Lỗi khi tải dữ liệu danh mục hoạt động. Vui lòng thử lại!"
+        );
       } finally {
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, activityCategoryId]);
+
+  useEffect(() => {
+    fetchActivityCategoryData();
+  }, [fetchActivityCategoryData]);
 
   const handleInputChange = (field: string, value: string) => {
     setActivityCategory((prevActivityCategory) => ({
@@ -67,7 +72,10 @@ const ActivityCategoryForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? ActivityCategoryService.updateActivityCategory(activityCategoryId, activityCategory)
+      ? ActivityCategoryService.updateActivityCategory(
+          activityCategoryId,
+          activityCategory
+        )
       : ActivityCategoryService.createActivityCategory(activityCategory);
 
     savePromise
@@ -95,7 +103,9 @@ const ActivityCategoryForm = ({
       ) : (
         <Paper elevation={3} className="form">
           <Typography variant="h5" gutterBottom>
-            {isEditing ? "Chỉnh sửa danh mục hoạt động" : "Thêm danh mục hoạt động mới"}
+            {isEditing
+              ? "Chỉnh sửa danh mục hoạt động"
+              : "Thêm danh mục hoạt động mới"}
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12}>

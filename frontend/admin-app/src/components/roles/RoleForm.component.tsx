@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ICreateRole } from "../../types/global.typing";
 import {
   Button,
@@ -15,11 +15,11 @@ import "../../styles/form.scss";
 interface IRoleFormProps {
   handleClickCancelBtn: () => void;
   onSaveSuccess: (newRole: number) => void;
-  RoleId: number;
+  roleId: number;
 }
 
 const RoleForm = ({
-  RoleId,
+  roleId,
   onSaveSuccess,
   handleClickCancelBtn,
 }: IRoleFormProps) => {
@@ -30,17 +30,13 @@ const RoleForm = ({
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = RoleId !== 0;
+  const isEditing = roleId !== 0;
 
-  useEffect(() => {
-    fetchRoleData();
-  }, [RoleId]);
-
-  const fetchRoleData = async () => {
+  const fetchRoleData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await RoleService.getRoleById(RoleId);
+        const data = await RoleService.getRoleById(roleId);
         setRole(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu vai trò:", error);
@@ -49,7 +45,11 @@ const RoleForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, roleId]);
+
+  useEffect(() => {
+    fetchRoleData();
+  }, [fetchRoleData]);
 
   const handleInputChange = (field: string, value: string) => {
     setRole((prevRole) => ({
@@ -67,7 +67,7 @@ const RoleForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? RoleService.updateRole(RoleId, Role)
+      ? RoleService.updateRole(roleId, Role)
       : RoleService.createRole(Role);
 
     savePromise
