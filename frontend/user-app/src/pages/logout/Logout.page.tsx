@@ -24,7 +24,7 @@ const LogoutPage = () => {
     };
 
     performLogout();
-  }, []);
+  }, [logout]);
 
   return null;
 };

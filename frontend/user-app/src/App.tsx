@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { ThemeContext } from "./context/theme.context";
 import CustomToastContainer from "./components/common/custom-toast-container/CustomToastContainer.component";
 import UserLayout from "./layouts/UserLayout";
