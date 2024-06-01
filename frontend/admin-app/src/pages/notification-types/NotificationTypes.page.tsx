@@ -14,7 +14,7 @@ const NotificationTypes = () => {
   const [NotificationTypes, setNotificationTypes] = useState<
     INotificationType[]
   >([]);
-  const [NotificationTypeId, setNotificationTypeId] = useState<number>(0);
+  const [notificationTypeId, setNotificationTypeId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
@@ -81,7 +81,7 @@ const NotificationTypes = () => {
   };
 
   const handleSaveSuccess = async (newNotificationTypeId: number) => {
-    if (NotificationTypeId === 0) {
+    if (notificationTypeId === 0) {
       setNotificationTypeId(newNotificationTypeId);
       await saveRecordHistory(
         newNotificationTypeId,
@@ -89,15 +89,15 @@ const NotificationTypes = () => {
         "Thêm mới loại thông báo"
       );
     } else {
-      await saveRecordHistory(NotificationTypeId, 2, "Cập nhật loại thông báo");
+      await saveRecordHistory(notificationTypeId, 2, "Cập nhật loại thông báo");
     }
     fetchNotificationTypes();
   };
 
   const handleClickCancelBtn = () => closeModal();
 
-  const handleClickDeleteBtn = async (NotificationTypeId: number) => {
-    setDeleteItemId(NotificationTypeId);
+  const handleClickDeleteBtn = async (notificationTypeId: number) => {
+    setDeleteItemId(notificationTypeId);
     openDeleteDialog();
   };
 
@@ -132,7 +132,7 @@ const NotificationTypes = () => {
         >
           <div className="modal-content">
             <NotificationTypeForm
-              NotificationTypeId={NotificationTypeId}
+              notificationTypeId={notificationTypeId}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />

@@ -11,8 +11,8 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const Faculties = () => {
-  const [Faculties, setFaculties] = useState<IFaculty[]>([]);
-  const [FacultyId, setFacultyId] = useState<number>(0);
+  const [faculties, setFaculties] = useState<IFaculty[]>([]);
+  const [facultyId, setFacultyId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
@@ -28,8 +28,8 @@ const Faculties = () => {
   const fetchFaculties = async () => {
     try {
       setLoading(true);
-      const FacultiesData = await FacultyService.getAllFaculties();
-      setFaculties(FacultiesData);
+      const facultiesData = await FacultyService.getAllFaculties();
+      setFaculties(facultiesData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách khoa:", error);
       toast.error("Lỗi khi tải danh sách khoa. Vui lòng thử lại.");
@@ -51,8 +51,8 @@ const Faculties = () => {
     openModal();
   };
 
-  const handleClickEditBtn = (FacultyId: number) => {
-    setFacultyId(FacultyId);
+  const handleClickEditBtn = (facultyId: number) => {
+    setFacultyId(facultyId);
     openModal();
   };
 
@@ -78,19 +78,19 @@ const Faculties = () => {
   };
 
   const handleSaveSuccess = async (newFacultyId: number) => {
-    if (FacultyId === 0) {
+    if (facultyId === 0) {
       setFacultyId(newFacultyId);
       await saveRecordHistory(newFacultyId, 1, "Thêm mới khoa");
     } else {
-      await saveRecordHistory(FacultyId, 2, "Cập nhật khoa");
+      await saveRecordHistory(facultyId, 2, "Cập nhật khoa");
     }
     fetchFaculties();
   };
 
   const handleClickCancelBtn = () => closeModal();
 
-  const handleClickDeleteBtn = async (FacultyId: number) => {
-    setDeleteItemId(FacultyId);
+  const handleClickDeleteBtn = async (facultyId: number) => {
+    setDeleteItemId(facultyId);
     openDeleteDialog();
   };
 
@@ -125,7 +125,7 @@ const Faculties = () => {
         >
           <div className="modal-content">
             <FacultyForm
-              FacultyId={FacultyId}
+              facultyId={facultyId}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
@@ -134,12 +134,12 @@ const Faculties = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : Faculties.length === 0 ? (
+      ) : faculties.length === 0 ? (
         <h1>Không tìm thấy khoa nào.</h1>
       ) : (
         <>
           <FacultiesGrid
-            data={Faculties}
+            data={faculties}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ICreatePermission } from "../../types/global.typing";
 import {
   Button,
@@ -15,32 +15,28 @@ import "../../styles/form.scss";
 interface IPermissionFormProps {
   handleClickCancelBtn: () => void;
   onSaveSuccess: (newPermission: number) => void;
-  PermissionId: number;
+  permissionId: number;
 }
 
 const PermissionForm = ({
-  PermissionId,
+  permissionId,
   onSaveSuccess,
   handleClickCancelBtn,
 }: IPermissionFormProps) => {
-  const [Permission, setPermission] = useState<ICreatePermission>({
+  const [permission, setPermission] = useState<ICreatePermission>({
     name: "",
     status: 0,
     description: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = PermissionId !== 0;
+  const isEditing = permissionId !== 0;
 
-  useEffect(() => {
-    fetchPermissionData();
-  }, [PermissionId]);
-
-  const fetchPermissionData = async () => {
+  const fetchPermissionData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await PermissionService.getPermissionById(PermissionId);
+        const data = await PermissionService.getPermissionById(permissionId);
         setPermission(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu quyền hạn:", error);
@@ -49,7 +45,11 @@ const PermissionForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, permissionId]);
+
+  useEffect(() => {
+    fetchPermissionData();
+  }, [fetchPermissionData]);
 
   const handleInputChange = (field: string, value: string) => {
     setPermission((prevPermission) => ({
@@ -59,7 +59,7 @@ const PermissionForm = ({
   };
 
   const handleClickSaveBtn = () => {
-    if (Permission.name === "") {
+    if (permission.name === "") {
       toast.error("Vui lòng nhập tên quyền hạn!");
       return;
     }
@@ -67,8 +67,8 @@ const PermissionForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? PermissionService.updatePermission(PermissionId, Permission)
-      : PermissionService.createPermission(Permission);
+      ? PermissionService.updatePermission(permissionId, permission)
+      : PermissionService.createPermission(permission);
 
     savePromise
       .then((newPermission) => {
@@ -103,7 +103,7 @@ const PermissionForm = ({
                 fullWidth
                 label="Tên quyền hạn"
                 variant="outlined"
-                value={Permission.name}
+                value={permission.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
               />
             </Grid>
@@ -114,7 +114,7 @@ const PermissionForm = ({
                 rows={3}
                 label="Mô tả"
                 variant="outlined"
-                value={Permission.description}
+                value={permission.description}
                 onChange={(e) =>
                   handleInputChange("description", e.target.value)
                 }

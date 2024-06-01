@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ICreateNotificationType } from "../../types/global.typing";
 import {
   Button,
@@ -15,11 +15,11 @@ import "../../styles/form.scss";
 interface INotificationTypeFormProps {
   handleClickCancelBtn: () => void;
   onSaveSuccess: (newNotificationType: number) => void;
-  NotificationTypeId: number;
+  notificationTypeId: number;
 }
 
 const NotificationTypeForm = ({
-  NotificationTypeId,
+  notificationTypeId,
   onSaveSuccess,
   handleClickCancelBtn,
 }: INotificationTypeFormProps) => {
@@ -31,18 +31,14 @@ const NotificationTypeForm = ({
     });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = NotificationTypeId !== 0;
+  const isEditing = notificationTypeId !== 0;
 
-  useEffect(() => {
-    fetchNotificationTypeData();
-  }, [NotificationTypeId]);
-
-  const fetchNotificationTypeData = async () => {
+  const fetchNotificationTypeData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
         const data = await NotificationTypeService.getNotificationTypeById(
-          NotificationTypeId
+          notificationTypeId
         );
         setNotificationType(data);
       } catch (error) {
@@ -52,7 +48,10 @@ const NotificationTypeForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, notificationTypeId]);
+  useEffect(() => {
+    fetchNotificationTypeData();
+  }, [fetchNotificationTypeData]);
 
   const handleInputChange = (field: string, value: string) => {
     setNotificationType((prevNotificationType) => ({
@@ -71,7 +70,7 @@ const NotificationTypeForm = ({
 
     const savePromise = isEditing
       ? NotificationTypeService.updateNotificationType(
-          NotificationTypeId,
+          notificationTypeId,
           NotificationType
         )
       : NotificationTypeService.createNotificationType(NotificationType);

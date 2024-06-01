@@ -11,8 +11,8 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const Permissions = () => {
-  const [Permissions, setPermissions] = useState<IPermission[]>([]);
-  const [PermissionId, setPermissionId] = useState<number>(0);
+  const [permissions, setPermissions] = useState<IPermission[]>([]);
+  const [permissionId, setPermissionId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState<boolean>(false);
@@ -28,8 +28,8 @@ const Permissions = () => {
   const fetchPermissions = async () => {
     try {
       setLoading(true);
-      const PermissionsData = await PermissionService.getAllPermissions();
-      setPermissions(PermissionsData);
+      const permissionsData = await PermissionService.getAllPermissions();
+      setPermissions(permissionsData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách quyền hạn:", error);
       toast.error("Lỗi khi tải danh sách quyền hạn. Vui lòng thử lại.");
@@ -78,11 +78,11 @@ const Permissions = () => {
   };
 
   const handleSaveSuccess = async (newPermissionId: number) => {
-    if (PermissionId === 0) {
+    if (permissionId === 0) {
       setPermissionId(newPermissionId);
       await saveRecordHistory(newPermissionId, 1, "Thêm mới quyền hạn");
     } else {
-      await saveRecordHistory(PermissionId, 2, "Cập nhật quyền hạn");
+      await saveRecordHistory(permissionId, 2, "Cập nhật quyền hạn");
     }
     fetchPermissions();
   };
@@ -125,7 +125,7 @@ const Permissions = () => {
         >
           <div className="modal-content">
             <PermissionForm
-              PermissionId={PermissionId}
+              permissionId={permissionId}
               onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
@@ -134,12 +134,12 @@ const Permissions = () => {
       </div>
       {loading ? (
         <CircularProgress size={100} />
-      ) : Permissions.length === 0 ? (
+      ) : permissions.length === 0 ? (
         <h1>Không tìm thấy quyền hạn nào.</h1>
       ) : (
         <>
           <PermissionsGrid
-            data={Permissions}
+            data={permissions}
             handleClickEditBtn={handleClickEditBtn}
             handleClickDeleteBtn={handleClickDeleteBtn}
           />

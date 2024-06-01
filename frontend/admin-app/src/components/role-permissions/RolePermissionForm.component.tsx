@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ICreateRolePermission,
   IPermission,
@@ -25,13 +25,13 @@ import "../../styles/form.scss";
 interface IRolePermissionFormProps {
   handleClickCancelBtn: () => void;
   onSaveSuccess: (newRolePermission: number) => void;
-  RolePermissionId: number;
+  rolePermissionId: number;
   roles: IRole[];
   permissions: IPermission[];
 }
 
 const RolePermissionForm = ({
-  RolePermissionId,
+  rolePermissionId,
   roles,
   permissions,
   onSaveSuccess,
@@ -45,17 +45,13 @@ const RolePermissionForm = ({
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = RolePermissionId !== 0;
+  const isEditing = rolePermissionId !== 0;
 
-  useEffect(() => {
-    fetchRolePermissionData();
-  }, [RolePermissionId]);
-
-  const fetchRolePermissionData = async () => {
+  const fetchRolePermissionData = useCallback(async () => {
     if (isEditing) {
       try {
         const data = await RolePermissionService.getRolePermissionById(
-          RolePermissionId
+          rolePermissionId
         );
         setRolePermission(data);
       } catch (error) {
@@ -63,7 +59,11 @@ const RolePermissionForm = ({
         toast.error("Lỗi khi tải dữ liệu phân quyền. Vui lòng thử lại!");
       }
     }
-  };
+  }, [isEditing, rolePermissionId]);
+
+  useEffect(() => {
+    fetchRolePermissionData();
+  }, [fetchRolePermissionData]);
 
   const handleInputChange = (field: string, value: string | number) => {
     setRolePermission((prevRolePermission) => ({
@@ -77,7 +77,7 @@ const RolePermissionForm = ({
 
     const savePromise = isEditing
       ? RolePermissionService.updateRolePermission(
-          RolePermissionId,
+          rolePermissionId,
           RolePermission
         )
       : RolePermissionService.createRolePermission(RolePermission);

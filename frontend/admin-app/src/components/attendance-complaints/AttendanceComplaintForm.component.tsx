@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { ICreateAttendanceComplaint } from "../../types/global.typing";
 import {
   Button,
@@ -23,24 +23,24 @@ const AttendanceComplaintForm = ({
   onSaveSuccess,
   handleClickCancelBtn,
 }: IAttendanceComplaintFormProps) => {
-  const [AttendanceComplaint, setAttendanceComplaint] = useState<ICreateAttendanceComplaint>({
-    //name: "",
-    status: 0,
-    description: "",
-  });
+  const [AttendanceComplaint, setAttendanceComplaint] =
+    useState<ICreateAttendanceComplaint>({
+      //name: "",
+      status: 0,
+      description: "",
+    });
 
   const [loading, setLoading] = useState(false);
   const isEditing = attendanceComplaintId !== 0;
 
-  useEffect(() => {
-    fetchAttendanceComplaintData();
-  }, [attendanceComplaintId]);
-
-  const fetchAttendanceComplaintData = async () => {
+  const fetchAttendanceComplaintData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await AttendanceComplaintService.getAttendanceComplaintById(attendanceComplaintId);
+        const data =
+          await AttendanceComplaintService.getAttendanceComplaintById(
+            attendanceComplaintId
+          );
         setAttendanceComplaint(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu khiếu nại:", error);
@@ -49,7 +49,11 @@ const AttendanceComplaintForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, attendanceComplaintId]);
+
+  useEffect(() => {
+    fetchAttendanceComplaintData();
+  }, [fetchAttendanceComplaintData]);
 
   const handleInputChange = (field: string, value: string) => {
     setAttendanceComplaint((prevAttendanceComplaint) => ({
@@ -67,8 +71,13 @@ const AttendanceComplaintForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? AttendanceComplaintService.updateAttendanceComplaint(attendanceComplaintId, AttendanceComplaint)
-      : AttendanceComplaintService.createAttendanceComplaint(AttendanceComplaint);
+      ? AttendanceComplaintService.updateAttendanceComplaint(
+          attendanceComplaintId,
+          AttendanceComplaint
+        )
+      : AttendanceComplaintService.createAttendanceComplaint(
+          AttendanceComplaint
+        );
 
     savePromise
       .then((newAttendanceComplaint) => {

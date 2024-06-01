@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ICreateFaculty } from "../../types/global.typing";
 import {
   Button,
@@ -15,32 +15,28 @@ import "../../styles/form.scss";
 interface IFacultyFormProps {
   handleClickCancelBtn: () => void;
   onSaveSuccess: (newFaculty: number) => void;
-  FacultyId: number;
+  facultyId: number;
 }
 
 const FacultyForm = ({
-  FacultyId,
+  facultyId,
   onSaveSuccess,
   handleClickCancelBtn,
 }: IFacultyFormProps) => {
-  const [Faculty, setFaculty] = useState<ICreateFaculty>({
+  const [faculty, setFaculty] = useState<ICreateFaculty>({
     name: "",
     status: 0,
     description: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const isEditing = FacultyId !== 0;
+  const isEditing = facultyId !== 0;
 
-  useEffect(() => {
-    fetchFacultyData();
-  }, [FacultyId]);
-
-  const fetchFacultyData = async () => {
+  const fetchFacultyData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await FacultyService.getFacultyById(FacultyId);
+        const data = await FacultyService.getFacultyById(facultyId);
         setFaculty(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu khoa:", error);
@@ -49,7 +45,11 @@ const FacultyForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, facultyId]);
+
+  useEffect(() => {
+    fetchFacultyData();
+  }, [fetchFacultyData]);
 
   const handleInputChange = (field: string, value: string) => {
     setFaculty((prevFaculty) => ({
@@ -59,7 +59,7 @@ const FacultyForm = ({
   };
 
   const handleClickSaveBtn = () => {
-    if (Faculty.name === "") {
+    if (faculty.name === "") {
       toast.error("Vui lòng nhập tên khoa!");
       return;
     }
@@ -67,8 +67,8 @@ const FacultyForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? FacultyService.updateFaculty(FacultyId, Faculty)
-      : FacultyService.createFaculty(Faculty);
+      ? FacultyService.updateFaculty(facultyId, faculty)
+      : FacultyService.createFaculty(faculty);
 
     savePromise
       .then((newFaculty) => {
@@ -103,7 +103,7 @@ const FacultyForm = ({
                 fullWidth
                 label="Tên khoa"
                 variant="outlined"
-                value={Faculty.name}
+                value={faculty.name}
                 onChange={(e) => handleInputChange("name", e.target.value)}
               />
             </Grid>
@@ -114,7 +114,7 @@ const FacultyForm = ({
                 rows={3}
                 label="Mô tả"
                 variant="outlined"
-                value={Faculty.description}
+                value={faculty.description}
                 onChange={(e) =>
                   handleInputChange("description", e.target.value)
                 }

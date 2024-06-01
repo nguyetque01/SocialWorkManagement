@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ICreateUser } from "../../types/global.typing";
 import {
   Button,
@@ -58,11 +58,7 @@ const UserForm = ({
     event.preventDefault();
   };
 
-  useEffect(() => {
-    fetchUserData();
-  }, [userId]);
-
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     if (isEditing) {
       try {
         const data = await UserService.getUserById(userId);
@@ -71,7 +67,11 @@ const UserForm = ({
         toast.error("Lỗi khi tải dữ liệu người dùng.");
       }
     }
-  };
+  }, [isEditing, userId]);
+
+  useEffect(() => {
+    fetchUserData();
+  }, [fetchUserData]);
 
   const handleInputChange = (field: string, value: string | null) => {
     setUser((prevUser) => ({

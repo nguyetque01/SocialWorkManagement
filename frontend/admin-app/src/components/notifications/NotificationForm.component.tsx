@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ICreateNotification,
   INotificationType,
@@ -44,11 +44,7 @@ const NotificationForm = ({
   const [loading, setLoading] = useState(false);
   const isEditing = notificationId !== 0;
 
-  useEffect(() => {
-    fetchNotificationData();
-  }, [notificationId]);
-
-  const fetchNotificationData = async () => {
+  const fetchNotificationData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
@@ -63,7 +59,11 @@ const NotificationForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, notificationId]);
+
+  useEffect(() => {
+    fetchNotificationData();
+  }, [fetchNotificationData]);
 
   const handleInputChange = (field: string, value: string | number) => {
     setNotification((prevNotification) => ({

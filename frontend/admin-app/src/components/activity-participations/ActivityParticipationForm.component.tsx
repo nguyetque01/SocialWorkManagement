@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { ICreateActivityParticipation} from "../../types/global.typing";
+import { useCallback, useEffect, useState } from "react";
+import { ICreateActivityParticipation } from "../../types/global.typing";
 import {
   Button,
   TextField,
@@ -23,34 +23,40 @@ const ActivityParticipationForm = ({
   onSaveSuccess,
   handleClickCancelBtn,
 }: IActivityParticipationFormProps) => {
-  const [activityParticipation, setActivityParticipation] = useState<ICreateActivityParticipation>({
-    // có sửa lại ở đây
-    // activitySessionId: undefined,
-    status: 0,
-    description: "",
-  });
+  const [activityParticipation, setActivityParticipation] =
+    useState<ICreateActivityParticipation>({
+      // có sửa lại ở đây
+      // activitySessionId: undefined,
+      status: 0,
+      description: "",
+    });
 
   const [loading, setLoading] = useState(false);
   const isEditing = activityParticipationId !== 0;
 
-  useEffect(() => {
-    fetchActivityParticipationData();
-  }, [activityParticipationId]);
-
-  const fetchActivityParticipationData = async () => {
+  const fetchActivityParticipationData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
-        const data = await ActivityParticipationService.getActivityParticipationById(activityParticipationId);
+        const data =
+          await ActivityParticipationService.getActivityParticipationById(
+            activityParticipationId
+          );
         setActivityParticipation(data);
       } catch (error) {
         console.error("Lỗi khi tải dữ liệu hoạt động tham gia:", error);
-        toast.error("Lỗi khi tải dữ liệu hoạt động tham gia. Vui lòng thử lại!");
+        toast.error(
+          "Lỗi khi tải dữ liệu hoạt động tham gia. Vui lòng thử lại!"
+        );
       } finally {
         // setLoading(false);
       }
     }
-  };
+  }, [isEditing, activityParticipationId]);
+
+  useEffect(() => {
+    fetchActivityParticipationData();
+  }, [fetchActivityParticipationData]);
 
   const handleInputChange = (field: string, value: string) => {
     setActivityParticipation((prevActivityParticipation) => ({
@@ -69,8 +75,13 @@ const ActivityParticipationForm = ({
     setLoading(true);
 
     const savePromise = isEditing
-      ? ActivityParticipationService.updateActivityParticipation(activityParticipationId, activityParticipation)
-      : ActivityParticipationService.createActivityParticipation(activityParticipation);
+      ? ActivityParticipationService.updateActivityParticipation(
+          activityParticipationId,
+          activityParticipation
+        )
+      : ActivityParticipationService.createActivityParticipation(
+          activityParticipation
+        );
 
     savePromise
       .then((newActivityParticipation) => {
@@ -97,7 +108,9 @@ const ActivityParticipationForm = ({
       ) : (
         <Paper elevation={3} className="form">
           <Typography variant="h5" gutterBottom>
-            {isEditing ? "Chỉnh sửa hoạt động tham gia" : "Thêm hoạt động tham gia mới"}
+            {isEditing
+              ? "Chỉnh sửa hoạt động tham gia"
+              : "Thêm hoạt động tham gia mới"}
           </Typography>
           <Grid container spacing={2}>
             {/* <Grid item xs={12}>

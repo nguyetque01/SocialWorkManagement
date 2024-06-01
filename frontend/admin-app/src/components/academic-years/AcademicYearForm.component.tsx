@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ICreateAcademicYear } from "../../types/global.typing";
 import {
   Button,
@@ -34,11 +34,7 @@ const AcademicYearForm = ({
   const [loading, setLoading] = useState(false);
   const isEditing = academicYearId !== 0;
 
-  useEffect(() => {
-    fetchAcademicYearData();
-  }, [academicYearId]);
-
-  const fetchAcademicYearData = async () => {
+  const fetchAcademicYearData = useCallback(async () => {
     if (isEditing) {
       try {
         // setLoading(true);
@@ -53,7 +49,11 @@ const AcademicYearForm = ({
         // setLoading(false);
       }
     }
-  };
+  }, [academicYearId, isEditing]);
+
+  useEffect(() => {
+    fetchAcademicYearData();
+  }, [fetchAcademicYearData]);
 
   const handleInputChange = (field: string, value: string) => {
     setAcademicYear((prevAcademicYear) => ({

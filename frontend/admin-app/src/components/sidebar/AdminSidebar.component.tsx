@@ -184,7 +184,7 @@ const AdminSidebar = ({
       setOpenIndex(index);
     }
 
-    if (index == 5) {
+    if (index === 5) {
       setConfirmLogoutOpen(true);
     }
   };
