@@ -60,6 +60,13 @@ const Login = () => {
           >
             Trường Đại Học Công Nghệ Đồng Nai
           </Typography>
+          <Typography
+            variant="h6"
+            className="page-name"
+            sx={{ textAlign: "center" }}
+          >
+            - Hệ Thống Quản Trị -
+          </Typography>
         </Box>
         <LoginForm onLogin={handleLogin} />
       </Box>

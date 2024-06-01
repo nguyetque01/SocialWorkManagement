@@ -4,6 +4,13 @@ export interface MenuItemType {
   subItems?: MenuItemType[];
 }
 
+export interface ApiResponse<T> {
+  status: string;
+  message: string;
+  responseData: T;
+  timeStamp: string;
+}
+
 export interface IUser {
   id: number;
   email: string;

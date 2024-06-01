@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { ICreateUser } from "../../types/global.typing";
 import {
   Button,
   TextField,
@@ -19,6 +18,7 @@ import { toast } from "react-toastify";
 import UserService from "../../services/UserService";
 import "../../styles/form.scss";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { ICreateUser } from "../../types/user.typing";
 
 interface IUserFormProps {
   handleClickCancelBtn: () => void;

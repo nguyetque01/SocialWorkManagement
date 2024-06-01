@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using backend.Repositories;
+using backend.Helpers;
 
 namespace backend.Controllers
 {
@@ -13,95 +12,121 @@ namespace backend.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly SocialWorkDbContext _context;
+        private readonly IUserRepository _userRepository;
+        private readonly ResponseHelper _responseHelper;
 
-        public UsersController(SocialWorkDbContext context)
+        public UsersController(IUserRepository userRepository, ResponseHelper responseHelper)
         {
-            _context = context;
+            _userRepository = userRepository;
+            _responseHelper = responseHelper;
         }
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<IActionResult> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            try
+            {
+                var users = await _userRepository.GetAllUsers();
+                return _responseHelper.CreateResponse("Users retrieved successfully", users, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
+        }
+
+        // GET: api/Users/details
+        [HttpGet("details")]
+        public async Task<IActionResult> GetAllUserDetails()
+        {
+            try
+            {
+                var userDetails = await _userRepository.GetAllUserDetails();
+                return _responseHelper.CreateResponse("User details retrieved successfully", userDetails, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = await _userRepository.GetUserById(id);
+                if (user == null)
+                {
+                    return _responseHelper.CreateResponse("User not found", null, "fail");
+                }
+                return _responseHelper.CreateResponse("User retrieved successfully", user, "success");
             }
-
-            return user;
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(user).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
+                if (id != user.Id)
                 {
-                    return NotFound();
+                    return _responseHelper.CreateResponse("User ID mismatch", null, "fail");
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                await _userRepository.UpdateUser(user);
+
+                return _responseHelper.CreateResponse("User updated successfully", null, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<IActionResult> PostUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _userRepository.AddUser(user);
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+                return _responseHelper.CreateResponse("User added successfully", user, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var userExists = await _userRepository.UserExists(id);
+                if (!userExists)
+                {
+                    return _responseHelper.CreateResponse("User not found", null, "fail");
+                }
+
+                await _userRepository.DeleteUser(id);
+
+                return _responseHelper.CreateResponse("User deleted successfully", null, "success");
             }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.Id == id);
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
     }
 }

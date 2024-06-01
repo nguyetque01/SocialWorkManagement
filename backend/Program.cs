@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using NuGet.DependencyResolver;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication;
+using backend.Repositories;
+using backend.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,7 +47,6 @@ builder.Services.AddSwaggerGen(option =>
 builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
     opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
@@ -67,6 +68,9 @@ builder.Services.AddDbContext<SocialWorkDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SocialWorkDB"));
 });
+builder.Services.AddScoped<TokenService, TokenService>();
+builder.Services.AddScoped<ResponseHelper>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
