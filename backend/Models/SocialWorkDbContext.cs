@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using backend.DTOs;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Models;
@@ -14,6 +15,8 @@ public partial class SocialWorkDbContext : DbContext
         : base(options)
     {
     }
+
+    public DbSet<UserDetailDto> UserDetails { get; set; }
 
     public virtual DbSet<AcademicYear> AcademicYears { get; set; }
 

@@ -2,16 +2,16 @@ import React, { useEffect, useState, useContext } from "react";
 import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { IUser } from "../../types/global.typing";
 import UsersGrid from "../../components/users/UsersGrid.component";
 import UserForm from "../../components/users/UserForm.component";
 import UserService from "../../services/UserService";
 import DeleteDialog from "../../components/common/dialog/DeleteDialog.component";
 import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
+import { IUserDetail } from "../../types/user.typing";
 
 const Users = () => {
-  const [users, setUsers] = useState<IUser[]>([]);
+  const [users, setUsers] = useState<IUserDetail[]>([]);
   const [userId, setuserId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -28,8 +28,8 @@ const Users = () => {
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const UsersData = await UserService.getAllUsers();
-      setUsers(UsersData);
+      const usersData = await UserService.getAllUserDetails();
+      setUsers(usersData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách người dùng:", error);
       toast.error("Lỗi khi tải danh sách người dùng. Vui lòng thử lại.");

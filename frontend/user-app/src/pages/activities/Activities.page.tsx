@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CircularProgress, Modal, Typography } from "@mui/material";
+import { CircularProgress, Modal } from "@mui/material";
 import { toast } from "react-toastify";
 import { IActivity } from "../../types/global.typing";
 import ActivitiesGrid from "../../components/activities/ActivitiesGrid.component";

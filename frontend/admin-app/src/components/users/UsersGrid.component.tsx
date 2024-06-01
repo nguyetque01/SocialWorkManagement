@@ -2,11 +2,11 @@ import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Edit, Delete } from "@mui/icons-material";
 import moment from "moment";
-import { IUser } from "../../types/global.typing";
 import "../../styles/grid.scss";
+import { IUserDetail } from "../../types/user.typing";
 
 interface IUsersGridProps {
-  data: IUser[];
+  data: IUserDetail[];
   handleClickEditBtn: (id: number) => void;
   handleClickDeleteBtn: (id: number) => void;
 }
@@ -46,9 +46,9 @@ const UsersGrid = ({
     },
     { field: "address", headerName: "Địa chỉ", width: 150 },
     { field: "phoneNumber", headerName: "Điện thoại", width: 150 },
-    { field: "roleId", headerName: "ID Vai trò", width: 150 },
-    { field: "facultyId", headerName: "ID Khoa", width: 150 },
-    { field: "classId", headerName: "ID Lớp", width: 150 },
+    { field: "roleName", headerName: " Vai trò", width: 150 },
+    { field: "facultyName", headerName: " Khoa", width: 150 },
+    { field: "className", headerName: " Lớp", width: 150 },
     { field: "status", headerName: "Trạng thái", width: 150 },
     { field: "description", headerName: "Mô tả", width: 150 },
     {
