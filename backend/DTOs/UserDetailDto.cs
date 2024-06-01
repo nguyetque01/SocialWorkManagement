@@ -12,7 +12,7 @@
         public string? RoleName { get; set; }
         public string? FacultyName { get; set; }
         public string? ClassName { get; set; }
-        public int? Status { get; set; }
+        public string? StatusText { get; set; }
         public string? Description { get; set; }
     }
 }

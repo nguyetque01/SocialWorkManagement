@@ -49,7 +49,7 @@ const UsersGrid = ({
     { field: "roleName", headerName: " Vai trò", width: 150 },
     { field: "facultyName", headerName: " Khoa", width: 150 },
     { field: "className", headerName: " Lớp", width: 150 },
-    { field: "status", headerName: "Trạng thái", width: 150 },
+    { field: "statusText", headerName: "Trạng thái", width: 150 },
     { field: "description", headerName: "Mô tả", width: 150 },
     {
       field: "actions",

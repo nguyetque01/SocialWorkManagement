@@ -71,6 +71,7 @@ builder.Services.AddDbContext<SocialWorkDbContext>(options =>
 builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddScoped<ResponseHelper>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
