@@ -25,7 +25,8 @@ const ActivitiesGrid = ({
     { field: "name", headerName: "Tên hoạt động", width: 400 },
     { field: "location", headerName: "Địa điểm", width: 200 },
     { field: "academicYear", headerName: "Năm học", width: 150 },
-    { field: "activityCategory", headerName: "Loại hoạt động", width: 150 },
+    { field: "activityCategory", headerName: "Danh mục hoạt động", width: 150 },
+    { field: "totalDays", headerName: "Tổng số ngày CTXH", width: 150 },
     {
       field: "releaseTime",
       headerName: "Thời gian công bố",
