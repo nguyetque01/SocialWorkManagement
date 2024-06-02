@@ -54,6 +54,23 @@ const Activitieservice = {
     }
   },
 
+  getActivityDetailById: async (
+    ActivityId: number
+  ): Promise<IActivityDetail> => {
+    try {
+      const response = await httpModule.get<ApiResponse<IActivityDetail>>(
+        `${API_ENDPOINT}/details/${ActivityId}`
+      );
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      throw new Error("Failed to fetch Activity");
+    }
+  },
+
   createActivity: async (ActivityData: ICreateActivity): Promise<IActivity> => {
     try {
       const response = await httpModule.post<ApiResponse<IActivity>>(

@@ -70,6 +70,25 @@ namespace backend.Controllers
             }
         }
 
+        // GET: api/Activities/details/5
+        [HttpGet("details/{id}")]
+        public async Task<IActionResult> GetActivityDetail(int id)
+        {
+            try
+            {
+                var activityDetail = await _activityRepository.GetActivityDetailById(id);
+                if (activityDetail == null)
+                {
+                    return _responseHelper.CreateResponse("Activity detail not found", null, "fail");
+                }
+                return _responseHelper.CreateResponse("Activity detail retrieved successfully", activityDetail, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
+        }
+
         // PUT: api/Activities/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutActivity(int id, Activity activity)

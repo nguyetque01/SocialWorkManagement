@@ -1,0 +1,36 @@
+@import "./mixins";
+
+.activity-detail {
+  padding: 20px;
+  margin: 20px auto;
+  width: 850px;
+  min-height: 420px;
+}
+
+.detail-container {
+  margin-top: 10px;
+}
+
+.detail-container > div {
+  margin-bottom: 10px;
+}
+
+.btns {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background-color: var(--primary);
+  color: white;
+}
+
+.typography-with-icon {
+  display: flex;
+  align-items: center;
+}
+
+.typography-with-icon .MuiSvgIcon-root {
+  margin-right: 10px;
+}

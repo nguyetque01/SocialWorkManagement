@@ -16,6 +16,7 @@ namespace backend.Repositories
         Task DeleteActivity(int id);
         Task<bool> ActivityExists(int id);
         Task<IEnumerable<ActivityDetailDto>> GetAllActivityDetails();
+        Task<ActivityDetailDto> GetActivityDetailById(int id); 
 
     }
 
@@ -26,13 +27,6 @@ namespace backend.Repositories
         public ActivityRepository(SocialWorkDbContext context)
         {
             _context = context;
-        }
-
-        public async Task<IEnumerable<ActivityDetailDto>> GetAllActivityDetails()
-        {
-            return await _context.Set<ActivityDetailDto>()
-                                 .FromSqlRaw("EXECUTE GetAllActivityDetails")
-                                 .ToListAsync();
         }
 
         public async Task<IEnumerable<Activity>> GetAllActivities()
@@ -70,6 +64,20 @@ namespace backend.Repositories
         public async Task<bool> ActivityExists(int id)
         {
             return await _context.Activities.AnyAsync(e => e.Id == id);
+        }
+
+        public async Task<IEnumerable<ActivityDetailDto>> GetAllActivityDetails()
+        {
+            return await _context.Set<ActivityDetailDto>()
+                                 .FromSqlRaw("EXECUTE GetAllActivityDetails")
+                                 .ToListAsync();
+        }
+        public async Task<ActivityDetailDto> GetActivityDetailById(int id)
+        {
+            IEnumerable<ActivityDetailDto> activities = await _context.Set<ActivityDetailDto>()
+                        .FromSqlRaw("EXECUTE GetActivityDetailsByID @ActivityID={0}", id)
+                        .ToListAsync();
+            return activities.FirstOrDefault();
         }
     }
 }
