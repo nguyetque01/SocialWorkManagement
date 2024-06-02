@@ -15,7 +15,6 @@ public partial class SocialWorkDbContext : DbContext
         : base(options)
     {
     }
-
     public DbSet<UserDetailDto> UserDetails { get; set; }
     public DbSet<ActivityDetailDto> ActivityDetails { get; set; }
 
@@ -345,16 +344,17 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<Status>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Status__3214EC279917B461");
+            entity.HasKey(e => e.Id).HasName("PK__Status__3214EC273B5E0AAF");
 
             entity.ToTable("Status");
 
-            entity.HasIndex(e => e.Name, "UQ__Status__737584F6B355D513").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__Status__737584F6219353C8").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Code).HasDefaultValue(0);
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.StatusType).HasMaxLength(50);
         });
 
         modelBuilder.Entity<User>(entity =>
