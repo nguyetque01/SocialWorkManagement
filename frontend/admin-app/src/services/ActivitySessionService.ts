@@ -1,38 +1,76 @@
 import httpModule from "../helpers/http.module";
-import { IActivitySession, ICreateActivitySession } from "../types/global.typing";
+import { ApiResponse } from "../types/global.typing";
+import {
+  ICreateActivitySession,
+  IActivitySession,
+  IActivitySessionDetail,
+} from "../types/activity-session.typing";
 
-const API_ENDPOINT = "/activitySessions";
+const API_ENDPOINT = "/ActivitySessions";
 
 const ActivitySessionService = {
-  getAllactivitySessions: async (): Promise<IActivitySession[]> => {
+  getAllActivitySessions: async (): Promise<IActivitySession[]> => {
     try {
-      const response = await httpModule.get<IActivitySession[]>(API_ENDPOINT);
-      return response.data;
+      const response = await httpModule.get<ApiResponse<IActivitySession[]>>(
+        API_ENDPOINT
+      );
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to fetch activity sessions");
+      throw new Error("Failed to fetch ActivitySessions");
     }
   },
 
-  getActivitySessionById: async (ActivitySessionId: number): Promise<IActivitySession> => {
+  getAllActivitySessionDetails: async (): Promise<IActivitySessionDetail[]> => {
     try {
-      const response = await httpModule.get<IActivitySession>(
+      const response = await httpModule.get<
+        ApiResponse<IActivitySessionDetail[]>
+      >(`${API_ENDPOINT}/details`);
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      throw new Error("Failed to fetch ActivitySessions");
+    }
+  },
+
+  getActivitySessionById: async (
+    ActivitySessionId: number
+  ): Promise<IActivitySession> => {
+    try {
+      const response = await httpModule.get<ApiResponse<IActivitySession>>(
         `${API_ENDPOINT}/${ActivitySessionId}`
       );
-      return response.data;
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to fetch activity session");
+      throw new Error("Failed to fetch ActivitySession");
     }
   },
 
-  createActivitySession: async (ActivitySessionData: ICreateActivitySession): Promise<IActivitySession> => {
+  createActivitySession: async (
+    ActivitySessionData: ICreateActivitySession
+  ): Promise<IActivitySession> => {
     try {
-      const response = await httpModule.post<IActivitySession>(
+      const response = await httpModule.post<ApiResponse<IActivitySession>>(
         API_ENDPOINT,
         ActivitySessionData
       );
-      return response.data;
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to create activity session");
+      throw new Error("Failed to create ActivitySession");
     }
   },
 
@@ -41,17 +79,28 @@ const ActivitySessionService = {
     ActivitySessionData: ICreateActivitySession
   ): Promise<void> => {
     try {
-      await httpModule.put(`${API_ENDPOINT}/${ActivitySessionId}`, ActivitySessionData);
+      const response = await httpModule.put<ApiResponse<any>>(
+        `${API_ENDPOINT}/${ActivitySessionId}`,
+        ActivitySessionData
+      );
+      if (response.data.status === "fail") {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to update activity session");
+      throw new Error("Failed to update ActivitySession");
     }
   },
 
   deleteActivitySession: async (ActivitySessionId: number): Promise<void> => {
     try {
-      await httpModule.delete(`${API_ENDPOINT}/${ActivitySessionId}`);
+      const response = await httpModule.delete<ApiResponse<any>>(
+        `${API_ENDPOINT}/${ActivitySessionId}`
+      );
+      if (response.data.status === "fail") {
+        throw new Error(response.data.message);
+      }
     } catch (error) {
-      throw new Error("Failed to delete activity session");
+      throw new Error("Failed to delete ActivitySession");
     }
   },
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { IActivitySession } from "../../types/global.typing";
+import { IActivitySessionDetail } from "../../types/activity-session.typing";
 import ActivitySessionsGrid from "../../components/activity-sessions/ActivitySessionsGrid.component";
 import ActivitySessionForm from "../../components/activity-sessions/ActivitySessionForm.component";
 import ActivitySessionService from "../../services/ActivitySessionService";
@@ -11,9 +11,9 @@ import RecordHistoryService from "../../services/RecordHistoryService";
 import { MainContext } from "../../context/main.context";
 
 const ActivitySessions = () => {
-  const [activitySessions, setActivitySessions] = useState<IActivitySession[]>(
-    []
-  );
+  const [activitySessions, setActivitySessions] = useState<
+    IActivitySessionDetail[]
+  >([]);
   const [activitySessionId, setActivitySessionId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -31,11 +31,11 @@ const ActivitySessions = () => {
     try {
       setLoading(true);
       const ActivitySessionsData =
-        await ActivitySessionService.getAllactivitySessions();
+        await ActivitySessionService.getAllActivitySessionDetails();
       setActivitySessions(ActivitySessionsData);
     } catch (error) {
-      console.error("Lỗi khi tải danh sách phiên hoạt động:", error);
-      toast.error("Lỗi khi tải danh sách phiên hoạt động. Vui lòng thử lại.");
+      console.error("Lỗi khi tải danh sách buổi hoạt động:", error);
+      toast.error("Lỗi khi tải danh sách buổi hoạt động. Vui lòng thử lại.");
     } finally {
       setLoading(false);
     }
@@ -86,10 +86,10 @@ const ActivitySessions = () => {
       await saveRecordHistory(
         newActivitySessionId,
         1,
-        "Thêm mới loại hành động"
+        "Thêm mới loại hoạt động"
       );
     } else {
-      await saveRecordHistory(activitySessionId, 2, "Cập nhật loại hành động");
+      await saveRecordHistory(activitySessionId, 2, "Cập nhật loại hoạt động");
     }
     fetchActivitySessions();
   };
@@ -104,13 +104,13 @@ const ActivitySessions = () => {
   const deleteActivitySession = async () => {
     try {
       await ActivitySessionService.deleteActivitySession(deleteItemId);
-      await saveRecordHistory(deleteItemId, 3, "Xóa phiên hành động");
+      await saveRecordHistory(deleteItemId, 3, "Xóa buổi hoạt động");
       closeModal();
       fetchActivitySessions();
-      toast.success("phiên hoạt động đã được xóa thành công!");
+      toast.success("buổi hoạt động đã được xóa thành công!");
     } catch (error) {
-      console.error("Lỗi khi xóa phiên hoạt động:", error);
-      toast.error("Lỗi khi xóa phiên hoạt động. Vui lòng thử lại.");
+      console.error("Lỗi khi xóa buổi hoạt động:", error);
+      toast.error("Lỗi khi xóa buổi hoạt động. Vui lòng thử lại.");
     } finally {
       closeDeleteDialog();
     }
@@ -119,7 +119,7 @@ const ActivitySessions = () => {
   return (
     <div className="content">
       <div className="heading">
-        <h2>Danh sách phiên hoạt động</h2>
+        <h2>Danh sách buổi hoạt động</h2>
         <Button variant="outlined" onClick={handleClickAddBtn}>
           <Add />
         </Button>
@@ -142,7 +142,7 @@ const ActivitySessions = () => {
       {loading ? (
         <CircularProgress size={100} />
       ) : activitySessions.length === 0 ? (
-        <h1>Không tìm thấy phiên hoạt động nào.</h1>
+        <h1>Không tìm thấy buổi hoạt động nào.</h1>
       ) : (
         <>
           <ActivitySessionsGrid
@@ -151,7 +151,7 @@ const ActivitySessions = () => {
             handleClickDeleteBtn={handleClickDeleteBtn}
           />
           <DeleteDialog
-            item={"phiên hoạt động"}
+            item={"buổi hoạt động"}
             isOpen={isDeleteDialogOpen}
             handleClose={() => setIsDeleteDialogOpen(false)}
             handleConfirm={deleteActivitySession}
