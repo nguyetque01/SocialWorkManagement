@@ -18,6 +18,11 @@ export interface IActivityDetail {
   releaseTime?: Date | null;
   statusText?: string | null;
   description?: string | null;
+  totalDays?: number | null;
+  activityStartDate?: Date | null;
+  activityEndDate?: Date | null;
+  registrationStartTime?: Date | null;
+  registrationEndTime?: Date | null;
 }
 
 export interface ICreateActivity {

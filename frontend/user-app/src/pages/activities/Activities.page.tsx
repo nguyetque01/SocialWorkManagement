@@ -11,7 +11,8 @@ const Activities = () => {
   const [activities, setActivities] = useState<IActivityDetail[]>([]);
   const [activityId, setActivityId] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] =
+    useState<boolean>(false);
   const currentDate = new Date();
   currentDate.setHours(currentDate.getHours() + 7);
 
@@ -32,26 +33,31 @@ const Activities = () => {
     }
   };
 
-  const openModal = () => setIsModalOpen(true);
+  const openRegisterModal = () => setIsRegisterModalOpen(true);
 
-  const closeModal = () => setIsModalOpen(false);
+  const closeRegisterModal = () => setIsRegisterModalOpen(false);
 
   const handleClickRegisterBtn = (activityId: number) => {
     setActivityId(activityId);
-    openModal();
+    openRegisterModal();
+  };
+
+  const handleClickDetailBtn = (activityId: number) => {
+    setActivityId(activityId);
+    openRegisterModal();
   };
 
   const handleSaveSuccess = async (newActivityId: number) => {};
 
-  const handleClickCancelBtn = () => closeModal();
+  const handleClickCancelBtn = () => closeRegisterModal();
 
   return (
     <div className="content">
       <div className="heading">
         <p className="title">Danh sách hoạt động</p>
         <Modal
-          open={isModalOpen}
-          onClose={closeModal}
+          open={isRegisterModalOpen}
+          onClose={closeRegisterModal}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
           className="modal-container"
@@ -73,6 +79,7 @@ const Activities = () => {
         <ActivitiesGrid
           data={activities}
           handleClickRegisterBtn={handleClickRegisterBtn}
+          handleClickDetailBtn={handleClickDetailBtn}
         />
       )}
     </div>
