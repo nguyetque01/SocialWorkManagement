@@ -61,3 +61,8 @@ ul {
     --text--color2: #999;
   }
 }
+.center {
+  @include d-flex(row, center, center);
+  width: 100%;
+  height: 100%;
+}

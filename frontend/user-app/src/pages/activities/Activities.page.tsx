@@ -5,6 +5,7 @@ import { IActivityDetail } from "../../types/activity.typing";
 import ActivitiesGrid from "../../components/activities/ActivitiesGrid.component";
 import ActivityRegistrationForm from "../../components/activities/ActivityRegistrationForm.component";
 import ActivityService from "../../services/ActivityService";
+import ActivityDetail from "../../components/activities/ActivityDetail.component";
 import "../../styles/page.scss";
 
 const Activities = () => {
@@ -13,6 +14,7 @@ const Activities = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] =
     useState<boolean>(false);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState<boolean>(false);
   const currentDate = new Date();
   currentDate.setHours(currentDate.getHours() + 7);
 
@@ -37,6 +39,10 @@ const Activities = () => {
 
   const closeRegisterModal = () => setIsRegisterModalOpen(false);
 
+  const openDetailModal = () => setIsDetailModalOpen(true);
+
+  const closeDetailModal = () => setIsDetailModalOpen(false);
+
   const handleClickRegisterBtn = (activityId: number) => {
     setActivityId(activityId);
     openRegisterModal();
@@ -44,12 +50,15 @@ const Activities = () => {
 
   const handleClickDetailBtn = (activityId: number) => {
     setActivityId(activityId);
-    openRegisterModal();
+    openDetailModal();
   };
 
   const handleSaveSuccess = async (newActivityId: number) => {};
 
-  const handleClickCancelBtn = () => closeRegisterModal();
+  const handleClickCancelBtn = () => {
+    closeRegisterModal();
+    closeDetailModal();
+  };
 
   return (
     <div className="content">
@@ -66,6 +75,20 @@ const Activities = () => {
             <ActivityRegistrationForm
               activityId={activityId}
               onSaveSuccess={handleSaveSuccess}
+              handleClickCancelBtn={handleClickCancelBtn}
+            />
+          </div>
+        </Modal>
+        <Modal
+          open={isDetailModalOpen}
+          onClose={closeDetailModal}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+          className="modal-container"
+        >
+          <div className="modal-content">
+            <ActivityDetail
+              activityId={activityId}
               handleClickCancelBtn={handleClickCancelBtn}
             />
           </div>
