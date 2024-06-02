@@ -94,7 +94,7 @@ const AdminSidebar = ({
         },
         {
           icon: <Event />,
-          text: "Phiên hoạt động",
+          text: "Buổi hoạt động",
           link: "/activity-sessions",
         },
         {

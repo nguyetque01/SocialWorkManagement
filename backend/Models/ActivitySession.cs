@@ -25,7 +25,7 @@ public partial class ActivitySession
 
     public DateTime? RegistrationEndTime { get; set; }
 
-    public int? RegistrationStatus { get; set; }
+    public int? RegistrationAcceptanceStatus { get; set; }
 
     public int? Status { get; set; }
 

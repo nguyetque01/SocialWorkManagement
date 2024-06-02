@@ -16,7 +16,10 @@ public partial class SocialWorkDbContext : DbContext
     {
     }
     public DbSet<UserDetailDto> UserDetails { get; set; }
+
     public DbSet<ActivityDetailDto> ActivityDetails { get; set; }
+
+    public DbSet<ActivitySessionDetailDto> ActivitySessionDetails { get; set; }
 
     public virtual DbSet<AcademicYear> AcademicYears { get; set; }
 
@@ -59,11 +62,11 @@ public partial class SocialWorkDbContext : DbContext
     {
         modelBuilder.Entity<AcademicYear>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Academic__3214EC2788C5476D");
+            entity.HasKey(e => e.Id).HasName("PK__Academic__3214EC27B478C038");
 
             entity.ToTable("AcademicYear");
 
-            entity.HasIndex(e => e.Name, "UQ__Academic__737584F6D71DF765").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__Academic__737584F6F8E47061").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(255);
@@ -77,11 +80,11 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<ActionType>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__ActionTy__3214EC271F9AE5C1");
+            entity.HasKey(e => e.Id).HasName("PK__ActionTy__3214EC279A6E01E4");
 
             entity.ToTable("ActionType");
 
-            entity.HasIndex(e => e.Name, "UQ__ActionTy__737584F65F842A60").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__ActionTy__737584F63916E18A").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(255);
@@ -91,7 +94,7 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<Activity>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC27F1DC9611");
+            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC27DE958B50");
 
             entity.ToTable("Activity");
 
@@ -117,7 +120,7 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<ActivityCategory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC2780931625");
+            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC275674ADC1");
 
             entity.ToTable("ActivityCategory");
 
@@ -135,7 +138,7 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<ActivityParticipation>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC27600E49E6");
+            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC2727429502");
 
             entity.ToTable("ActivityParticipation");
 
@@ -159,16 +162,16 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<ActivitySession>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC27903C36DE");
+            entity.HasKey(e => e.Id).HasName("PK__Activity__3214EC2706F4628E");
 
             entity.ToTable("ActivitySession");
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.ActivityId).HasColumnName("ActivityID");
             entity.Property(e => e.Description).HasMaxLength(255);
+            entity.Property(e => e.RegistrationAcceptanceStatus).HasDefaultValue(0);
             entity.Property(e => e.RegistrationEndTime).HasColumnType("datetime");
             entity.Property(e => e.RegistrationStartTime).HasColumnType("datetime");
-            entity.Property(e => e.RegistrationStatus).HasDefaultValue(0);
             entity.Property(e => e.Session).HasMaxLength(50);
             entity.Property(e => e.Status).HasDefaultValue(0);
 
@@ -179,7 +182,7 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<AttendanceComplaint>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Attendan__3214EC273C63A1FF");
+            entity.HasKey(e => e.Id).HasName("PK__Attendan__3214EC27CDE838C0");
 
             entity.ToTable("AttendanceComplaint");
 
@@ -201,11 +204,11 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<Class>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Class__3214EC278DB09EC5");
+            entity.HasKey(e => e.Id).HasName("PK__Class__3214EC274FEC15C4");
 
             entity.ToTable("Class");
 
-            entity.HasIndex(e => e.Name, "UQ__Class__737584F6EE6C74DC").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__Class__737584F67001A515").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.AdvisorId).HasColumnName("AdvisorID");
@@ -221,11 +224,11 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<Faculty>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Faculty__3214EC27FE47B92E");
+            entity.HasKey(e => e.Id).HasName("PK__Faculty__3214EC2700653FF8");
 
             entity.ToTable("Faculty");
 
-            entity.HasIndex(e => e.Name, "UQ__Faculty__737584F68CBB5C7D").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__Faculty__737584F6627C78F1").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(255);
@@ -235,7 +238,7 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<Notification>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC270EADC57C");
+            entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC27A3570405");
 
             entity.ToTable("Notification");
 
@@ -257,11 +260,11 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<NotificationType>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC27F655639D");
+            entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC275B4C0CC6");
 
             entity.ToTable("NotificationType");
 
-            entity.HasIndex(e => e.Name, "UQ__Notifica__737584F60E37119F").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__Notifica__737584F62BDC21E5").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(255);
@@ -271,11 +274,11 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<Permission>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Permissi__3214EC27340DA64F");
+            entity.HasKey(e => e.Id).HasName("PK__Permissi__3214EC274FB11407");
 
             entity.ToTable("Permission");
 
-            entity.HasIndex(e => e.Name, "UQ__Permissi__737584F690D88C9E").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__Permissi__737584F6A98858D6").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(255);
@@ -285,7 +288,7 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<RecordHistory>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__RecordHi__3214EC27C6818458");
+            entity.HasKey(e => e.Id).HasName("PK__RecordHi__3214EC271A617E8C");
 
             entity.ToTable("RecordHistory");
 
@@ -311,9 +314,9 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<Role>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC273BB9B9A1");
+            entity.HasKey(e => e.Id).HasName("PK__Roles__3214EC272BC4A3D8");
 
-            entity.HasIndex(e => e.Name, "UQ__Roles__737584F67BBDAD95").IsUnique();
+            entity.HasIndex(e => e.Name, "UQ__Roles__737584F6A5C12E3D").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Description).HasMaxLength(255);
@@ -323,7 +326,7 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<RolePermission>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__RolePerm__3214EC2791A282A8");
+            entity.HasKey(e => e.Id).HasName("PK__RolePerm__3214EC27CE1F4472");
 
             entity.ToTable("RolePermission");
 
@@ -344,11 +347,9 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<Status>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Status__3214EC273B5E0AAF");
+            entity.HasKey(e => e.Id).HasName("PK__Status__3214EC2768AAFE98");
 
             entity.ToTable("Status");
-
-            entity.HasIndex(e => e.Name, "UQ__Status__737584F6219353C8").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Code).HasDefaultValue(0);
@@ -359,9 +360,9 @@ public partial class SocialWorkDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC279A1F793E");
+            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC27DF90CC29");
 
-            entity.HasIndex(e => e.Email, "UQ__Users__A9D1053410E2BF66").IsUnique();
+            entity.HasIndex(e => e.Email, "UQ__Users__A9D10534E247C6A4").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Address).HasMaxLength(255);

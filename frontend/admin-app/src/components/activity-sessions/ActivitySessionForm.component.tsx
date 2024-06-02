@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { ICreateActivitySession } from "../../types/global.typing";
+import { ICreateActivitySession } from "../../types/activity-session.typing";
 import {
   Button,
   TextField,
@@ -42,8 +42,8 @@ const ActivitySessionForm = ({
         );
         setActivitySession(data);
       } catch (error) {
-        console.error("Lỗi khi tải dữ liệu phiên hoạt động:", error);
-        toast.error("Lỗi khi tải dữ liệu phiên hoạt động. Vui lòng thử lại!");
+        console.error("Lỗi khi tải dữ liệu buổi hoạt động:", error);
+        toast.error("Lỗi khi tải dữ liệu buổi hoạt động. Vui lòng thử lại!");
       } finally {
         // setLoading(false);
       }
@@ -63,7 +63,7 @@ const ActivitySessionForm = ({
 
   const handleClickSaveBtn = () => {
     if (ActivitySession.session === "") {
-      toast.error("Vui lòng nhập tên phiên hoạt động!");
+      toast.error("Vui lòng nhập tên buổi hoạt động!");
       return;
     }
 
@@ -79,13 +79,13 @@ const ActivitySessionForm = ({
     savePromise
       .then((newActivitySession) => {
         const newActivitySessionId = newActivitySession?.id || 0;
-        toast.success("phiên hoạt động đã được lưu thành công!");
+        toast.success("buổi hoạt động đã được lưu thành công!");
         handleClickCancelBtn();
         onSaveSuccess(newActivitySessionId);
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Đã xảy ra lỗi khi lưu phiên hoạt động!");
+        toast.error("Đã xảy ra lỗi khi lưu buổi hoạt động!");
       })
       .finally(() => {
         setLoading(false);
@@ -101,15 +101,13 @@ const ActivitySessionForm = ({
       ) : (
         <Paper elevation={3} className="form">
           <Typography variant="h5" gutterBottom>
-            {isEditing
-              ? "Chỉnh sửa phiên hoạt động"
-              : "Thêm phiên hoạt động mới"}
+            {isEditing ? "Chỉnh sửa buổi hoạt động" : "Thêm buổi hoạt động mới"}
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Tên phiên hoạt động"
+                label="Tên buổi hoạt động"
                 variant="outlined"
                 value={ActivitySession.session}
                 onChange={(e) => handleInputChange("name", e.target.value)}

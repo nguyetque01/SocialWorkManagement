@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using backend.Repositories;
+using backend.Helpers;
 
 namespace backend.Controllers
 {
@@ -13,95 +12,121 @@ namespace backend.Controllers
     [ApiController]
     public class ActivitySessionsController : ControllerBase
     {
-        private readonly SocialWorkDbContext _context;
+        private readonly IActivitySessionRepository _ActivitySessionRepository;
+        private readonly ResponseHelper _responseHelper;
 
-        public ActivitySessionsController(SocialWorkDbContext context)
+        public ActivitySessionsController(IActivitySessionRepository ActivitySessionRepository, ResponseHelper responseHelper)
         {
-            _context = context;
+            _ActivitySessionRepository = ActivitySessionRepository;
+            _responseHelper = responseHelper;
         }
 
         // GET: api/ActivitySessions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ActivitySession>>> GetActivitySessions()
+        public async Task<IActionResult> GetActivitySessions()
         {
-            return await _context.ActivitySessions.ToListAsync();
+            try
+            {
+                var ActivitySessions = await _ActivitySessionRepository.GetAllActivitySessions();
+                return _responseHelper.CreateResponse("ActivitySessions retrieved successfully", ActivitySessions, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
+        }
+
+        // GET: api/ActivitySessions/details
+        [HttpGet("details")]
+        public async Task<IActionResult> GetAllActivitySessionDetails()
+        {
+            try
+            {
+                var ActivitySessionDetails = await _ActivitySessionRepository.GetAllActivitySessionDetails();
+                return _responseHelper.CreateResponse("ActivitySession details retrieved successfully", ActivitySessionDetails, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // GET: api/ActivitySessions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ActivitySession>> GetActivitySession(int id)
+        public async Task<IActionResult> GetActivitySession(int id)
         {
-            var activitySession = await _context.ActivitySessions.FindAsync(id);
-
-            if (activitySession == null)
+            try
             {
-                return NotFound();
+                var ActivitySession = await _ActivitySessionRepository.GetActivitySessionById(id);
+                if (ActivitySession == null)
+                {
+                    return _responseHelper.CreateResponse("ActivitySession not found", null, "fail");
+                }
+                return _responseHelper.CreateResponse("ActivitySession retrieved successfully", ActivitySession, "success");
             }
-
-            return activitySession;
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // PUT: api/ActivitySessions/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutActivitySession(int id, ActivitySession activitySession)
+        public async Task<IActionResult> PutActivitySession(int id, ActivitySession ActivitySession)
         {
-            if (id != activitySession.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(activitySession).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ActivitySessionExists(id))
+                if (id != ActivitySession.Id)
                 {
-                    return NotFound();
+                    return _responseHelper.CreateResponse("ActivitySession ID mismatch", null, "fail");
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                await _ActivitySessionRepository.UpdateActivitySession(ActivitySession);
+
+                return _responseHelper.CreateResponse("ActivitySession updated successfully", null, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // POST: api/ActivitySessions
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ActivitySession>> PostActivitySession(ActivitySession activitySession)
+        public async Task<IActionResult> PostActivitySession(ActivitySession ActivitySession)
         {
-            _context.ActivitySessions.Add(activitySession);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _ActivitySessionRepository.AddActivitySession(ActivitySession);
 
-            return CreatedAtAction("GetActivitySession", new { id = activitySession.Id }, activitySession);
+                return _responseHelper.CreateResponse("ActivitySession added successfully", ActivitySession, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // DELETE: api/ActivitySessions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivitySession(int id)
         {
-            var activitySession = await _context.ActivitySessions.FindAsync(id);
-            if (activitySession == null)
+            try
             {
-                return NotFound();
+                var ActivitySessionExists = await _ActivitySessionRepository.ActivitySessionExists(id);
+                if (!ActivitySessionExists)
+                {
+                    return _responseHelper.CreateResponse("ActivitySession not found", null, "fail");
+                }
+
+                await _ActivitySessionRepository.DeleteActivitySession(id);
+
+                return _responseHelper.CreateResponse("ActivitySession deleted successfully", null, "success");
             }
-
-            _context.ActivitySessions.Remove(activitySession);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ActivitySessionExists(int id)
-        {
-            return _context.ActivitySessions.Any(e => e.Id == id);
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
     }
 }

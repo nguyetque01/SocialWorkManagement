@@ -38,12 +38,12 @@ namespace backend.Controllers
 
         // GET: api/Activities/details
         [HttpGet("details")]
-        public async Task<IActionResult> GetAllactivityDetails()
+        public async Task<IActionResult> GetAllActivityDetails()
         {
             try
             {
                 var activityDetails = await _activityRepository.GetAllActivityDetails();
-                return _responseHelper.CreateResponse("activity details retrieved successfully", activityDetails, "success");
+                return _responseHelper.CreateResponse("Activity details retrieved successfully", activityDetails, "success");
             }
             catch (Exception ex)
             {
@@ -53,16 +53,16 @@ namespace backend.Controllers
 
         // GET: api/Activities/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Getactivity(int id)
+        public async Task<IActionResult> GetActivity(int id)
         {
             try
             {
                 var activity = await _activityRepository.GetActivityById(id);
                 if (activity == null)
                 {
-                    return _responseHelper.CreateResponse("activity not found", null, "fail");
+                    return _responseHelper.CreateResponse("Activity not found", null, "fail");
                 }
-                return _responseHelper.CreateResponse("activity retrieved successfully", activity, "success");
+                return _responseHelper.CreateResponse("Activity retrieved successfully", activity, "success");
             }
             catch (Exception ex)
             {
@@ -72,18 +72,18 @@ namespace backend.Controllers
 
         // PUT: api/Activities/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Putactivity(int id, Activity activity)
+        public async Task<IActionResult> PutActivity(int id, Activity activity)
         {
             try
             {
                 if (id != activity.Id)
                 {
-                    return _responseHelper.CreateResponse("activity ID mismatch", null, "fail");
+                    return _responseHelper.CreateResponse("Activity ID mismatch", null, "fail");
                 }
 
                 await _activityRepository.UpdateActivity(activity);
 
-                return _responseHelper.CreateResponse("activity updated successfully", null, "success");
+                return _responseHelper.CreateResponse("Activity updated successfully", null, "success");
             }
             catch (Exception ex)
             {
@@ -93,13 +93,13 @@ namespace backend.Controllers
 
         // POST: api/Activities
         [HttpPost]
-        public async Task<IActionResult> Postactivity(Activity activity)
+        public async Task<IActionResult> PostActivity(Activity activity)
         {
             try
             {
                 await _activityRepository.AddActivity(activity);
 
-                return _responseHelper.CreateResponse("activity added successfully", activity, "success");
+                return _responseHelper.CreateResponse("Activity added successfully", activity, "success");
             }
             catch (Exception ex)
             {
@@ -109,19 +109,19 @@ namespace backend.Controllers
 
         // DELETE: api/Activities/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Deleteactivity(int id)
+        public async Task<IActionResult> DeleteActivity(int id)
         {
             try
             {
                 var activityExists = await _activityRepository.ActivityExists(id);
                 if (!activityExists)
                 {
-                    return _responseHelper.CreateResponse("activity not found", null, "fail");
+                    return _responseHelper.CreateResponse("Activity not found", null, "fail");
                 }
 
                 await _activityRepository.DeleteActivity(id);
 
-                return _responseHelper.CreateResponse("activity deleted successfully", null, "success");
+                return _responseHelper.CreateResponse("Activity deleted successfully", null, "success");
             }
             catch (Exception ex)
             {
