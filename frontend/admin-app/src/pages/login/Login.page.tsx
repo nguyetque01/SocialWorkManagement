@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
-import { Box, Typography } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { imagePaths } from "../../constants/imagePaths.contants";
 import { AuthContext } from "../../context/auth.context";
 import AuthService from "../../services/AuthService";
@@ -9,6 +9,8 @@ import LoginForm from "../../components/login/LoginForm.component";
 import "./login-page.scss";
 
 const Login = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
@@ -19,6 +21,8 @@ const Login = () => {
 
   const handleLogin = async (email: string, password: string) => {
     try {
+      setLoading(true);
+
       const response = await AuthService.login(email, password);
       if ("token" in response) {
         localStorage.setItem("token", response.token);
@@ -36,6 +40,8 @@ const Login = () => {
     } catch (error) {
       console.error("Đã xảy ra lỗi khi đăng nhập:", error);
       toast.error("Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại sau.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,7 +74,11 @@ const Login = () => {
             - Hệ Thống Quản Trị -
           </Typography>
         </Box>
-        <LoginForm onLogin={handleLogin} />
+        {loading ? (
+          <CircularProgress size={100} />
+        ) : (
+          <LoginForm onLogin={handleLogin} />
+        )}
       </Box>
     </Box>
   );
