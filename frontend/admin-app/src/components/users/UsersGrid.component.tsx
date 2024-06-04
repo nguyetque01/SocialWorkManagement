@@ -16,9 +16,7 @@ const UsersGrid = ({
   handleClickEditBtn,
   handleClickDeleteBtn,
 }: IUsersGridProps) => {
-  const sortedData = [...data].sort((a, b) => {
-    return b.id - a.id;
-  });
+  const sortedData = [...data].sort((a, b) => b.id - a.id);
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 80 },
@@ -46,9 +44,9 @@ const UsersGrid = ({
     },
     { field: "address", headerName: "Địa chỉ", width: 150 },
     { field: "phoneNumber", headerName: "Điện thoại", width: 150 },
-    { field: "roleName", headerName: " Vai trò", width: 150 },
-    { field: "facultyName", headerName: " Khoa", width: 150 },
-    { field: "className", headerName: " Lớp", width: 150 },
+    { field: "roleName", headerName: "Vai trò", width: 150 },
+    { field: "facultyName", headerName: "Khoa", width: 150 },
+    { field: "className", headerName: "Lớp", width: 150 },
     { field: "statusText", headerName: "Trạng thái", width: 150 },
     { field: "description", headerName: "Mô tả", width: 150 },
     {
@@ -76,11 +74,12 @@ const UsersGrid = ({
           </IconButton>
         </>
       ),
+      cellClassName: 'sticky-column',
     },
   ];
 
   return (
-    <Box className="grid">
+    <Box className="grid" style={{ height: 600, width: '100%', position: 'relative' }}>
       <DataGrid
         rows={sortedData}
         columns={columns}
@@ -94,6 +93,7 @@ const UsersGrid = ({
         getRowId={(row) => row.id}
         rowHeight={50}
         disableRowSelectionOnClick
+        autoHeight={false} 
       />
     </Box>
   );
