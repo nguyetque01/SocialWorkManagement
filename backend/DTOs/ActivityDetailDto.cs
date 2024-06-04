@@ -12,7 +12,7 @@ namespace backend.DTOs
         public DateTime? ReleaseTime { get; set; }
         public string? StatusText { get; set; }
         public string? Description { get; set; }
-        public int? TotalDays { get; set; }
+        public decimal? TotalDays { get; set; }
         public DateOnly? ActivityStartDate { get; set; }
         public DateOnly? ActivityEndDate { get; set; }
         public DateTime? RegistrationStartTime { get; set; }

@@ -8,7 +8,7 @@ import {
 
 const API_ENDPOINT = "/Activities";
 
-const Activitieservice = {
+const ActivityService = {
   getAllActivities: async (): Promise<IActivity[]> => {
     try {
       const response = await httpModule.get<ApiResponse<IActivity[]>>(
@@ -101,4 +101,4 @@ const Activitieservice = {
   },
 };
 
-export default Activitieservice;
+export default ActivityService;

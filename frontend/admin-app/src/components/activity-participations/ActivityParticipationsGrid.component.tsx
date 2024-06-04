@@ -1,11 +1,11 @@
 import { Box, IconButton } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Edit, Delete } from "@mui/icons-material";
-import { IActivityParticipation } from "../../types/global.typing";
+import { IActivityParticipationDetail } from "../../types/activity-participation.typing";
 import "../../styles/grid.scss";
 
 interface IActivityParticipationsGridProps {
-  data: IActivityParticipation[];
+  data: IActivityParticipationDetail[];
   handleClickEditBtn: (id: number) => void;
   handleClickDeleteBtn: (id: number) => void;
 }
@@ -20,9 +20,6 @@ const ActivityParticipationsGrid = ({
   });
 
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Tên", width: 150 },
-    { field: "description", headerName: "Mô tả", width: 150 },
     {
       field: "actions",
       headerName: "Thao tác",
@@ -49,6 +46,37 @@ const ActivityParticipationsGrid = ({
         </>
       ),
     },
+    { field: "id", headerName: "ID", width: 80 },
+    { field: "studentId", headerName: "ID Sinh viên", width: 80 },
+    { field: "studentName", headerName: "Tên Sinh viên", width: 150 },
+    { field: "activityId", headerName: "Mã Hoạt động", width: 80 },
+    { field: "activityName", headerName: "Tên Hoạt động", width: 150 },
+    {
+      field: "activitySessionId",
+      headerName: "Mã Phiên Hoạt động",
+      width: 120,
+    },
+    { field: "session", headerName: "Phiên", width: 120 },
+    { field: "startTime", headerName: "Thời gian Bắt đầu", width: 150 },
+    { field: "endTime", headerName: "Thời gian Kết thúc", width: 150 },
+    { field: "daysCount", headerName: "Số ngày", width: 100 },
+    { field: "statusText", headerName: "Trạng thái", width: 120 },
+    {
+      field: "registrationStatusText",
+      headerName: "Trạng thái Đăng ký",
+      width: 180,
+    },
+    {
+      field: "attendanceStatusText",
+      headerName: "Trạng thái Tham gia",
+      width: 180,
+    },
+    {
+      field: "approvalAttendanceStatusText",
+      headerName: "Trạng thái Chấp nhận Tham gia",
+      width: 220,
+    },
+    { field: "description", headerName: "Mô tả", width: 150 },
   ];
 
   return (

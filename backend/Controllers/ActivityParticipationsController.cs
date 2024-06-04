@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using backend.Repositories;
+using backend.Helpers;
 
 namespace backend.Controllers
 {
@@ -13,95 +12,140 @@ namespace backend.Controllers
     [ApiController]
     public class ActivityParticipationsController : ControllerBase
     {
-        private readonly SocialWorkDbContext _context;
+        private readonly IActivityParticipationRepository _ActivityParticipationRepository;
+        private readonly ResponseHelper _responseHelper;
 
-        public ActivityParticipationsController(SocialWorkDbContext context)
+        public ActivityParticipationsController(IActivityParticipationRepository ActivityParticipationRepository, ResponseHelper responseHelper)
         {
-            _context = context;
+            _ActivityParticipationRepository = ActivityParticipationRepository;
+            _responseHelper = responseHelper;
         }
 
         // GET: api/ActivityParticipations
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ActivityParticipation>>> GetActivityParticipations()
+        public async Task<IActionResult> GetActivityParticipations()
         {
-            return await _context.ActivityParticipations.ToListAsync();
+            try
+            {
+                var ActivityParticipations = await _ActivityParticipationRepository.GetAllActivityParticipations();
+                return _responseHelper.CreateResponse("ActivityParticipations retrieved successfully", ActivityParticipations, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
+        }
+
+        // GET: api/ActivityParticipations/details
+        [HttpGet("details")]
+        public async Task<IActionResult> GetAllActivityParticipationDetails()
+        {
+            try
+            {
+                var ActivityParticipationDetails = await _ActivityParticipationRepository.GetAllActivityParticipationDetails();
+                return _responseHelper.CreateResponse("ActivityParticipation details retrieved successfully", ActivityParticipationDetails, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // GET: api/ActivityParticipations/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ActivityParticipation>> GetActivityParticipation(int id)
+        public async Task<IActionResult> GetActivityParticipation(int id)
         {
-            var activityParticipation = await _context.ActivityParticipations.FindAsync(id);
-
-            if (activityParticipation == null)
+            try
             {
-                return NotFound();
+                var ActivityParticipation = await _ActivityParticipationRepository.GetActivityParticipationById(id);
+                if (ActivityParticipation == null)
+                {
+                    return _responseHelper.CreateResponse("ActivityParticipation not found", null, "fail");
+                }
+                return _responseHelper.CreateResponse("ActivityParticipation retrieved successfully", ActivityParticipation, "success");
             }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
+        }
 
-            return activityParticipation;
+        // GET: api/ActivityParticipations/details/5
+        [HttpGet("details/{id}")]
+        public async Task<IActionResult> GetActivityParticipationDetail(int id)
+        {
+            try
+            {
+                var ActivityParticipationDetail = await _ActivityParticipationRepository.GetActivityParticipationDetailById(id);
+                if (ActivityParticipationDetail == null)
+                {
+                    return _responseHelper.CreateResponse("ActivityParticipation detail not found", null, "fail");
+                }
+                return _responseHelper.CreateResponse("ActivityParticipation detail retrieved successfully", ActivityParticipationDetail, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // PUT: api/ActivityParticipations/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutActivityParticipation(int id, ActivityParticipation activityParticipation)
+        public async Task<IActionResult> PutActivityParticipation(int id, ActivityParticipation ActivityParticipation)
         {
-            if (id != activityParticipation.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(activityParticipation).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ActivityParticipationExists(id))
+                if (id != ActivityParticipation.Id)
                 {
-                    return NotFound();
+                    return _responseHelper.CreateResponse("ActivityParticipation ID mismatch", null, "fail");
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                await _ActivityParticipationRepository.UpdateActivityParticipation(ActivityParticipation);
+
+                return _responseHelper.CreateResponse("ActivityParticipation updated successfully", null, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // POST: api/ActivityParticipations
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<ActivityParticipation>> PostActivityParticipation(ActivityParticipation activityParticipation)
+        public async Task<IActionResult> PostActivityParticipation(ActivityParticipation ActivityParticipation)
         {
-            _context.ActivityParticipations.Add(activityParticipation);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _ActivityParticipationRepository.AddActivityParticipation(ActivityParticipation);
 
-            return CreatedAtAction("GetActivityParticipation", new { id = activityParticipation.Id }, activityParticipation);
+                return _responseHelper.CreateResponse("ActivityParticipation added successfully", ActivityParticipation, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
 
         // DELETE: api/ActivityParticipations/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteActivityParticipation(int id)
         {
-            var activityParticipation = await _context.ActivityParticipations.FindAsync(id);
-            if (activityParticipation == null)
+            try
             {
-                return NotFound();
+                var ActivityParticipationExists = await _ActivityParticipationRepository.ActivityParticipationExists(id);
+                if (!ActivityParticipationExists)
+                {
+                    return _responseHelper.CreateResponse("ActivityParticipation not found", null, "fail");
+                }
+
+                await _ActivityParticipationRepository.DeleteActivityParticipation(id);
+
+                return _responseHelper.CreateResponse("ActivityParticipation deleted successfully", null, "success");
             }
-
-            _context.ActivityParticipations.Remove(activityParticipation);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ActivityParticipationExists(int id)
-        {
-            return _context.ActivityParticipations.Any(e => e.Id == id);
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
         }
     }
 }
