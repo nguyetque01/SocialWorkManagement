@@ -1,5 +1,6 @@
 export interface IUser {
   id: number;
+  code: string;
   email: string;
   password: string;
   fullName?: string;
@@ -16,6 +17,7 @@ export interface IUser {
 
 export interface IUserDetail {
   id: number;
+  code: string;
   email: string;
   fullName: string;
   dateOfBirth?: Date;
@@ -31,6 +33,7 @@ export interface IUserDetail {
 
 export interface ICreateUser {
   email?: string;
+  code?: string;
   password?: string;
   fullName?: string;
   dateOfBirth?: string;
