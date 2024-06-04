@@ -63,7 +63,7 @@ const NotificationsGrid = ({
   ];
 
   return (
-    <Box className="grid">
+    <Box className="grid" style={{ height: 600, width: '100%', position: 'relative' }}>
       <DataGrid
         rows={sortedData}
         columns={columns}
@@ -77,6 +77,7 @@ const NotificationsGrid = ({
         getRowId={(row) => row.id}
         rowHeight={50}
         disableRowSelectionOnClick
+        autoHeight={false}
       />
     </Box>
   );

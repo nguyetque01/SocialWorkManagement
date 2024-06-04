@@ -52,7 +52,7 @@ const RolesGrid = ({
   ];
 
   return (
-    <Box className="grid small">
+    <Box className="grid small" style={{ height: 600, width: '100%', position: 'relative' }}>
       <DataGrid
         rows={sortedData}
         columns={columns}
@@ -66,6 +66,7 @@ const RolesGrid = ({
         getRowId={(row) => row.id}
         rowHeight={50}
         disableRowSelectionOnClick
+        autoHeight={false}
       />
     </Box>
   );

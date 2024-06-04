@@ -20,32 +20,6 @@ const ActivitySessionsGrid = ({
   });
 
   const columns: GridColDef[] = [
-    {
-      field: "actions",
-      headerName: "Thao tác",
-      width: 100,
-      renderCell: (params) => (
-        <>
-          <IconButton
-            aria-label="edit"
-            size="small"
-            color="secondary"
-            style={{ marginRight: 8 }}
-            onClick={() => handleClickEditBtn(params.row.id)}
-          >
-            <Edit fontSize="inherit" />
-          </IconButton>
-          <IconButton
-            aria-label="delete"
-            size="small"
-            color="error"
-            onClick={() => handleClickDeleteBtn(params.row.id)}
-          >
-            <Delete fontSize="inherit" />
-          </IconButton>
-        </>
-      ),
-    },
     { field: "id", headerName: "ID", width: 80 },
     { field: "activity", headerName: "Hoạt động", width: 300 },
     { field: "activityDate", headerName: "Ngày Hoạt Động", width: 150 },
@@ -71,10 +45,37 @@ const ActivitySessionsGrid = ({
     },
     { field: "statusText", headerName: "Trạng Thái", width: 150 },
     { field: "description", headerName: "Mô tả", width: 200 },
+    {
+      field: "actions",
+      headerName: "Thao tác",
+      width: 100,
+      renderCell: (params) => (
+        <>
+          <IconButton
+            aria-label="edit"
+            size="small"
+            color="secondary"
+            style={{ marginRight: 8 }}
+            onClick={() => handleClickEditBtn(params.row.id)}
+          >
+            <Edit fontSize="inherit" />
+          </IconButton>
+          <IconButton
+            aria-label="delete"
+            size="small"
+            color="error"
+            onClick={() => handleClickDeleteBtn(params.row.id)}
+          >
+            <Delete fontSize="inherit" />
+          </IconButton>
+        </>
+      ),
+      cellClassName: 'sticky-column',
+    },
   ];
 
   return (
-    <Box className="grid small">
+    <Box className="grid small" style={{ height: 600, width: '100%', position: 'relative' }}>
       <DataGrid
         rows={sortedData}
         columns={columns}
@@ -88,6 +89,7 @@ const ActivitySessionsGrid = ({
         getRowId={(row) => row.id}
         rowHeight={50}
         disableRowSelectionOnClick
+        autoHeight={false}
       />
     </Box>
   );

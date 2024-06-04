@@ -10,10 +10,26 @@
     &:focus-within {
       outline: none;
     }
+    &.sticky-column {
+      position: sticky;
+      right: 0;
+      background-color: white;
+      z-index: 2;
+      border-left: 1px solid #ddd;
+    }
   }
+
   .MuiDataGrid-cell {
     &:focus-within {
       outline: none;
     }
+    &.sticky-column {
+      position: sticky;
+      right: 0;
+      background-color: white;
+      z-index: 1;
+      border-left: 1px solid #ddd;
+    }
   }
+
 }
