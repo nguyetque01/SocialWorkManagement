@@ -10,12 +10,12 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class statusesController : ControllerBase
+    public class StatusesController : ControllerBase
     {
         private readonly IStatusRepository _statusRepository;
         private readonly ResponseHelper _responseHelper;
 
-        public statusesController(IStatusRepository statusRepository, ResponseHelper responseHelper)
+        public StatusesController(IStatusRepository statusRepository, ResponseHelper responseHelper)
         {
             _statusRepository = statusRepository;
             _responseHelper = responseHelper;

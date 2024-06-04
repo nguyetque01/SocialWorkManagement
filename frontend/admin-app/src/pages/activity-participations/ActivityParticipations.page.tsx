@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Button, CircularProgress, Modal } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { toast } from "react-toastify";
-import { IActivityParticipation } from "../../types/global.typing";
+import { IActivityParticipationDetail } from "../../types/activity-participation.typing";
 import ActivityParticipationsGrid from "../../components/activity-participations/ActivityParticipationsGrid.component";
 import ActivityParticipationForm from "../../components/activity-participations/ActivityParticipationForm.component";
 import ActivityParticipationService from "../../services/ActivityParticipationService";
@@ -12,7 +12,7 @@ import { MainContext } from "../../context/main.context";
 
 const ActivityParticipations = () => {
   const [activityParticipations, setActivityParticipations] = useState<
-    IActivityParticipation[]
+    IActivityParticipationDetail[]
   >([]);
   const [activityParticipationId, setActivityParticipationId] =
     useState<number>(0);
@@ -32,7 +32,7 @@ const ActivityParticipations = () => {
     try {
       setLoading(true);
       const activityParticipationsData =
-        await ActivityParticipationService.getAllActivityParticipations();
+        await ActivityParticipationService.getAllActivityParticipationDetails();
       setActivityParticipations(activityParticipationsData);
     } catch (error) {
       console.error("Lỗi khi tải danh sách hoạt động tham gia:", error);

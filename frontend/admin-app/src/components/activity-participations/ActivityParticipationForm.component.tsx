@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ICreateActivityParticipation } from "../../types/global.typing";
+import { ICreateActivityParticipation } from "../../types/activity-participation.typing";
 import {
   Button,
   TextField,

@@ -17,7 +17,7 @@ public partial class ActivitySession
 
     public TimeOnly? EndTime { get; set; }
 
-    public int? DaysCount { get; set; }
+    public decimal? DaysCount { get; set; }
 
     public int? MaxParticipants { get; set; }
 
