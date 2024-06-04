@@ -61,12 +61,15 @@ const ActivitiesGrid = ({
           </IconButton>
         </>
       ),
-      cellClassName: 'sticky-column', //add this line
+      cellClassName: "sticky-column",
     },
   ];
 
   return (
-    <Box className="grid" style={{ height: 600, width: '100%', position: 'relative' }}>
+    <Box
+      className="grid"
+      style={{ height: 600, width: "100%", position: "relative" }}
+    >
       <DataGrid
         rows={sortedData}
         columns={columns}
