@@ -1,14 +1,16 @@
-import { useContext } from "react";
-import { Box, Typography } from "@mui/material";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { imagePaths } from "../../constants/imagePaths.contants";
-import LoginForm from "../../components/login/LoginForm.component";
-import AuthService from "../../services/AuthService";
 import { AuthContext } from "../../context/auth.context";
-import "./login-page.scss";
+import AuthService from "../../services/AuthService";
 import UserService from "../../services/UserService";
+import LoginForm from "../../components/login/LoginForm.component";
+import "./login-page.scss";
 
 const Login = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const authContext = useContext(AuthContext);
 
   if (!authContext) {
@@ -19,13 +21,18 @@ const Login = () => {
 
   const handleLogin = async (email: string, password: string) => {
     try {
+      setLoading(true);
+
       const response = await AuthService.login(email, password);
       if ("token" in response) {
         localStorage.setItem("token", response.token);
         localStorage.setItem("role", response.role);
         const userData = await UserService.getUserById(parseInt(response.id));
-        login(userData);
-        // window.location.href = "/";
+        if (userData?.roleId === 1) {
+          login(userData);
+        } else {
+          toast.error("Tài khoản không hợp lệ!");
+        }
       } else {
         console.error(response.message);
         toast.error("Email hoặc mật khẩu không chính xác");
@@ -33,6 +40,8 @@ const Login = () => {
     } catch (error) {
       console.error("Đã xảy ra lỗi khi đăng nhập:", error);
       toast.error("Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại sau.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,7 +67,11 @@ const Login = () => {
             Trường Đại Học Công Nghệ Đồng Nai
           </Typography>
         </Box>
-        <LoginForm onLogin={handleLogin} />
+        {loading ? (
+          <CircularProgress size={100} />
+        ) : (
+          <LoginForm onLogin={handleLogin} />
+        )}
       </Box>
     </Box>
   );

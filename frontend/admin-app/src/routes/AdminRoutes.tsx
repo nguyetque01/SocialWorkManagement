@@ -6,6 +6,8 @@ const AdminDashboard = lazy(
   () => import("../pages/admin-dashboard/AdminDashboard.page")
 );
 const Logout = lazy(() => import("../pages/logout/Logout.page"));
+const Error = lazy(() => import("../pages/errors/Error.page"));
+
 const Users = lazy(() => import("../pages/users/Users.page"));
 const Roles = lazy(() => import("../pages/roles/Roles.page"));
 const Permissions = lazy(() => import("../pages/permissions/Permissions.page"));
@@ -71,6 +73,7 @@ const AdminRoutes = () => {
         <Route path="/record-histories" element={<RecordHistories />} />
         <Route path="/notifications" element={<Notifications />} />
         <Route path="/notification-types" element={<NotificationTypes />} />
+        <Route path="*" element={<Error errorCode={404} />} />
       </Routes>
     </Suspense>
   );
