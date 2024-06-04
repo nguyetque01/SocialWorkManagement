@@ -22,6 +22,7 @@ const UsersGrid = ({
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 80 },
+    { field: "code", headerName: "Mã số", width: 150 },
     { field: "email", headerName: "Email", width: 150 },
     { field: "fullName", headerName: "Họ tên", width: 150 },
     {

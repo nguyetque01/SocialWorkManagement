@@ -120,6 +120,16 @@ const UserForm = ({
             <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
+                label="Mã số"
+                variant="outlined"
+                value={User.code}
+                onChange={(e) => handleInputChange("code", e.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={12} md={6}>
+              <TextField
+                fullWidth
                 label="Tên người dùng"
                 variant="outlined"
                 value={User.fullName}
@@ -207,7 +217,7 @@ const UserForm = ({
               </FormControl>
             </Grid>
 
-            <Grid item xs={12}>
+            <Grid item xs={12} md={6}>
               <TextField
                 fullWidth
                 label="Địa chỉ"
