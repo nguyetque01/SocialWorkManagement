@@ -28,11 +28,7 @@ const Login = () => {
         localStorage.setItem("token", response.token);
         localStorage.setItem("role", response.role);
         const userData = await UserService.getUserById(parseInt(response.id));
-        if (userData?.roleId === 1) {
-          login(userData);
-        } else {
-          toast.error("Tài khoản không hợp lệ!");
-        }
+        login(userData);
       } else {
         console.error(response.message);
         toast.error("Email hoặc mật khẩu không chính xác");
