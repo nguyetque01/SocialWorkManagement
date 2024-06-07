@@ -1,0 +1,31 @@
+@import "../../styles/mixins";
+
+.main {
+  width: 60vw;
+  max-height: 90vh;
+
+  .title {
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: uppercase;
+  }
+  .name {
+    padding: 16px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: capitalize;
+    background-color: lightblue;
+  }
+
+  .grid {
+    @include d-flex(row, center, center);
+  }
+
+  .btns {
+    padding: 0 20px 20px 20px;
+    justify-content: space-between;
+  }
+}

@@ -51,6 +51,21 @@ namespace backend.Controllers
             }
         }
 
+        // GET: api/ActivitySessions/details/activity/5
+        [HttpGet("details/activity/{activityId}")]
+        public async Task<IActionResult> GetActivitySessionDetailsByActivityID(int activityId)
+        {
+            try
+            {
+                var ActivitySessionDetails = await _ActivitySessionRepository.GetActivitySessionDetailsByActivityID(activityId);
+                return _responseHelper.CreateResponse("ActivitySession details retrieved successfully", ActivitySessionDetails, "success");
+            }
+            catch (Exception ex)
+            {
+                return _responseHelper.CreateResponse($"An error occurred: {ex.Message}", null, "fail");
+            }
+        }
+
         // GET: api/ActivitySessions/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetActivitySession(int id)
