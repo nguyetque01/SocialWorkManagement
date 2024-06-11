@@ -1,0 +1,133 @@
+.container {
+    margin-top: 20px;
+    padding-top: 20px;
+    text-align: center;
+    background-color: #F8F9FA;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    padding-bottom: 20px;
+    color: #AC1F24;
+}
+
+.imagesContainer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.largeImage, .smallImage {
+    position: relative;
+    flex: 1;
+    margin-right: 20px;
+    overflow: hidden;
+    border-radius: 10px;
+
+    img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+        transition: transform 0.3s; 
+    }
+
+    img:hover {
+        transform: scale(1.1); 
+    }
+
+    .imageText {
+        position: absolute;
+        bottom: 10px;
+        left: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+}
+
+.smallImages {
+    display: flex;
+    flex-direction: column;
+    flex: 0.5;
+
+    .smallImage {
+        padding-top: 5px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        border-radius: 10px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s; 
+        }
+
+        img:hover {
+            transform: scale(1.1); 
+        }
+
+        .imageText {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+    }
+}
+
+.bottomImages {
+    display: flex;
+    justify-content: space-between;
+
+    .bottomImage {
+        flex: 1;
+        margin-right: 10px;
+        overflow: hidden;
+        margin-left: 10px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        img {
+            width: 120px;
+            height: 80px;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+            transition: transform 0.3s; 
+        }
+
+        img:hover {
+            transform: scale(1.1); 
+        }
+
+        .bottomImageText {
+            margin-left: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+    }
+}

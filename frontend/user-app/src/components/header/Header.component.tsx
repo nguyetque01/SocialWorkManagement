@@ -13,7 +13,7 @@ import Account from "../account/Account.component";
 import { Notifications } from "@mui/icons-material";
 import "./header.scss";
 import SearchBar from "../search/SearchBar.component";
-
+ 
 const Header: React.FC = () => {
   const handleSearch = (query: string) => {
     console.log("Searching for:", query);

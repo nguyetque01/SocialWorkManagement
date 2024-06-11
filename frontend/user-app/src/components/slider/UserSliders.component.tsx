@@ -3,9 +3,9 @@ import "./UserSliders.scss";
 
 const images = [
   "https://dntu.edu.vn/storage/slider/SNKI6B5zhVjVfJzWW8IjSuImULqobt-metaZ0NnUnFTY0Q2TlM4d3FqWkpNNHg4d3ZnVEJWWW9YLW1ldGFZK0c3bFc1bkxtcHdadz09LS5qcGc=-.webp",
-  "https://dntu.edu.vn/storage/dntu/post/niqGSwhMTCCzfyOx680ytSsnZ5cf4j-metaMS5qcGc=-.jpg",
-  "https://dntu.edu.vn/storage/images/resized/dntu-chuyen-xe-ve-que-don-tet-nam-2024.jpg",
-  "https://dntu.edu.vn/storage/images/resized/tham-gia-dien-tap-phuong-an-chua-chay-cuu-nan-cuu-ho-cnch-phoi-hop-nhieu-luc-luong-tai-trung-tam-thuong-mai-lotte-mart-dong-nai.jpg",
+  "https://dntu.edu.vn/storage/slider/UoBCeY2SctQYqZLj22K59ReYq2JZCR-metaY29uZy12aWVuLXJlc2l6ZS5wbmc=-.webp",
+  "https://dntu.edu.vn/images/popup-xethocba.jpg",
+  "https://dntu.edu.vn/storage/dntu/post/01HZNSPTKQ4ADEDCXCN2A8VAKK.jpg",
 ];
 
 interface UserSlidersProps {
@@ -37,13 +37,10 @@ const UserSliders: React.FC<UserSlidersProps> = ({ interval = 5000 }) => {
 
   return (
     <div className="image-slider">
-      {images.map((image, index) => (
-        <div
-          key={index}
-          className={`slide ${index === currentIndex ? "active" : ""}`}
-          style={{ backgroundImage: `url(${image})` }}
-        />
-      ))}
+      <div
+        className="main-slide"
+        style={{ backgroundImage: `url(${images[currentIndex]})` }}
+      />
       <button className="prev" onClick={prevSlide}>
         ❮
       </button>

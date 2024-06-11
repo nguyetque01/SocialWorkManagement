@@ -1,0 +1,24 @@
+.footer {
+    background-color: #7D0C0C;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    color: white; 
+    
+    iframe {
+      border: 0;
+    }
+  
+    .contact-info {
+      margin-top: 10px; 
+      p {
+        margin: 5px 0; 
+      }
+      a {
+        color: white; 
+        text-decoration: underline; 
+      }
+    }
+  }
+  
