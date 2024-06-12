@@ -41,6 +41,26 @@ const ActivityParticipationService = {
     }
   },
 
+  getActivityParticipationDetailsByStudentId: async (
+    studentId: number | undefined
+  ): Promise<IActivityParticipationDetail[]> => {
+    if (typeof studentId === "number") {
+      try {
+        const response = await httpModule.get<
+          ApiResponse<IActivityParticipationDetail[]>
+        >(`${API_ENDPOINT}/details/student/${studentId}`);
+        if (response.data.status === "success") {
+          return response.data.responseData;
+        } else {
+          throw new Error(response.data.message);
+        }
+      } catch (error) {
+        throw new Error("Failed to fetch Activity Participations");
+      }
+    }
+    return [];
+  },
+
   getActivityParticipationById: async (
     activityParticipationId: number
   ): Promise<IActivityParticipation> => {
@@ -55,6 +75,23 @@ const ActivityParticipationService = {
       }
     } catch (error) {
       throw new Error("Failed to fetch activity participation");
+    }
+  },
+
+  getActivityParticipationDetailsById: async (
+    id: number | undefined
+  ): Promise<IActivityParticipationDetail> => {
+    try {
+      const response = await httpModule.get<
+        ApiResponse<IActivityParticipationDetail>
+      >(`${API_ENDPOINT}/details/${id}`);
+      if (response.data.status === "success") {
+        return response.data.responseData;
+      } else {
+        throw new Error(response.data.message);
+      }
+    } catch (error) {
+      throw new Error("Failed to fetch activity participations");
     }
   },
 

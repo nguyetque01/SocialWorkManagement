@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import ActivityService from "../../services/ActivityService";
-import "../../styles/detail.scss";
 import { IActivityDetail } from "../../types/activity.typing";
+import "../../styles/detail.scss";
 
 interface IActivityDetailProps {
   handleClickCancelBtn: () => void;
@@ -45,7 +45,7 @@ const ActivityDetail = ({
   }, [fetchActivityData]);
 
   return (
-    <Paper elevation={3} className="activity-detail">
+    <Paper elevation={3} className="detail-wrapped">
       <Typography variant="h5" gutterBottom>
         Chi tiết hoạt động
       </Typography>
@@ -84,6 +84,7 @@ const ActivityDetail = ({
                 sx={{ marginRight: 1, marginBottom: 1 }}
               />
             </Grid>
+
             <Grid item xs={12} sm={6}>
               <Typography variant="body1">
                 <strong>ID:</strong> {activity.id}
@@ -103,6 +104,7 @@ const ActivityDetail = ({
                 {activity.description || "Không có thông tin"}
               </Typography>
             </Grid>
+
             <Grid item xs={12} sm={6}>
               <Typography variant="body1">
                 <strong>Trạng thái:</strong>{" "}
@@ -138,6 +140,8 @@ const ActivityDetail = ({
               </Typography>
             </Grid>
           </Grid>
+          <Divider className="divider-margin" />
+
           <div className="btns">
             <Button
               className="cancel-btn"

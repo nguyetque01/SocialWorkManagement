@@ -17,7 +17,7 @@ namespace backend.Repositories
         Task<bool> ActivityParticipationExists(int id);
         Task<IEnumerable<ActivityParticipationDetailDto>> GetAllActivityParticipationDetails();
         Task<ActivityParticipationDetailDto> GetActivityParticipationDetailById(int id);
-
+        Task<IEnumerable<ActivityParticipationDetailDto>> GetActivityParticipationDetailByStudentId(int studentId);
     }
 
     public class ActivityParticipationRepository : IActivityParticipationRepository
@@ -72,12 +72,20 @@ namespace backend.Repositories
                                  .FromSqlRaw("EXECUTE GetAllActivityParticipationDetails")
                                  .ToListAsync();
         }
+
         public async Task<ActivityParticipationDetailDto> GetActivityParticipationDetailById(int id)
         {
             IEnumerable<ActivityParticipationDetailDto> ActivityParticipations = await _context.Set<ActivityParticipationDetailDto>()
                         .FromSqlRaw("EXECUTE GetActivityParticipationDetailsByID @ActivityParticipationID={0}", id)
                         .ToListAsync();
             return ActivityParticipations.FirstOrDefault();
+        }
+
+        public async Task<IEnumerable<ActivityParticipationDetailDto>> GetActivityParticipationDetailByStudentId(int studentId)
+        {
+            return await _context.Set<ActivityParticipationDetailDto>()
+                                 .FromSqlRaw("EXECUTE GetActivityParticipationDetailsByStudentID @StudentId={0}", studentId)
+                                 .ToListAsync();
         }
     }
 }

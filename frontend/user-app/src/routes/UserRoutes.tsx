@@ -6,6 +6,9 @@ const Login = lazy(() => import("../pages/login/Login.page"));
 const Logout = lazy(() => import("../pages/logout/Logout.page"));
 const Home = lazy(() => import("../pages/home/Home.page"));
 const Activities = lazy(() => import("../pages/activities/Activities.page"));
+const RegisteredActivities = lazy(
+  () => import("../pages/activities/RegisteredActivities.page")
+);
 const Error = lazy(() => import("../pages/errors/Error.page"));
 
 const UserRoutes = () => {
@@ -17,6 +20,10 @@ const UserRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/activities" element={<Activities />} />
+        <Route
+          path="/registerd-activities"
+          element={<RegisteredActivities />}
+        />
         <Route path="*" element={<Error errorCode={404} />} />
       </Routes>
     </Suspense>
