@@ -21,7 +21,7 @@ const ActivitySessionsGrid = ({
 
   const columns: GridColDef[] = [
     { field: "id", headerName: "ID", width: 80 },
-    { field: "activity", headerName: "Hoạt động", width: 300 },
+    { field: "activityName", headerName: "Hoạt động", width: 300 },
     { field: "activityDate", headerName: "Ngày Hoạt Động", width: 150 },
     { field: "session", headerName: "Buổi", width: 150 },
     { field: "startTime", headerName: "Thời Gian Bắt Đầu", width: 150 },
@@ -70,12 +70,15 @@ const ActivitySessionsGrid = ({
           </IconButton>
         </>
       ),
-      cellClassName: 'sticky-column',
+      cellClassName: "sticky-column",
     },
   ];
 
   return (
-    <Box className="grid small" style={{ height: 600, width: '100%', position: 'relative' }}>
+    <Box
+      className="grid small"
+      style={{ height: 600, width: "100%", position: "relative" }}
+    >
       <DataGrid
         rows={sortedData}
         columns={columns}

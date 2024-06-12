@@ -6,7 +6,9 @@ namespace backend.DTOs
     {
         public int Id { get; set; }
 
-        public string? Activity { get; set; }
+        public int? ActivityId { get; set; }
+
+        public string? ActivityName { get; set; }
 
         public DateOnly? ActivityDate { get; set; }
 

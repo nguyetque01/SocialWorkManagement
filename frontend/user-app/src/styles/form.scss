@@ -47,18 +47,17 @@
       }
     }
   }
-
-  .btns {
-    @include d-flex(row, center, center);
-    margin-top: 25px;
-    margin-left: auto;
-    .cancel-btn {
-      margin-right: 10px;
-      background-color: var(--grey);
-      color: var(--text-color1);
-    }
-    .save-btn {
-      background-color: var(--primary);
-    }
+}
+.btns {
+  @include d-flex(row, center, center);
+  margin-top: 25px;
+  margin-left: auto;
+  .cancel-btn {
+    margin-right: 10px;
+    background-color: var(--grey);
+    color: var(--text-color1);
+  }
+  .save-btn {
+    background-color: var(--primary);
   }
 }

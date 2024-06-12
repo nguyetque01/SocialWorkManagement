@@ -10,13 +10,13 @@ namespace backend.Repositories
     public interface IActivitySessionRepository
     {
         Task<IEnumerable<ActivitySession>> GetAllActivitySessions();
+        Task<IEnumerable<ActivitySessionDetailDto>> GetAllActivitySessionDetails();
+        Task<IEnumerable<ActivitySessionDetailDto>> GetActivitySessionDetailsByActivityID(int activityID);
         Task<ActivitySession> GetActivitySessionById(int id);
         Task AddActivitySession(ActivitySession ActivitySession);
         Task UpdateActivitySession(ActivitySession ActivitySession);
         Task DeleteActivitySession(int id);
         Task<bool> ActivitySessionExists(int id);
-        Task<IEnumerable<ActivitySessionDetailDto>> GetAllActivitySessionDetails();
-
     }
 
     public class ActivitySessionRepository : IActivitySessionRepository
@@ -28,6 +28,11 @@ namespace backend.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<ActivitySession>> GetAllActivitySessions()
+        {
+            return await _context.ActivitySessions.ToListAsync();
+        }
+
         public async Task<IEnumerable<ActivitySessionDetailDto>> GetAllActivitySessionDetails()
         {
             return await _context.Set<ActivitySessionDetailDto>()
@@ -35,9 +40,11 @@ namespace backend.Repositories
                                  .ToListAsync();
         }
 
-        public async Task<IEnumerable<ActivitySession>> GetAllActivitySessions()
+        public async Task<IEnumerable<ActivitySessionDetailDto>> GetActivitySessionDetailsByActivityID(int activityId)
         {
-            return await _context.ActivitySessions.ToListAsync();
+            return await _context.Set<ActivitySessionDetailDto>()
+                                 .FromSqlRaw("EXECUTE GetActivitySessionDetailsByActivityID @activityId={0}", activityId)
+                                 .ToListAsync();
         }
 
         public async Task<ActivitySession> GetActivitySessionById(int id)

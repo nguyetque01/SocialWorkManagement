@@ -3,7 +3,7 @@ import { CircularProgress, Modal } from "@mui/material";
 import { toast } from "react-toastify";
 import { IActivityDetail } from "../../types/activity.typing";
 import ActivitiesGrid from "../../components/activities/ActivitiesGrid.component";
-import ActivityRegistrationForm from "../../components/activities/ActivityRegistrationForm.component";
+import ActivityRegistration from "../../components/activities/ActivityRegistration.component";
 import ActivityService from "../../services/ActivityService";
 import ActivityDetail from "../../components/activities/ActivityDetail.component";
 import "../../styles/page.scss";
@@ -72,9 +72,8 @@ const Activities = () => {
           className="modal-container"
         >
           <div className="modal-content">
-            <ActivityRegistrationForm
+            <ActivityRegistration
               activityId={activityId}
-              onSaveSuccess={handleSaveSuccess}
               handleClickCancelBtn={handleClickCancelBtn}
             />
           </div>
